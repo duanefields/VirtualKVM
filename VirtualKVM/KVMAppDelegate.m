@@ -1,10 +1,12 @@
 #import "KVMAppDelegate.h"
 #import "KVMStatusItem.h"
+#import "KVMController.h"
 
 @interface KVMAppDelegate ()
 
-@property (nonatomic) NSStatusItem *statusItem;
+@property (nonatomic) IBOutlet NSStatusItem *statusItem;
 @property (nonatomic) IBOutlet NSMenu *menu;
+@property (nonatomic) IBOutlet KVMController *controller;
 
 @end
 

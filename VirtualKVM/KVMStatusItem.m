@@ -1,5 +1,9 @@
 #import "KVMStatusItem.h"
 
+@interface KVMStatusItem ()
+@end
+
+
 @implementation KVMStatusItem
 
 + (NSStatusItem *)statusItemWithMenu:(NSMenu *)menu {
