@@ -21,6 +21,8 @@
 		4767297B191BD44A00726705 /* KVMStatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4767297A191BD44A00726705 /* KVMStatusItem.m */; };
 		4767297E191BF05400726705 /* KVMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4767297D191BF05400726705 /* KVMController.m */; };
 		47672981191C022900726705 /* KVMThunderboltObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 47672980191C022900726705 /* KVMThunderboltObserver.m */; };
+		47E96804191C3A17006531E1 /* KVMBluetoothController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47E96803191C3A17006531E1 /* KVMBluetoothController.m */; };
+		47E96806191C3AFB006531E1 /* IOBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47E96805191C3AFB006531E1 /* IOBluetooth.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,9 @@
 		4767297D191BF05400726705 /* KVMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KVMController.m; sourceTree = "<group>"; };
 		4767297F191C022900726705 /* KVMThunderboltObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVMThunderboltObserver.h; sourceTree = "<group>"; };
 		47672980191C022900726705 /* KVMThunderboltObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KVMThunderboltObserver.m; sourceTree = "<group>"; };
+		47E96802191C3A17006531E1 /* KVMBluetoothController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVMBluetoothController.h; sourceTree = "<group>"; };
+		47E96803191C3A17006531E1 /* KVMBluetoothController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KVMBluetoothController.m; sourceTree = "<group>"; };
+		47E96805191C3AFB006531E1 /* IOBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOBluetooth.framework; path = System/Library/Frameworks/IOBluetooth.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47E96806191C3AFB006531E1 /* IOBluetooth.framework in Frameworks */,
 				47672946191BBD7200726705 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -104,6 +110,7 @@
 		47672944191BBD7200726705 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				47E96805191C3AFB006531E1 /* IOBluetooth.framework */,
 				47672945191BBD7200726705 /* Cocoa.framework */,
 				47672964191BBD7200726705 /* XCTest.framework */,
 				47672947191BBD7200726705 /* Other Frameworks */,
@@ -133,6 +140,8 @@
 				4767297D191BF05400726705 /* KVMController.m */,
 				4767297F191C022900726705 /* KVMThunderboltObserver.h */,
 				47672980191C022900726705 /* KVMThunderboltObserver.m */,
+				47E96802191C3A17006531E1 /* KVMBluetoothController.h */,
+				47E96803191C3A17006531E1 /* KVMBluetoothController.m */,
 				4767295D191BBD7200726705 /* Images.xcassets */,
 				4767294C191BBD7200726705 /* Supporting Files */,
 			);
@@ -271,6 +280,7 @@
 				4767297E191BF05400726705 /* KVMController.m in Sources */,
 				47672952191BBD7200726705 /* main.m in Sources */,
 				47672981191C022900726705 /* KVMThunderboltObserver.m in Sources */,
+				47E96804191C3A17006531E1 /* KVMBluetoothController.m in Sources */,
 				4767297B191BD44A00726705 /* KVMStatusItem.m in Sources */,
 				47672959191BBD7200726705 /* KVMAppDelegate.m in Sources */,
 			);
@@ -485,6 +495,7 @@
 				47672975191BBD7200726705 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		47672976191BBD7200726705 /* Build configuration list for PBXNativeTarget "VirtualKVMTests" */ = {
 			isa = XCConfigurationList;
@@ -493,6 +504,7 @@
 				47672978191BBD7200726705 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

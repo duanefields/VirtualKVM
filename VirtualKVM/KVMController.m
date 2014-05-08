@@ -1,4 +1,5 @@
 #import "KVMController.h"
+#import "KVMBluetoothController.h"
 
 @interface KVMController ()
 @property KVMThunderboltObserver *thunderboltObserver;
@@ -14,15 +15,7 @@
     return self;
 }
 
-- (IBAction)toggleDisplayMode:(id)sender {
-    // todo check for thunderbolt connection?
-    
-    NSLog(@"toggling display mode");
-    
-    [self pressCommandF2];
-}
-
-- (void)pressCommandF2 {
+- (void)enableTargetDisplayMode {
     static NSAppleScript *script;
     if (script == nil) {
         script = [[NSAppleScript alloc] initWithSource:@"tell application \"System Events\" to key code 144 using command down"];
@@ -36,10 +29,18 @@
 
 - (void)thunderboltObserverDeviceConnected:(KVMThunderboltObserver *)observer {
     NSLog(@"thunderbolt device connected");
+    
+    [self enableTargetDisplayMode];
+    
+    [[KVMBluetoothController sharedController] setBluetoothEnabled:NO];
 }
 
 - (void)thunderboltObserverDeviceDisconnected:(KVMThunderboltObserver *)observer {
     NSLog(@"thunderbolt device disconnected");
+
+    // system will automatically disable target display mode
+    
+    [[KVMBluetoothController sharedController] setBluetoothEnabled:YES];
 }
 
 @end
