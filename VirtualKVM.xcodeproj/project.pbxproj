@@ -18,6 +18,7 @@
 		47672966191BBD7200726705 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47672945191BBD7200726705 /* Cocoa.framework */; };
 		4767296E191BBD7200726705 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4767296C191BBD7200726705 /* InfoPlist.strings */; };
 		47672970191BBD7200726705 /* VirtualKVMTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4767296F191BBD7200726705 /* VirtualKVMTests.m */; };
+		4767297B191BD44A00726705 /* KVMStatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4767297A191BD44A00726705 /* KVMStatusItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,8 @@
 		4767296B191BBD7200726705 /* VirtualKVMTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "VirtualKVMTests-Info.plist"; sourceTree = "<group>"; };
 		4767296D191BBD7200726705 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4767296F191BBD7200726705 /* VirtualKVMTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VirtualKVMTests.m; sourceTree = "<group>"; };
+		47672979191BD44A00726705 /* KVMStatusItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVMStatusItem.h; sourceTree = "<group>"; };
+		4767297A191BD44A00726705 /* KVMStatusItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KVMStatusItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +121,8 @@
 				47672957191BBD7200726705 /* KVMAppDelegate.h */,
 				47672958191BBD7200726705 /* KVMAppDelegate.m */,
 				4767295A191BBD7200726705 /* MainMenu.xib */,
+				47672979191BD44A00726705 /* KVMStatusItem.h */,
+				4767297A191BD44A00726705 /* KVMStatusItem.m */,
 				4767295D191BBD7200726705 /* Images.xcassets */,
 				4767294C191BBD7200726705 /* Supporting Files */,
 			);
@@ -254,6 +259,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				47672952191BBD7200726705 /* main.m in Sources */,
+				4767297B191BD44A00726705 /* KVMStatusItem.m in Sources */,
 				47672959191BBD7200726705 /* KVMAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

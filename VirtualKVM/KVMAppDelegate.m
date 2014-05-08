@@ -1,18 +1,21 @@
-//
-//  KVMAppDelegate.m
-//  VirtualKVM
-//
-//  Created by Duane Fields on 5/8/14.
-//  Copyright (c) 2014 Fast Wombat. All rights reserved.
-//
-
 #import "KVMAppDelegate.h"
+#import "KVMStatusItem.h"
+
+@interface KVMAppDelegate ()
+
+@property (nonatomic) NSStatusItem *statusItem;
+@property (nonatomic) IBOutlet NSMenu *menu;
+
+@end
 
 @implementation KVMAppDelegate
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
-    // Insert code here to initialize your application
+- (void)awakeFromNib {
+    self.statusItem = [KVMStatusItem statusItemWithMenu:self.menu];
+}
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    
 }
 
 @end
