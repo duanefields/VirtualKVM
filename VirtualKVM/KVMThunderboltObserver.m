@@ -54,8 +54,27 @@ static NSTimeInterval const kTimeInterval = 2.0;
 }
 
 - (BOOL)macConnectedViaThunderbolt {
-    const char *cmd = "/usr/sbin/system_profiler SPThunderboltDataType|/usr/bin/grep 0xA27";
-    return system(cmd) == 0;
+    NSTask *task = [[NSTask alloc] init];
+    [task setLaunchPath:@"/usr/sbin/system_profiler"];
+    [task setArguments:@[@"SPThunderboltDataType", @"-xml"]];
+
+    NSPipe *out = [NSPipe pipe];
+    [task setStandardOutput:out];
+    [task launch];
+
+    NSFileHandle *read = [out fileHandleForReading];
+    NSData *dataRead = [read readDataToEndOfFile];
+    
+    NSError *error;
+    NSArray *plist = [NSPropertyListSerialization propertyListWithData:dataRead options:NSPropertyListImmutable format:NULL error:&error];
+    NSArray *devices = plist[0][@"_items"][0][@"_items"];
+    for (NSDictionary *device in devices) {
+        if ([device[@"vendor_id_key"] isEqualToString:@"0xA27"]) {
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 @end
