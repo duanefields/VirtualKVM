@@ -21,11 +21,11 @@
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <menu id="ZQU-Qi-o3m">
             <items>
-                <menuItem title="Item 2" id="o6B-8G-HZL">
+                <menuItem title="Quit" id="o6B-8G-HZL">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                </menuItem>
-                <menuItem title="Item 3" id="rJm-E9-eKi">
-                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="quit:" target="lVf-z2-2S9" id="RBq-GN-o7c"/>
+                    </connections>
                 </menuItem>
             </items>
         </menu>

@@ -25,6 +25,12 @@
     [script executeAndReturnError:&errorInfo];
 }
 
+#pragma mark - Menu Options
+
+- (IBAction)quit:(id)sender {
+    [[NSApplication sharedApplication] terminate:self];
+}
+
 #pragma mark - KVMThunderboltObserver
 
 - (void)thunderboltObserverDeviceConnected:(KVMThunderboltObserver *)observer {
