@@ -9,9 +9,9 @@
 + (NSStatusItem *)statusItemWithMenu:(NSMenu *)menu {
     NSStatusItem *statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     
-    statusItem.title = @"KVM";
-    statusItem.image = [NSImage imageNamed:@"logo"];
-    statusItem.alternateImage = [NSImage imageNamed:@"logo-alt"];
+    statusItem.title = nil;
+    statusItem.image = [NSImage imageNamed:@"StatusIcon"];
+    statusItem.alternateImage = [NSImage imageNamed:@"StatusIcon"];
     statusItem.highlightMode = YES;
     statusItem.menu = menu;
     
