@@ -21,7 +21,18 @@
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <menu id="ZQU-Qi-o3m">
             <items>
-                <menuItem title="Quit" id="o6B-8G-HZL">
+                <menuItem title="Connection: Unknown" id="9wc-aF-0Uk">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="oPG-AQ-XoO"/>
+                <menuItem title="Auto Toggle Bluetooth" state="on" id="5RI-2K-t5L">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Auto Toggle Display" state="on" id="Beb-Ne-3cM">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="aOi-yt-xjg"/>
+                <menuItem title="Quit Virtual KVM" id="o6B-8G-HZL">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="quit:" target="lVf-z2-2S9" id="RBq-GN-o7c"/>
