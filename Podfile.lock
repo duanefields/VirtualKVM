@@ -1,0 +1,10 @@
+PODS:
+  - GVUserDefaults (0.9.4)
+
+DEPENDENCIES:
+  - GVUserDefaults
+
+SPEC CHECKSUMS:
+  GVUserDefaults: 50dbc9e24ab41b0c24bda7af8b5944ad0413dd2a
+
+COCOAPODS: 0.32.1

@@ -1,5 +1,6 @@
 #import "KVMController.h"
 #import "KVMBluetoothController.h"
+#import "GVUserDefaults+KVMApp.h"
 
 @interface KVMController ()
 @property KVMThunderboltObserver *thunderboltObserver;
@@ -27,6 +28,29 @@
 
 #pragma mark - Menu Options
 
+- (IBAction)toggleTargetDisplayOption:(id)sender {
+    NSMenuItem *menuItem = (NSMenuItem *)sender;
+    if (menuItem.state == NSOnState) {
+        menuItem.state = NSOffState;
+    } else {
+        menuItem.state = NSOnState;
+    }
+    
+    [GVUserDefaults standardUserDefaults].toggleTargetDisplayMode = menuItem.state == NSOnState;
+}
+
+- (IBAction)toggleBluetoothOption:(id)sender {
+    NSMenuItem *menuItem = (NSMenuItem *)sender;
+    if (menuItem.state == NSOnState) {
+        menuItem.state = NSOffState;
+    } else {
+        menuItem.state = NSOnState;
+    }
+    
+    [GVUserDefaults standardUserDefaults].toggleBluetooth = menuItem.state == NSOnState;
+}
+
+
 - (IBAction)quit:(id)sender {
     [[NSApplication sharedApplication] terminate:self];
 }
@@ -36,17 +60,25 @@
 - (void)thunderboltObserverDeviceConnected:(KVMThunderboltObserver *)observer {
     NSLog(@"thunderbolt device connected");
     
-    [self enableTargetDisplayMode];
-    
-    [[KVMBluetoothController sharedController] setBluetoothEnabled:NO];
+    if ([GVUserDefaults standardUserDefaults].toggleTargetDisplayMode) {
+        [self enableTargetDisplayMode];
+    }
+
+    if ([GVUserDefaults standardUserDefaults].toggleBluetooth) {
+        [[KVMBluetoothController sharedController] setBluetoothEnabled:NO];
+    }
 }
 
 - (void)thunderboltObserverDeviceDisconnected:(KVMThunderboltObserver *)observer {
     NSLog(@"thunderbolt device disconnected");
 
-    // system will automatically disable target display mode
+    if ([GVUserDefaults standardUserDefaults].toggleTargetDisplayMode) {
+        // system will automatically disable target display mode
+    }
     
-    [[KVMBluetoothController sharedController] setBluetoothEnabled:YES];
+    if ([GVUserDefaults standardUserDefaults].toggleBluetooth) {
+        [[KVMBluetoothController sharedController] setBluetoothEnabled:YES];
+    }
 }
 
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		284841241468452382E38064 /* libPods-VirtualKVM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C4C9E94FCF400EABD455FF /* libPods-VirtualKVM.a */; };
 		47672946191BBD7200726705 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47672945191BBD7200726705 /* Cocoa.framework */; };
 		47672950191BBD7200726705 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4767294E191BBD7200726705 /* InfoPlist.strings */; };
 		47672952191BBD7200726705 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 47672951191BBD7200726705 /* main.m */; };
@@ -18,11 +19,12 @@
 		47672966191BBD7200726705 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47672945191BBD7200726705 /* Cocoa.framework */; };
 		4767296E191BBD7200726705 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4767296C191BBD7200726705 /* InfoPlist.strings */; };
 		47672970191BBD7200726705 /* VirtualKVMTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4767296F191BBD7200726705 /* VirtualKVMTests.m */; };
-		4767297B191BD44A00726705 /* KVMStatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4767297A191BD44A00726705 /* KVMStatusItem.m */; };
 		4767297E191BF05400726705 /* KVMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4767297D191BF05400726705 /* KVMController.m */; };
 		47672981191C022900726705 /* KVMThunderboltObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 47672980191C022900726705 /* KVMThunderboltObserver.m */; };
+		47C0D521191EFA1A00BB9246 /* KVMStatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4767297A191BD44A00726705 /* KVMStatusItem.m */; };
 		47E96804191C3A17006531E1 /* KVMBluetoothController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47E96803191C3A17006531E1 /* KVMBluetoothController.m */; };
 		47E96806191C3AFB006531E1 /* IOBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47E96805191C3AFB006531E1 /* IOBluetooth.framework */; };
+		47E9680A191DB6FA006531E1 /* GVUserDefaults+KVMApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 47E96809191DB6FA006531E1 /* GVUserDefaults+KVMApp.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +66,10 @@
 		47E96802191C3A17006531E1 /* KVMBluetoothController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVMBluetoothController.h; sourceTree = "<group>"; };
 		47E96803191C3A17006531E1 /* KVMBluetoothController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KVMBluetoothController.m; sourceTree = "<group>"; };
 		47E96805191C3AFB006531E1 /* IOBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOBluetooth.framework; path = System/Library/Frameworks/IOBluetooth.framework; sourceTree = SDKROOT; };
+		47E96808191DB6FA006531E1 /* GVUserDefaults+KVMApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GVUserDefaults+KVMApp.h"; sourceTree = "<group>"; };
+		47E96809191DB6FA006531E1 /* GVUserDefaults+KVMApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GVUserDefaults+KVMApp.m"; sourceTree = "<group>"; };
+		54C4C9E94FCF400EABD455FF /* libPods-VirtualKVM.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VirtualKVM.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E069E9694C714ACA89946A96 /* Pods-VirtualKVM.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VirtualKVM.xcconfig"; path = "Pods/Pods-VirtualKVM.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +79,7 @@
 			files = (
 				47E96806191C3AFB006531E1 /* IOBluetooth.framework in Frameworks */,
 				47672946191BBD7200726705 /* Cocoa.framework in Frameworks */,
+				284841241468452382E38064 /* libPods-VirtualKVM.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +102,7 @@
 				47672969191BBD7200726705 /* VirtualKVMTests */,
 				47672944191BBD7200726705 /* Frameworks */,
 				47672943191BBD7200726705 /* Products */,
+				E069E9694C714ACA89946A96 /* Pods-VirtualKVM.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -114,6 +122,7 @@
 				47672945191BBD7200726705 /* Cocoa.framework */,
 				47672964191BBD7200726705 /* XCTest.framework */,
 				47672947191BBD7200726705 /* Other Frameworks */,
+				54C4C9E94FCF400EABD455FF /* libPods-VirtualKVM.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -133,9 +142,9 @@
 			children = (
 				47672957191BBD7200726705 /* KVMAppDelegate.h */,
 				47672958191BBD7200726705 /* KVMAppDelegate.m */,
-				4767295A191BBD7200726705 /* MainMenu.xib */,
-				47672979191BD44A00726705 /* KVMStatusItem.h */,
-				4767297A191BD44A00726705 /* KVMStatusItem.m */,
+				47E96808191DB6FA006531E1 /* GVUserDefaults+KVMApp.h */,
+				47E96809191DB6FA006531E1 /* GVUserDefaults+KVMApp.m */,
+				47E96807191DB6C1006531E1 /* Status Menu UI */,
 				4767297C191BF05400726705 /* KVMController.h */,
 				4767297D191BF05400726705 /* KVMController.m */,
 				4767297F191C022900726705 /* KVMThunderboltObserver.h */,
@@ -178,6 +187,16 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		47E96807191DB6C1006531E1 /* Status Menu UI */ = {
+			isa = PBXGroup;
+			children = (
+				4767295A191BBD7200726705 /* MainMenu.xib */,
+				47672979191BD44A00726705 /* KVMStatusItem.h */,
+				4767297A191BD44A00726705 /* KVMStatusItem.m */,
+			);
+			name = "Status Menu UI";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -185,9 +204,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 47672973191BBD7200726705 /* Build configuration list for PBXNativeTarget "VirtualKVM" */;
 			buildPhases = (
+				B64B71EFE0EA44ECBD4510FB /* Check Pods Manifest.lock */,
 				4767293E191BBD7200726705 /* Sources */,
 				4767293F191BBD7200726705 /* Frameworks */,
 				47672940191BBD7200726705 /* Resources */,
+				7CE47DC0E1864BFD9450FB37 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -272,6 +293,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		7CE47DC0E1864BFD9450FB37 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-VirtualKVM-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B64B71EFE0EA44ECBD4510FB /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		4767293E191BBD7200726705 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -280,8 +334,9 @@
 				4767297E191BF05400726705 /* KVMController.m in Sources */,
 				47672952191BBD7200726705 /* main.m in Sources */,
 				47672981191C022900726705 /* KVMThunderboltObserver.m in Sources */,
+				47E9680A191DB6FA006531E1 /* GVUserDefaults+KVMApp.m in Sources */,
 				47E96804191C3A17006531E1 /* KVMBluetoothController.m in Sources */,
-				4767297B191BD44A00726705 /* KVMStatusItem.m in Sources */,
+				47C0D521191EFA1A00BB9246 /* KVMStatusItem.m in Sources */,
 				47672959191BBD7200726705 /* KVMAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -412,6 +467,7 @@
 		};
 		47672974191BBD7200726705 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E069E9694C714ACA89946A96 /* Pods-VirtualKVM.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -425,6 +481,7 @@
 		};
 		47672975191BBD7200726705 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E069E9694C714ACA89946A96 /* Pods-VirtualKVM.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;

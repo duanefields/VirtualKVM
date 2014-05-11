@@ -16,6 +16,8 @@
             <connections>
                 <outlet property="controller" destination="lVf-z2-2S9" id="Evo-kn-xEA"/>
                 <outlet property="menu" destination="ZQU-Qi-o3m" id="EBU-10-97t"/>
+                <outlet property="toggleBluetoothMenuItem" destination="5RI-2K-t5L" id="5bT-yo-UzN"/>
+                <outlet property="toggleDisplayMenuItem" destination="Beb-Ne-3cM" id="bx9-aK-gJt"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
@@ -27,9 +29,15 @@
                 <menuItem isSeparatorItem="YES" id="oPG-AQ-XoO"/>
                 <menuItem title="Auto Toggle Bluetooth" state="on" id="5RI-2K-t5L">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="toggleBluetoothOption:" target="lVf-z2-2S9" id="iuw-QN-tOI"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="Auto Toggle Display" state="on" id="Beb-Ne-3cM">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="toggleTargetDisplayOption:" target="lVf-z2-2S9" id="b5O-ZI-yr6"/>
+                    </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="aOi-yt-xjg"/>
                 <menuItem title="Quit Virtual KVM" id="o6B-8G-HZL">
