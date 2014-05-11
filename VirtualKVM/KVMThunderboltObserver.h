@@ -15,6 +15,7 @@
 @protocol KVMThunderBoltObserverDelegate <NSObject>
 
 @optional
+- (void)thunderboltObserver:(KVMThunderboltObserver *)observer isInitiallyConnected:(BOOL)connected;
 - (void)thunderboltObserverDeviceConnected:(KVMThunderboltObserver *)observer;
 - (void)thunderboltObserverDeviceDisconnected:(KVMThunderboltObserver *)observer;
 

@@ -11,7 +11,14 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application"/>
-        <customObject id="lVf-z2-2S9" customClass="KVMController"/>
+        <customObject id="lVf-z2-2S9" customClass="KVMController">
+            <connections>
+                <outlet property="connectionStatusMenuItem" destination="9wc-aF-0Uk" id="wCh-Cf-J3x"/>
+                <outlet property="menu" destination="ZQU-Qi-o3m" id="mfM-jk-6Qf"/>
+                <outlet property="toggleBluetoothMenuItem" destination="5RI-2K-t5L" id="q2q-LS-th5"/>
+                <outlet property="toggleDisplayMenuItem" destination="Beb-Ne-3cM" id="e2R-MG-QZB"/>
+            </connections>
+        </customObject>
         <customObject id="Voe-Tx-rLC" customClass="KVMAppDelegate">
             <connections>
                 <outlet property="controller" destination="lVf-z2-2S9" id="Evo-kn-xEA"/>
@@ -23,7 +30,7 @@
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <menu id="ZQU-Qi-o3m">
             <items>
-                <menuItem title="Connection: Unknown" id="9wc-aF-0Uk">
+                <menuItem title="Connection: Unknown" enabled="NO" id="9wc-aF-0Uk">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="oPG-AQ-XoO"/>

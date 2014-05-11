@@ -4,6 +4,7 @@ static NSTimeInterval const kTimeInterval = 2.0;
 
 @interface KVMThunderboltObserver ()
 @property NSTimer *timer;
+@property BOOL initialized;
 @property BOOL macConnected;
 @end
 
@@ -36,8 +37,14 @@ static NSTimeInterval const kTimeInterval = 2.0;
     BOOL previouslyConnected = self.macConnected;
     self.macConnected = [self macConnectedViaThunderbolt];
     BOOL changed = self.macConnected != previouslyConnected;
+    
     if (changed) {
         [self notifyDelegateOfConnectionChange];
+    }
+    
+    if (! self.initialized) {
+        self.initialized = YES;
+        [self notifyDelegateOfInitialization];
     }
 }
 
@@ -52,6 +59,13 @@ static NSTimeInterval const kTimeInterval = 2.0;
         }
     }
 }
+
+- (void)notifyDelegateOfInitialization {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(thunderboltObserver:isInitiallyConnected:)]) {
+        [self.delegate thunderboltObserver:self isInitiallyConnected:self.macConnected];
+    }
+}
+
 
 - (BOOL)macConnectedViaThunderbolt {
     NSTask *task = [[NSTask alloc] init];
