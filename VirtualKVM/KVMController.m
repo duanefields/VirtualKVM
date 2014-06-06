@@ -2,10 +2,12 @@
 #import "KVMBluetoothController.h"
 #import "GVUserDefaults+KVMApp.h"
 #import "KVMStatusItem.h"
+#import <IOKit/pwr_mgt/IOPMLib.h>
 
 @interface KVMController ()
 @property (nonatomic) KVMThunderboltObserver *thunderboltObserver;
 @property (nonatomic) NSStatusItem *statusItem;
+@property (nonatomic) IOPMAssertionID sleepAssertion;
 
 @property (nonatomic) IBOutlet NSMenu *menu;
 @property (weak) IBOutlet NSMenuItem *toggleBluetoothMenuItem;
@@ -80,7 +82,7 @@
     [self updateConnectionState:NO];
 
     if ([GVUserDefaults standardUserDefaults].toggleTargetDisplayMode) {
-        // system will automatically disable target display mode
+        [self disableTargetDisplayMode];
     }
     
     if ([GVUserDefaults standardUserDefaults].toggleBluetooth) {
@@ -106,6 +108,23 @@
     
     NSDictionary *errorInfo = nil;
     [script executeAndReturnError:&errorInfo];
+    
+    CFStringRef reasonForActivity = (__bridge CFStringRef)@"In Target Display Mode";
+    IOReturn success = IOPMAssertionCreateWithName(kIOPMAssertionTypeNoDisplaySleep, kIOPMAssertionLevelOn, reasonForActivity, &_sleepAssertion);
+    if (success == kIOReturnSuccess) {
+        NSLog(@"Sleep disabled");
+    } else {
+        NSLog(@"Error disabling sleep");
+    }
+}
+
+- (void)disableTargetDisplayMode {
+    IOReturn success = IOPMAssertionRelease(self.sleepAssertion);
+    if (success == kIOReturnSuccess) {
+        NSLog(@"Sleep enabled");
+    } else {
+        NSLog(@"Error enabling sleep");
+    }
 }
 
 
