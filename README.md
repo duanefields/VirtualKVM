@@ -16,7 +16,7 @@ Quit and control options from the status bar menu.
 Installing
 ===========
 
-You can download the latest [release build](releases/) from the release tab, or you build it yourself. This project
+You can download the latest [release build](https://github.com/duanefields/VirtualKVM/releases) from the release tab, or you build it yourself. This project
 requires CocoaPods.
 
 Known Issues
