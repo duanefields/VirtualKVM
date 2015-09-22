@@ -16,8 +16,16 @@ Quit and control options from the status bar menu.
 Installing
 ===========
 
-You can download the latest [release build](https://github.com/duanefields/VirtualKVM/releases) from the release tab, or you build it yourself. This project
-requires CocoaPods.
+You can download the latest [release build](https://github.com/duanefields/VirtualKVM/releases) from the release tab, or you build it yourself.
+
+Building
+========
+This project requires CocoaPods.
+
+ * sudo gem install cocoapods
+ * pod install
+
+Open VirtualKVM.xcworkspace in XCode and build...
 
 Known Issues
 ============
