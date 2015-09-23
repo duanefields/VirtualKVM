@@ -3,11 +3,14 @@
 #import "GVUserDefaults+KVMApp.h"
 #import "KVMStatusItem.h"
 #import <IOKit/pwr_mgt/IOPMLib.h>
+#include <sys/types.h>
+#include <sys/sysctl.h>
 
 @interface KVMController ()
 @property (nonatomic) KVMThunderboltObserver *thunderboltObserver;
 @property (nonatomic) NSStatusItem *statusItem;
 @property (nonatomic) IOPMAssertionID sleepAssertion;
+@property (nonatomic) BOOL isClient;
 
 @property (nonatomic) IBOutlet NSMenu *menu;
 @property (weak) IBOutlet NSMenuItem *toggleBluetoothMenuItem;
@@ -18,8 +21,25 @@
 
 @implementation KVMController
 
++(NSString *)machineModel {
+    size_t len = 0;
+    sysctlbyname("hw.model", NULL, &len, NULL, 0);
+    
+    if (len) {
+        char *model = malloc(len*sizeof(char));
+        sysctlbyname("hw.model", model, &len, NULL, 0);
+        NSString *model_ns = [NSString stringWithUTF8String:model];
+        free(model);
+        NSLog(@"Running on %@", model_ns);
+        return model_ns;
+    }
+    
+    return @"Unknown";
+}
+
 - (id)init {
     self = [super init];
+    self.isClient = ! [[KVMController machineModel] containsString:@"iMac"];
     self.thunderboltObserver = [[KVMThunderboltObserver alloc] initWithDelegate:self];
     [self.thunderboltObserver startObserving];
 
@@ -30,6 +50,11 @@
     self.toggleBluetoothMenuItem.state = [GVUserDefaults standardUserDefaults].toggleBluetooth ? NSOnState : NSOffState;
     self.toggleDisplayMenuItem.state = [GVUserDefaults standardUserDefaults].toggleTargetDisplayMode ? NSOnState : NSOffState;
     self.connectionStatusMenuItem.title = @"Status: Unknown";
+    self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@ Mode: Initializing", self.isClient ? @"Client" : @"Host"];
+    if (self.isClient) {
+        self.toggleDisplayMenuItem.enabled = NO;
+        NSLog(@"Running in client mode");
+    }
     
     self.statusItem = [KVMStatusItem statusItemWithMenu:self.menu];
 }
@@ -73,7 +98,8 @@
     }
 
     if ([GVUserDefaults standardUserDefaults].toggleBluetooth) {
-        [[KVMBluetoothController sharedController] setBluetoothEnabled:NO];
+        BOOL state = self.isClient ? YES : NO;
+        [[KVMBluetoothController sharedController] setBluetoothEnabled:state];
     }
 }
 
@@ -86,7 +112,8 @@
     }
     
     if ([GVUserDefaults standardUserDefaults].toggleBluetooth) {
-        [[KVMBluetoothController sharedController] setBluetoothEnabled:YES];
+        BOOL state = self.isClient ? NO : YES;
+        [[KVMBluetoothController sharedController] setBluetoothEnabled:state];
     }
 }
 
@@ -95,7 +122,7 @@
 }
 
 - (void)updateConnectionState:(BOOL)connected {
-    self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"Status: %@", connected ? @"Connected" : @"Not Connected"];
+    self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@ Mode: %@", self.isClient ? @"Client" : @"Host", connected ? @"Connected" : @"Not Connected"];
 }
 
 #pragma mark - Helpers
