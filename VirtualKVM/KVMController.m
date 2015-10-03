@@ -39,7 +39,8 @@
 
 - (id)init {
     self = [super init];
-    self.isClient = ! [[KVMController machineModel] containsString:@"iMac"];
+    // NB: NSString::containsString isn't available on OSX 10.9
+    self.isClient = [[KVMController machineModel] rangeOfString:@"iMac"].location == NSNotFound;
     self.thunderboltObserver = [[KVMThunderboltObserver alloc] initWithDelegate:self];
     [self.thunderboltObserver startObserving];
 
