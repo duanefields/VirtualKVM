@@ -10,8 +10,10 @@
     NSStatusItem *statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     
     statusItem.title = nil;
-    statusItem.image = [NSImage imageNamed:@"StatusIcon"];
-    statusItem.alternateImage = [NSImage imageNamed:@"StatusIcon"];
+    NSImage *icon = [NSImage imageNamed:@"StatusIcon"];
+    icon.template = true;
+    statusItem.image = icon;
+    statusItem.alternateImage = icon;
     statusItem.highlightMode = YES;
     statusItem.menu = menu;
     
