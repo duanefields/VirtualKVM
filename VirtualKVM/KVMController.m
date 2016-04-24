@@ -15,6 +15,7 @@
 @property (nonatomic) IBOutlet NSMenu *menu;
 @property (weak) IBOutlet NSMenuItem *toggleBluetoothMenuItem;
 @property (weak) IBOutlet NSMenuItem *toggleDisplayMenuItem;
+@property (weak) IBOutlet NSMenuItem *toggleSleepMenuItem;
 @property (weak) IBOutlet NSMenuItem *connectionStatusMenuItem;
 
 @end
@@ -49,6 +50,7 @@
 - (void)awakeFromNib {
     self.toggleBluetoothMenuItem.state = [GVUserDefaults standardUserDefaults].toggleBluetooth ? NSOnState : NSOffState;
     self.toggleDisplayMenuItem.state = [GVUserDefaults standardUserDefaults].toggleTargetDisplayMode ? NSOnState : NSOffState;
+    self.toggleSleepMenuItem.state = [GVUserDefaults standardUserDefaults].toggleDisableSleep ? NSOnState : NSOffState;
     self.connectionStatusMenuItem.title = @"Status: Unknown";
     self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@ Mode: Initializing", self.isClient ? @"Client" : @"Host"];
     if (self.isClient) {
@@ -81,6 +83,17 @@
     }
     
     [GVUserDefaults standardUserDefaults].toggleBluetooth = menuItem.state == NSOnState;
+}
+
+- (IBAction)toggleSleepOption:(id)sender {
+    NSMenuItem *menuItem = (NSMenuItem *)sender;
+    if (menuItem.state == NSOnState) {
+        menuItem.state = NSOffState;
+    } else {
+        menuItem.state = NSOnState;
+    }
+    
+    [GVUserDefaults standardUserDefaults].toggleDisableSleep = menuItem.state == NSOnState;
 }
 
 - (IBAction)quit:(id)sender {
@@ -136,21 +149,25 @@
     NSDictionary *errorInfo = nil;
     [script executeAndReturnError:&errorInfo];
     
-    CFStringRef reasonForActivity = (__bridge CFStringRef)@"In Target Display Mode";
-    IOReturn success = IOPMAssertionCreateWithName(kIOPMAssertionTypeNoDisplaySleep, kIOPMAssertionLevelOn, reasonForActivity, &_sleepAssertion);
-    if (success == kIOReturnSuccess) {
-        NSLog(@"Sleep disabled");
-    } else {
-        NSLog(@"Error disabling sleep");
+    if ([GVUserDefaults standardUserDefaults].toggleDisableSleep) {
+        CFStringRef reasonForActivity = (__bridge CFStringRef)@"In Target Display Mode";
+        IOReturn success = IOPMAssertionCreateWithName(kIOPMAssertionTypeNoDisplaySleep, kIOPMAssertionLevelOn, reasonForActivity, &_sleepAssertion);
+        if (success == kIOReturnSuccess) {
+            NSLog(@"Sleep disabled");
+        } else {
+            NSLog(@"Error disabling sleep");
+        }
     }
 }
 
 - (void)disableTargetDisplayMode {
-    IOReturn success = IOPMAssertionRelease(self.sleepAssertion);
-    if (success == kIOReturnSuccess) {
-        NSLog(@"Sleep enabled");
-    } else {
-        NSLog(@"Error enabling sleep");
+    if (self.sleepAssertion != kIOPMNullAssertionID) {
+        IOReturn success = IOPMAssertionRelease(self.sleepAssertion);
+        if (success == kIOReturnSuccess) {
+            NSLog(@"Sleep enabled");
+        } else {
+            NSLog(@"Error enabling sleep");
+        }
     }
 }
 
