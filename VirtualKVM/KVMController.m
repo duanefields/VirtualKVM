@@ -128,13 +128,22 @@
 #pragma mark - Helpers
 
 - (void)enableTargetDisplayMode {
-    static NSAppleScript *script;
-    if (script == nil) {
-        script = [[NSAppleScript alloc] initWithSource:@"tell application \"System Events\" to key code 144 using command down"];
-    }
     
-    NSDictionary *errorInfo = nil;
-    [script executeAndReturnError:&errorInfo];
+    CGEventSourceRef src = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
+    
+    CGEventRef f2d = CGEventCreateKeyboardEvent(src, 0x90, true);
+    CGEventRef f2u = CGEventCreateKeyboardEvent(src, 0x90, false);
+    
+    CGEventSetFlags(f2d, kCGEventFlagMaskSecondaryFn | kCGEventFlagMaskCommand);
+    CGEventSetFlags(f2u, kCGEventFlagMaskSecondaryFn | kCGEventFlagMaskCommand);
+    
+    CGEventTapLocation loc = kCGHIDEventTap;
+    CGEventPost(loc, f2d);
+    CGEventPost(loc, f2u);
+    
+    CFRelease(f2d);
+    CFRelease(f2u);
+    CFRelease(src);
     
     CFStringRef reasonForActivity = (__bridge CFStringRef)@"In Target Display Mode";
     IOReturn success = IOPMAssertionCreateWithName(kIOPMAssertionTypeNoDisplaySleep, kIOPMAssertionLevelOn, reasonForActivity, &_sleepAssertion);
