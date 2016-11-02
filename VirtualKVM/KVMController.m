@@ -7,8 +7,8 @@
 #include <sys/sysctl.h>
 
 @interface KVMController ()
-@property (nonatomic) KVMThunderboltObserver *thunderboltObserver;
-@property (nonatomic) NSStatusItem *statusItem;
+@property (nonatomic, strong) KVMThunderboltObserver *thunderboltObserver;
+@property (nonatomic, strong) NSStatusItem *statusItem;
 @property (nonatomic) IOPMAssertionID sleepAssertion;
 @property (nonatomic) BOOL isClient;
 

@@ -3,7 +3,8 @@
 static NSTimeInterval const kTimeInterval = 2.0;
 
 @interface KVMThunderboltObserver ()
-@property NSTimer *timer;
+
+@property (nonatomic, strong) NSTimer *timer;
 @property BOOL initialized;
 @property BOOL macConnected;
 @end
@@ -14,6 +15,7 @@ static NSTimeInterval const kTimeInterval = 2.0;
 #pragma mark - Public Interface
 
 - (id)initWithDelegate:(id<KVMThunderBoltObserverDelegate>)delegate {
+    
     self = [super init];
     self.delegate = delegate;
     self.macConnected = NO;
@@ -21,12 +23,14 @@ static NSTimeInterval const kTimeInterval = 2.0;
 }
 
 - (void)startObserving {
-    if (![self.timer isValid]) {
+    
+    if (!self.timer || ![self.timer isValid]) {
         self.timer = [NSTimer scheduledTimerWithTimeInterval:kTimeInterval target:self selector:@selector(timerNotification:) userInfo:nil repeats:YES];
     }
 }
 
 - (void)stopObserving {
+    
     [self.timer invalidate];
     self.timer = nil;
 }
