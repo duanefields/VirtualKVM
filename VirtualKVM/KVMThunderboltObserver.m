@@ -7,6 +7,7 @@ static NSTimeInterval const kTimeInterval = 2.0;
 @property (nonatomic, strong) NSTimer *timer;
 @property BOOL initialized;
 @property BOOL macConnected;
+
 @end
 
 
@@ -37,7 +38,7 @@ static NSTimeInterval const kTimeInterval = 2.0;
 
 - (void)timerNotification:(NSNotification *)aNotification {
   BOOL previouslyConnected = self.macConnected;
-  self.macConnected = [self macConnectedViaThunderbolt];
+  self.macConnected = [self macConnectedViaThunderbolt] || [self macConnectedViaDisplayPort];
   BOOL changed = self.macConnected != previouslyConnected;
 
   if (changed) {
@@ -68,11 +69,10 @@ static NSTimeInterval const kTimeInterval = 2.0;
   }
 }
 
-
-- (BOOL)macConnectedViaThunderbolt {
+- (NSArray *)getDataTypeFromSystemProfiler:(NSString *)dataType {
   NSTask *task = [[NSTask alloc] init];
   [task setLaunchPath:@"/usr/sbin/system_profiler"];
-  [task setArguments:@[@"SPThunderboltDataType", @"-xml"]];
+  [task setArguments:@[dataType, @"-xml"]];
 
   NSPipe *out = [NSPipe pipe];
   [task setStandardOutput:out];
@@ -83,6 +83,33 @@ static NSTimeInterval const kTimeInterval = 2.0;
 
   NSError *error;
   NSArray *plist = [NSPropertyListSerialization propertyListWithData:dataRead options:NSPropertyListImmutable format:NULL error:&error];
+
+  return plist;
+}
+
+- (BOOL)macConnectedViaDisplayPort {
+  NSArray *plist = [self getDataTypeFromSystemProfiler:@"SPDisplaysDataType"];
+
+  NSArray *gpus = plist[0][@"_items"];
+  
+  for (NSDictionary *gpu in gpus) {
+    NSArray *displays = gpu[@"spdisplays_ndrvs"];
+    
+    for (NSDictionary *display in displays) {
+      if ([display[@"spdisplays_connection_type"] isEqualToString:@"spdisplays_displayport_dongletype_dp"]) {
+        if ([display[@"_spdisplays_display-vendor-id"] isEqualToString:@"610"]) {
+          return YES;
+        }
+      }
+    }
+  }
+
+  return NO;
+}
+
+- (BOOL)macConnectedViaThunderbolt {
+  NSArray *plist = [self getDataTypeFromSystemProfiler:@"SPThunderboltDataType"];
+  
   NSArray *devices = plist[0][@"_items"][0][@"_items"];
 
   for (NSDictionary *device in devices) {
