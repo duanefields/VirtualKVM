@@ -3,6 +3,7 @@
 @protocol KVMThunderBoltObserverDelegate;
 
 @interface KVMThunderboltObserver : NSObject
+
 @property (nonatomic, strong) id<KVMThunderBoltObserverDelegate> delegate;
 @property (readonly) BOOL macConnected;
 

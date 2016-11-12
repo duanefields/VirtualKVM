@@ -4,6 +4,7 @@
 
 @property (nonatomic) BOOL toggleBluetooth;
 @property (nonatomic) BOOL toggleTargetDisplayMode;
+
 - (NSDictionary *)setupDefaults;
 
 @end
