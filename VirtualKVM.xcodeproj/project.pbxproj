@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2854907C1DD8610800525808 /* KVMSystemProfiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2854907B1DD8610800525808 /* KVMSystemProfiler.m */; };
 		47672946191BBD7200726705 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47672945191BBD7200726705 /* Cocoa.framework */; };
 		47672950191BBD7200726705 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4767294E191BBD7200726705 /* InfoPlist.strings */; };
 		47672952191BBD7200726705 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 47672951191BBD7200726705 /* main.m */; };
@@ -41,6 +42,8 @@
 /* Begin PBXFileReference section */
 		1CDE0651EFEFF723A5BBA131 /* libPods-VirtualKVMTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VirtualKVMTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2673095FE54EC9E82407FA63 /* Pods-VirtualKVMTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VirtualKVMTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VirtualKVMTests/Pods-VirtualKVMTests.debug.xcconfig"; sourceTree = "<group>"; };
+		285490771DD8608200525808 /* KVMSystemProfiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVMSystemProfiler.h; sourceTree = "<group>"; };
+		2854907B1DD8610800525808 /* KVMSystemProfiler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KVMSystemProfiler.m; sourceTree = "<group>"; };
 		47672942191BBD7200726705 /* VirtualKVM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualKVM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47672945191BBD7200726705 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		47672948191BBD7200726705 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -158,18 +161,20 @@
 		4767294B191BBD7200726705 /* VirtualKVM */ = {
 			isa = PBXGroup;
 			children = (
-				47672957191BBD7200726705 /* KVMAppDelegate.h */,
-				47672958191BBD7200726705 /* KVMAppDelegate.m */,
 				47E96808191DB6FA006531E1 /* GVUserDefaults+KVMApp.h */,
 				47E96809191DB6FA006531E1 /* GVUserDefaults+KVMApp.m */,
-				47E96807191DB6C1006531E1 /* Status Menu UI */,
-				4767297C191BF05400726705 /* KVMController.h */,
-				4767297D191BF05400726705 /* KVMController.m */,
-				4767297F191C022900726705 /* KVMThunderboltObserver.h */,
-				47672980191C022900726705 /* KVMThunderboltObserver.m */,
+				47672957191BBD7200726705 /* KVMAppDelegate.h */,
+				47672958191BBD7200726705 /* KVMAppDelegate.m */,
 				47E96802191C3A17006531E1 /* KVMBluetoothController.h */,
 				47E96803191C3A17006531E1 /* KVMBluetoothController.m */,
+				4767297C191BF05400726705 /* KVMController.h */,
+				4767297D191BF05400726705 /* KVMController.m */,
+				2854907B1DD8610800525808 /* KVMSystemProfiler.m */,
+				285490771DD8608200525808 /* KVMSystemProfiler.h */,
+				4767297F191C022900726705 /* KVMThunderboltObserver.h */,
+				47672980191C022900726705 /* KVMThunderboltObserver.m */,
 				4767295D191BBD7200726705 /* Images.xcassets */,
+				47E96807191DB6C1006531E1 /* Status Menu UI */,
 				4767294C191BBD7200726705 /* Supporting Files */,
 			);
 			path = VirtualKVM;
@@ -417,6 +422,7 @@
 				47672952191BBD7200726705 /* main.m in Sources */,
 				47672981191C022900726705 /* KVMThunderboltObserver.m in Sources */,
 				47E9680A191DB6FA006531E1 /* GVUserDefaults+KVMApp.m in Sources */,
+				2854907C1DD8610800525808 /* KVMSystemProfiler.m in Sources */,
 				47E96804191C3A17006531E1 /* KVMBluetoothController.m in Sources */,
 				47C0D521191EFA1A00BB9246 /* KVMStatusItem.m in Sources */,
 				47672959191BBD7200726705 /* KVMAppDelegate.m in Sources */,
