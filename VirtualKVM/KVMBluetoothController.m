@@ -16,8 +16,14 @@ void IOBluetoothPreferenceSetControllerPowerState(int state);
   return sharedInstance;
 }
 
-- (void)setBluetoothEnabled:(BOOL)enabled {
-  IOBluetoothPreferenceSetControllerPowerState(enabled);
+- (void)disableBluetooth {
+  NSLog(@"Disabling Bluetooth.");
+  IOBluetoothPreferenceSetControllerPowerState(NO);
+}
+
+- (void)enableBluetooth {
+  NSLog(@"Enabling Bluetooth.");
+  IOBluetoothPreferenceSetControllerPowerState(YES);
 }
 
 @end

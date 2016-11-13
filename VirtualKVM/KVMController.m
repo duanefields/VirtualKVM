@@ -102,8 +102,11 @@
   }
 
   if ([GVUserDefaults standardUserDefaults].toggleBluetooth) {
-    BOOL state = self.isClient ? YES : NO;
-    [[KVMBluetoothController sharedController] setBluetoothEnabled:state];
+    if (self.isClient) {
+      [[KVMBluetoothController sharedController] enableBluetooth];
+    } else {
+      [[KVMBluetoothController sharedController] disableBluetooth];
+    }
   }
 }
 
@@ -116,8 +119,11 @@
   }
 
   if ([GVUserDefaults standardUserDefaults].toggleBluetooth) {
-    BOOL state = self.isClient ? NO : YES;
-    [[KVMBluetoothController sharedController] setBluetoothEnabled:state];
+    if (self.isClient) {
+      [[KVMBluetoothController sharedController] disableBluetooth];
+    } else {
+      [[KVMBluetoothController sharedController] enableBluetooth];
+    }
   }
 }
 
