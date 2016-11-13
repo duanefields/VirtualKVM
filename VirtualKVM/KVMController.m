@@ -141,6 +141,9 @@
 #pragma mark - Helpers
 
 - (void)enableTargetDisplayMode {
+  if ([self.thunderboltObserver isInTargetDisplayMode]) {
+    return;
+  }
 
   CGEventSourceRef src = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
 

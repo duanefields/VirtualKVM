@@ -10,6 +10,7 @@
 - (id)initWithDelegate:(id<KVMThunderBoltObserverDelegate>)delegate;
 - (void)startObserving;
 - (void)stopObserving;
+- (BOOL)isInTargetDisplayMode;
 
 @end
 

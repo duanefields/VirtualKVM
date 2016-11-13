@@ -71,6 +71,10 @@ static NSTimeInterval const kTimeInterval = 2.0;
 }
 
 - (BOOL)macConnectedViaDisplayPort {
+  if ([self isInTargetDisplayMode]) {
+    return YES;
+  }
+  
   NSArray *plist = [KVMSystemProfiler dataType:@"SPDisplaysDataType"];
   
   NSArray *gpus = plist[0][@"_items"];
@@ -86,7 +90,25 @@ static NSTimeInterval const kTimeInterval = 2.0;
       }
     }
   }
+  
+  return NO;
+}
 
+- (BOOL)isInTargetDisplayMode {
+  NSArray *plist = [KVMSystemProfiler dataType:@"SPDisplaysDataType"];
+  
+  NSArray *gpus = plist[0][@"_items"];
+  
+  for (NSDictionary *gpu in gpus) {
+    NSArray *displays = gpu[@"spdisplays_ndrvs"];
+    
+    for (NSDictionary *display in displays) {
+      if ([display[@"_name"] isEqualToString:@"iMac"] && display[@"_spdisplays_displayport_device"] == nil) {
+        return YES;
+      }
+    }
+  }
+  
   return NO;
 }
 
