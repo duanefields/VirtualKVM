@@ -48,17 +48,21 @@
 }
 
 - (NSString *)modeString {
-  return [NSString stringWithFormat:@"%@ Mode", self.isClient ? @"Client" : @"Host"];
+  if (self.isClient) {
+    return NSLocalizedString(@"Client Mode", comment:nil);
+  } else {
+    return NSLocalizedString(@"Host Mode", comment:nil);
+  }
 }
 
 - (void)awakeFromNib {
   self.toggleBluetoothMenuItem.state = [GVUserDefaults standardUserDefaults].toggleBluetooth ? NSOnState : NSOffState;
   self.toggleDisplayMenuItem.state = [GVUserDefaults standardUserDefaults].toggleTargetDisplayMode ? NSOnState : NSOffState;
-  self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: Initializing", [self modeString]];
+  self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], NSLocalizedString(@"Initializing …", comment:"State when the application is initializing.")];
 
   if (self.isClient) {
     self.toggleDisplayMenuItem.enabled = NO;
-    NSLog(@"Running in %@.", [self modeString]);
+    NSLog(NSLocalizedString(@"Running in %@.", comment:@"Example: Running in Client Mode."), [self modeString]);
   }
 
   self.statusItem = [KVMStatusItem statusItemWithMenu:self.menu];
@@ -97,7 +101,7 @@
 #pragma mark - KVMThunderboltObserverDelegate
 
 - (void)thunderboltObserverDeviceConnected:(KVMThunderboltObserver *)observer {
-  NSLog(@"Thunderbolt device connected.");
+  NSLog(NSLocalizedString(@"Thunderbolt device connected.", comment:nil));
   [self updateConnectionState:YES];
 
   if ([GVUserDefaults standardUserDefaults].toggleTargetDisplayMode) {
@@ -114,7 +118,7 @@
 }
 
 - (void)thunderboltObserverDeviceDisconnected:(KVMThunderboltObserver *)observer {
-  NSLog(@"Thunderbolt device disconnected.");
+  NSLog(NSLocalizedString(@"Thunderbolt device disconnected.", comment:nil));
   [self updateConnectionState:NO];
 
   if ([GVUserDefaults standardUserDefaults].toggleTargetDisplayMode) {
@@ -135,7 +139,7 @@
 }
 
 - (void)updateConnectionState:(BOOL)connected {
-  self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], connected ? @"Connected" : @"Not Connected"];
+  self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], connected ? NSLocalizedString(@"Connected", comment:nil) : NSLocalizedString(@"Not Connected", comment:nil)];
 }
 
 #pragma mark - Helpers
@@ -165,9 +169,9 @@
   IOReturn success = IOPMAssertionCreateWithName(kIOPMAssertionTypeNoDisplaySleep, kIOPMAssertionLevelOn, reasonForActivity, &_sleepAssertion);
 
   if (success == kIOReturnSuccess) {
-    NSLog(@"Sleep disabled.");
+    NSLog(NSLocalizedString(@"Sleep disabled.", comment:nil));
   } else {
-    NSLog(@"Error disabling sleep.");
+    NSLog(NSLocalizedString(@"Error disabling sleep.", comment:nil));
   }
 }
 
@@ -175,9 +179,9 @@
   IOReturn success = IOPMAssertionRelease(self.sleepAssertion);
 
   if (success == kIOReturnSuccess) {
-    NSLog(@"Sleep enabled.");
+    NSLog(NSLocalizedString(@"Sleep enabled.", comment:nil));
   } else {
-    NSLog(@"Error enabling sleep.");
+    NSLog(NSLocalizedString(@"Error enabling sleep.", comment:nil));
   }
 }
 

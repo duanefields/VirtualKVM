@@ -17,12 +17,12 @@ void IOBluetoothPreferenceSetControllerPowerState(int state);
 }
 
 - (void)disableBluetooth {
-  NSLog(@"Disabling Bluetooth.");
+  NSLog(NSLocalizedString(@"Disabling Bluetooth.", comment:nil));
   IOBluetoothPreferenceSetControllerPowerState(NO);
 }
 
 - (void)enableBluetooth {
-  NSLog(@"Enabling Bluetooth.");
+  NSLog(NSLocalizedString(@"Enabling Bluetooth.", comment:nil));
   IOBluetoothPreferenceSetControllerPowerState(YES);
 }
 

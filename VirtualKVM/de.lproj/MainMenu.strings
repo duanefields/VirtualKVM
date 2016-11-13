@@ -1,0 +1,12 @@
+/* Class = "NSMenuItem"; title = "Auto Toggle Bluetooth"; ObjectID = "5RI-2K-t5L"; */
+"5RI-2K-t5L.title" = "Bluetooth automatisch umschalten";
+
+/* Class = "NSMenuItem"; title = "Connection: Unknown"; ObjectID = "9wc-aF-0Uk"; */
+"9wc-aF-0Uk.title" = "Verbindung: unbekannt";
+
+/* Class = "NSMenuItem"; title = "Auto Toggle Display"; ObjectID = "Beb-Ne-3cM"; */
+"Beb-Ne-3cM.title" = "Monitor automatisch umschalten";
+
+/* Class = "NSMenuItem"; title = "Quit Virtual KVM"; ObjectID = "o6B-8G-HZL"; */
+"o6B-8G-HZL.title" = "Virtual KVM beenden";
+

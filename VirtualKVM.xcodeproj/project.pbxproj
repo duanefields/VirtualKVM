@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2840E5131DD8CD940054146D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2840E5151DD8CD940054146D /* Localizable.strings */; };
 		2854907C1DD8610800525808 /* KVMSystemProfiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2854907B1DD8610800525808 /* KVMSystemProfiler.m */; };
 		47672946191BBD7200726705 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47672945191BBD7200726705 /* Cocoa.framework */; };
 		47672950191BBD7200726705 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4767294E191BBD7200726705 /* InfoPlist.strings */; };
@@ -42,6 +43,11 @@
 /* Begin PBXFileReference section */
 		1CDE0651EFEFF723A5BBA131 /* libPods-VirtualKVMTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VirtualKVMTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2673095FE54EC9E82407FA63 /* Pods-VirtualKVMTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VirtualKVMTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VirtualKVMTests/Pods-VirtualKVMTests.debug.xcconfig"; sourceTree = "<group>"; };
+		2840E50D1DD8CD870054146D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2840E50E1DD8CD870054146D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		2840E50F1DD8CD880054146D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2840E5101DD8CD890054146D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = de; path = de.lproj/Credits.rtf; sourceTree = "<group>"; };
+		2840E5141DD8CD940054146D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		285490771DD8608200525808 /* KVMSystemProfiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVMSystemProfiler.h; sourceTree = "<group>"; };
 		2854907B1DD8610800525808 /* KVMSystemProfiler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KVMSystemProfiler.m; sourceTree = "<group>"; };
 		47672942191BBD7200726705 /* VirtualKVM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualKVM.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -161,6 +167,7 @@
 		4767294B191BBD7200726705 /* VirtualKVM */ = {
 			isa = PBXGroup;
 			children = (
+				4767295D191BBD7200726705 /* Images.xcassets */,
 				47E96808191DB6FA006531E1 /* GVUserDefaults+KVMApp.h */,
 				47E96809191DB6FA006531E1 /* GVUserDefaults+KVMApp.m */,
 				47672957191BBD7200726705 /* KVMAppDelegate.h */,
@@ -173,7 +180,6 @@
 				285490771DD8608200525808 /* KVMSystemProfiler.h */,
 				4767297F191C022900726705 /* KVMThunderboltObserver.h */,
 				47672980191C022900726705 /* KVMThunderboltObserver.m */,
-				4767295D191BBD7200726705 /* Images.xcassets */,
 				47E96807191DB6C1006531E1 /* Status Menu UI */,
 				4767294C191BBD7200726705 /* Supporting Files */,
 			);
@@ -183,6 +189,7 @@
 		4767294C191BBD7200726705 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2840E5151DD8CD940054146D /* Localizable.strings */,
 				4767294D191BBD7200726705 /* VirtualKVM-Info.plist */,
 				4767294E191BBD7200726705 /* InfoPlist.strings */,
 				47672951191BBD7200726705 /* main.m */,
@@ -286,6 +293,7 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
 			);
 			mainGroup = 47672939191BBD7200726705;
 			productRefGroup = 47672943191BBD7200726705 /* Products */;
@@ -303,6 +311,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2840E5131DD8CD940054146D /* Localizable.strings in Resources */,
 				47672950191BBD7200726705 /* InfoPlist.strings in Resources */,
 				4767295E191BBD7200726705 /* Images.xcassets in Resources */,
 				47672956191BBD7200726705 /* Credits.rtf in Resources */,
@@ -448,10 +457,19 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		2840E5151DD8CD940054146D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2840E5141DD8CD940054146D /* de */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		4767294E191BBD7200726705 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				4767294F191BBD7200726705 /* en */,
+				2840E50F1DD8CD880054146D /* de */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -460,6 +478,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				47672955191BBD7200726705 /* en */,
+				2840E5101DD8CD890054146D /* de */,
 			);
 			name = Credits.rtf;
 			sourceTree = "<group>";
@@ -468,6 +487,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				4767295B191BBD7200726705 /* Base */,
+				2840E50E1DD8CD870054146D /* de */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -476,6 +496,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				4767296D191BBD7200726705 /* en */,
+				2840E50D1DD8CD870054146D /* de */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -487,6 +508,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -531,6 +553,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;

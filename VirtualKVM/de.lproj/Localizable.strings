@@ -1,0 +1,42 @@
+/* No comment provided by engineer. */
+"Client Mode" = "Client-Modus";
+
+/* No comment provided by engineer. */
+"Connected" = "Verbunden";
+
+/* No comment provided by engineer. */
+"Disabling Bluetooth." = "Bluetooth wird deaktiviert.";
+
+/* No comment provided by engineer. */
+"Enabling Bluetooth." = "Bluetooth wird aktiviert.";
+
+/* No comment provided by engineer. */
+"Error disabling sleep." = "Fehler beim Deaktivieren des Ruhezustands.";
+
+/* No comment provided by engineer. */
+"Error enabling sleep." = "Fehler beim Aktivieren des Ruhezustands.";
+
+/* No comment provided by engineer. */
+"Host Mode" = "Host-Modus";
+
+/* State when the application is initializing. */
+"Initializing …" = "Initialisiert …";
+
+/* No comment provided by engineer. */
+"Not Connected" = "Nicht verbunden";
+
+/* Example: Running in Client Mode. */
+"Running in %@." = "Läuft im %@.";
+
+/* No comment provided by engineer. */
+"Sleep disabled." = "Ruhezustand deaktiviert.";
+
+/* No comment provided by engineer. */
+"Sleep enabled." = "Ruhezustand aktiviert.";
+
+/* No comment provided by engineer. */
+"Thunderbolt device connected." = "Thunderbolt-Gerät verbunden.";
+
+/* No comment provided by engineer. */
+"Thunderbolt device disconnected." = "Thunderbolt-Gerät getrennt.";
+
