@@ -47,15 +47,18 @@
   return self;
 }
 
+- (NSString *)modeString {
+  return [NSString stringWithFormat:@"%@ Mode", self.isClient ? @"Client" : @"Host"];
+}
+
 - (void)awakeFromNib {
   self.toggleBluetoothMenuItem.state = [GVUserDefaults standardUserDefaults].toggleBluetooth ? NSOnState : NSOffState;
   self.toggleDisplayMenuItem.state = [GVUserDefaults standardUserDefaults].toggleTargetDisplayMode ? NSOnState : NSOffState;
-  self.connectionStatusMenuItem.title = @"Status: Unknown";
-  self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@ Mode: Initializing", self.isClient ? @"Client" : @"Host"];
+  self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: Initializing", [self modeString]];
 
   if (self.isClient) {
     self.toggleDisplayMenuItem.enabled = NO;
-    NSLog(@"Running in client mode");
+    NSLog(@"Running in %@.", [self modeString]);
   }
 
   self.statusItem = [KVMStatusItem statusItemWithMenu:self.menu];
@@ -94,7 +97,7 @@
 #pragma mark - KVMThunderboltObserverDelegate
 
 - (void)thunderboltObserverDeviceConnected:(KVMThunderboltObserver *)observer {
-  NSLog(@"thunderbolt device connected");
+  NSLog(@"Thunderbolt device connected.");
   [self updateConnectionState:YES];
 
   if ([GVUserDefaults standardUserDefaults].toggleTargetDisplayMode) {
@@ -111,7 +114,7 @@
 }
 
 - (void)thunderboltObserverDeviceDisconnected:(KVMThunderboltObserver *)observer {
-  NSLog(@"thunderbolt device disconnected");
+  NSLog(@"Thunderbolt device disconnected.");
   [self updateConnectionState:NO];
 
   if ([GVUserDefaults standardUserDefaults].toggleTargetDisplayMode) {
@@ -132,7 +135,7 @@
 }
 
 - (void)updateConnectionState:(BOOL)connected {
-  self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@ Mode: %@", self.isClient ? @"Client" : @"Host", connected ? @"Connected" : @"Not Connected"];
+  self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], connected ? @"Connected" : @"Not Connected"];
 }
 
 #pragma mark - Helpers
