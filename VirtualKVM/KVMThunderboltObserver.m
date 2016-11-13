@@ -1,4 +1,5 @@
 #import "KVMThunderboltObserver.h"
+#import "KVMSystemProfiler.h"
 
 static NSTimeInterval const kTimeInterval = 2.0;
 
@@ -69,27 +70,9 @@ static NSTimeInterval const kTimeInterval = 2.0;
   }
 }
 
-- (NSArray *)getDataTypeFromSystemProfiler:(NSString *)dataType {
-  NSTask *task = [[NSTask alloc] init];
-  [task setLaunchPath:@"/usr/sbin/system_profiler"];
-  [task setArguments:@[dataType, @"-xml"]];
-
-  NSPipe *out = [NSPipe pipe];
-  [task setStandardOutput:out];
-  [task launch];
-
-  NSFileHandle *read = [out fileHandleForReading];
-  NSData *dataRead = [read readDataToEndOfFile];
-
-  NSError *error;
-  NSArray *plist = [NSPropertyListSerialization propertyListWithData:dataRead options:NSPropertyListImmutable format:NULL error:&error];
-
-  return plist;
-}
-
 - (BOOL)macConnectedViaDisplayPort {
-  NSArray *plist = [self getDataTypeFromSystemProfiler:@"SPDisplaysDataType"];
-
+  NSArray *plist = [KVMSystemProfiler dataType:@"SPDisplaysDataType"];
+  
   NSArray *gpus = plist[0][@"_items"];
   
   for (NSDictionary *gpu in gpus) {
@@ -108,7 +91,7 @@ static NSTimeInterval const kTimeInterval = 2.0;
 }
 
 - (BOOL)macConnectedViaThunderbolt {
-  NSArray *plist = [self getDataTypeFromSystemProfiler:@"SPThunderboltDataType"];
+  NSArray *plist = [KVMSystemProfiler dataType:@"SPThunderboltDataType"];
   
   NSArray *devices = plist[0][@"_items"][0][@"_items"];
 
