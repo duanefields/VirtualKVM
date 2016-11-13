@@ -6,10 +6,10 @@
 @dynamic toggleTargetDisplayMode;
 
 - (NSDictionary *)setupDefaults {
-    return @{
-             @"toggleBluetooth": @YES,
-             @"toggleTargetDisplayMode": @YES,
-            };
+  return @{
+    @"toggleBluetooth": @YES,
+    @"toggleTargetDisplayMode": @YES,
+  };
 }
 
 @end

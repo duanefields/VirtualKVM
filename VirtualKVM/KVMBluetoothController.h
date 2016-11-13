@@ -4,6 +4,7 @@
 
 + (instancetype)sharedController;
 
-- (void)setBluetoothEnabled:(BOOL)enabled;
+- (void)disableBluetooth;
+- (void)enableBluetooth;
 
 @end
