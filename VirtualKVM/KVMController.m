@@ -57,7 +57,6 @@
 }
 
 - (void)awakeFromNib {
-<<<<<<< HEAD
     self.toggleBluetoothMenuItem.state = [GVUserDefaults standardUserDefaults].toggleBluetooth ? NSOnState : NSOffState;
     self.toggleDisplayMenuItem.state = [GVUserDefaults standardUserDefaults].toggleTargetDisplayMode ? NSOnState : NSOffState;
     self.toggleSleepMenuItem.state = [GVUserDefaults standardUserDefaults].toggleDisableSleep ? NSOnState : NSOffState;
@@ -69,8 +68,7 @@
     }
     
     self.statusItem = [KVMStatusItem statusItemWithMenu:self.menu];
-=======
-  self.toggleBluetoothMenuItem.state = [GVUserDefaults standardUserDefaults].toggleBluetooth ? NSOnState : NSOffState;
+   self.toggleBluetoothMenuItem.state = [GVUserDefaults standardUserDefaults].toggleBluetooth ? NSOnState : NSOffState;
   self.toggleDisplayMenuItem.state = [GVUserDefaults standardUserDefaults].toggleTargetDisplayMode ? NSOnState : NSOffState;
   self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], NSLocalizedString(@"Initializing …", comment:"State when the application is initializing.")];
 
@@ -80,7 +78,6 @@
   }
 
   self.statusItem = [KVMStatusItem statusItemWithMenu:self.menu];
->>>>>>> duanefields/master
 }
 
 #pragma mark - Menu Actions
@@ -171,7 +168,6 @@
 #pragma mark - Helpers
 
 - (void)enableTargetDisplayMode {
-<<<<<<< HEAD
     
     CGEventSourceRef src = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
     
@@ -209,8 +205,7 @@
             NSLog(@"Error enabling sleep");
         }
     }
-}
-=======
+
   if ([self.thunderboltObserver isInTargetDisplayMode]) {
     return;
   }
@@ -241,15 +236,5 @@
   }
 }
 
-- (void)disableTargetDisplayMode {
-  IOReturn success = IOPMAssertionRelease(self.sleepAssertion);
->>>>>>> duanefields/master
-
-  if (success == kIOReturnSuccess) {
-    NSLog(NSLocalizedString(@"Sleep enabled.", comment:nil));
-  } else {
-    NSLog(NSLocalizedString(@"Error enabling sleep.", comment:nil));
-  }
-}
 
 @end
