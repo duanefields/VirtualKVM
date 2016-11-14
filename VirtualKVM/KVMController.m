@@ -57,19 +57,10 @@
 }
 
 - (void)awakeFromNib {
-    self.toggleBluetoothMenuItem.state = [GVUserDefaults standardUserDefaults].toggleBluetooth ? NSOnState : NSOffState;
-    self.toggleDisplayMenuItem.state = [GVUserDefaults standardUserDefaults].toggleTargetDisplayMode ? NSOnState : NSOffState;
-    self.toggleSleepMenuItem.state = [GVUserDefaults standardUserDefaults].toggleDisableSleep ? NSOnState : NSOffState;
-    self.connectionStatusMenuItem.title = @"Status: Unknown";
-    self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@ Mode: Initializing", self.isClient ? @"Client" : @"Host"];
-    if (self.isClient) {
-        self.toggleDisplayMenuItem.enabled = NO;
-        NSLog(@"Running in client mode");
-    }
-    
-    self.statusItem = [KVMStatusItem statusItemWithMenu:self.menu];
-   self.toggleBluetoothMenuItem.state = [GVUserDefaults standardUserDefaults].toggleBluetooth ? NSOnState : NSOffState;
+  self.toggleBluetoothMenuItem.state = [GVUserDefaults standardUserDefaults].toggleBluetooth ? NSOnState : NSOffState;
   self.toggleDisplayMenuItem.state = [GVUserDefaults standardUserDefaults].toggleTargetDisplayMode ? NSOnState : NSOffState;
+  self.toggleSleepMenuItem.state = [GVUserDefaults standardUserDefaults].toggleDisableSleep ? NSOnState : NSOffState;
+
   self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], NSLocalizedString(@"Initializing …", comment:"State when the application is initializing.")];
 
   if (self.isClient) {
@@ -175,44 +166,6 @@
 #pragma mark - Helpers
 
 - (void)enableTargetDisplayMode {
-    
-    CGEventSourceRef src = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
-    
-    CGEventRef f2d = CGEventCreateKeyboardEvent(src, 0x90, true);
-    CGEventRef f2u = CGEventCreateKeyboardEvent(src, 0x90, false);
-    
-    CGEventSetFlags(f2d, kCGEventFlagMaskSecondaryFn | kCGEventFlagMaskCommand);
-    CGEventSetFlags(f2u, kCGEventFlagMaskSecondaryFn | kCGEventFlagMaskCommand);
-    
-    CGEventTapLocation loc = kCGHIDEventTap;
-    CGEventPost(loc, f2d);
-    CGEventPost(loc, f2u);
-    
-    CFRelease(f2d);
-    CFRelease(f2u);
-    CFRelease(src);
-    
-    if ([GVUserDefaults standardUserDefaults].toggleDisableSleep) {
-        CFStringRef reasonForActivity = (__bridge CFStringRef)@"In Target Display Mode";
-        IOReturn success = IOPMAssertionCreateWithName(kIOPMAssertionTypeNoDisplaySleep, kIOPMAssertionLevelOn, reasonForActivity, &_sleepAssertion);
-        if (success == kIOReturnSuccess) {
-            NSLog(@"Sleep disabled");
-        } else {
-            NSLog(@"Error disabling sleep");
-        }
-    }
-}
-
-- (void)disableTargetDisplayMode {
-    if (self.sleepAssertion != kIOPMNullAssertionID) {
-        IOReturn success = IOPMAssertionRelease(self.sleepAssertion);
-        if (success == kIOReturnSuccess) {
-            NSLog(@"Sleep enabled");
-        } else {
-            NSLog(@"Error enabling sleep");
-        }
-    }
-
   if ([self.thunderboltObserver isInTargetDisplayMode]) {
     return;
   }
@@ -233,15 +186,28 @@
   CFRelease(f2u);
   CFRelease(src);
 
-  CFStringRef reasonForActivity = (__bridge CFStringRef)@"In Target Display Mode";
-  IOReturn success = IOPMAssertionCreateWithName(kIOPMAssertionTypeNoDisplaySleep, kIOPMAssertionLevelOn, reasonForActivity, &_sleepAssertion);
-
-  if (success == kIOReturnSuccess) {
-    NSLog(NSLocalizedString(@"Sleep disabled.", comment:nil));
-  } else {
-    NSLog(NSLocalizedString(@"Error disabling sleep.", comment:nil));
+  if ([GVUserDefaults standardUserDefaults].toggleDisableSleep) {
+    CFStringRef reasonForActivity = (__bridge CFStringRef)@"In Target Display Mode";
+    IOReturn success = IOPMAssertionCreateWithName(kIOPMAssertionTypeNoDisplaySleep, kIOPMAssertionLevelOn, reasonForActivity, &_sleepAssertion);
+    
+    if (success == kIOReturnSuccess) {
+      NSLog(NSLocalizedString(@"Sleep disabled.", comment:nil));
+    } else {
+      NSLog(NSLocalizedString(@"Error disabling sleep.", comment:nil));
+    }
   }
 }
 
+- (void)disableTargetDisplayMode {
+  if (self.sleepAssertion != kIOPMNullAssertionID) {
+    IOReturn success = IOPMAssertionRelease(self.sleepAssertion);
+    
+    if (success == kIOReturnSuccess) {
+      NSLog(NSLocalizedString(@"Sleep enabled.", comment:nil));
+    } else {
+      NSLog(NSLocalizedString(@"Error enabling sleep.", comment:nil));
+    }
+  }
+}
 
 @end
