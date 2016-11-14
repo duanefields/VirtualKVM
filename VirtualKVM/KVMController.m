@@ -158,7 +158,14 @@
 }
 
 - (void)thunderboltObserver:(KVMThunderboltObserver *)observer isInitiallyConnected:(BOOL)connected {
-  [self updateConnectionState:connected];
+  
+    [self updateConnectionState:connected];
+
+    if (connected) {
+        if ([GVUserDefaults standardUserDefaults].toggleTargetDisplayMode) {
+            [self enableTargetDisplayMode];
+        }
+    }
 }
 
 - (void)updateConnectionState:(BOOL)connected {
