@@ -32,7 +32,7 @@
     sysctlbyname("hw.model", model, &len, NULL, 0);
     NSString *model_ns = [NSString stringWithUTF8String:model];
     free(model);
-    NSLog(@"Running on %@.", model_ns);
+    NSLog(NSLocalizedString(@"Running on %@.", comment:nil), model_ns);
     return model_ns;
   }
 
@@ -169,19 +169,19 @@
   if ([self.thunderboltObserver isInTargetDisplayMode]) {
     return;
   }
-  
+
   CGEventSourceRef src = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
-  
+
   CGEventRef f2d = CGEventCreateKeyboardEvent(src, 0x90, true);
   CGEventRef f2u = CGEventCreateKeyboardEvent(src, 0x90, false);
-  
+
   CGEventSetFlags(f2d, kCGEventFlagMaskSecondaryFn | kCGEventFlagMaskCommand);
   CGEventSetFlags(f2u, kCGEventFlagMaskSecondaryFn | kCGEventFlagMaskCommand);
-  
+
   CGEventTapLocation loc = kCGHIDEventTap;
   CGEventPost(loc, f2d);
   CGEventPost(loc, f2u);
-  
+
   CFRelease(f2d);
   CFRelease(f2u);
   CFRelease(src);
@@ -189,7 +189,7 @@
   if ([GVUserDefaults standardUserDefaults].toggleDisableSleep) {
     CFStringRef reasonForActivity = (__bridge CFStringRef)@"In Target Display Mode";
     IOReturn success = IOPMAssertionCreateWithName(kIOPMAssertionTypeNoDisplaySleep, kIOPMAssertionLevelOn, reasonForActivity, &_sleepAssertion);
-    
+
     if (success == kIOReturnSuccess) {
       NSLog(NSLocalizedString(@"Sleep disabled.", comment:nil));
     } else {
@@ -201,7 +201,7 @@
 - (void)disableTargetDisplayMode {
   if (self.sleepAssertion != kIOPMNullAssertionID) {
     IOReturn success = IOPMAssertionRelease(self.sleepAssertion);
-    
+
     if (success == kIOReturnSuccess) {
       NSLog(NSLocalizedString(@"Sleep enabled.", comment:nil));
     } else {

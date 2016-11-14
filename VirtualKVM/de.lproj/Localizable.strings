@@ -29,6 +29,9 @@
 "Running in %@." = "Läuft im %@.";
 
 /* No comment provided by engineer. */
+"Running on %@." = "Läuft auf einem %@.";
+
+/* No comment provided by engineer. */
 "Sleep disabled." = "Ruhezustand deaktiviert.";
 
 /* No comment provided by engineer. */
