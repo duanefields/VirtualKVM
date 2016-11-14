@@ -46,7 +46,7 @@ static NSTimeInterval const kTimeInterval = 2.0;
     [self notifyDelegateOfConnectionChange];
   }
 
-  if (! self.initialized) {
+  if (!self.initialized) {
     self.initialized = YES;
     [self notifyDelegateOfInitialization];
   }

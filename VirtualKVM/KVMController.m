@@ -107,18 +107,19 @@
 }
 
 - (IBAction)toggleSleepOption:(id)sender {
-    NSMenuItem *menuItem = (NSMenuItem *)sender;
-    if (menuItem.state == NSOnState) {
-        menuItem.state = NSOffState;
-    } else {
-        menuItem.state = NSOnState;
-    }
-    
-    [GVUserDefaults standardUserDefaults].toggleDisableSleep = menuItem.state == NSOnState;
+  NSMenuItem *menuItem = (NSMenuItem *)sender;
+
+  if (menuItem.state == NSOnState) {
+    menuItem.state = NSOffState;
+  } else {
+    menuItem.state = NSOnState;
+  }
+
+  [GVUserDefaults standardUserDefaults].toggleDisableSleep = menuItem.state == NSOnState;
 }
 
 - (IBAction)quit:(id)sender {
-    [[NSApplication sharedApplication] terminate:self];
+  [[NSApplication sharedApplication] terminate:self];
 }
 
 #pragma mark - KVMThunderboltObserverDelegate
@@ -158,14 +159,13 @@
 }
 
 - (void)thunderboltObserver:(KVMThunderboltObserver *)observer isInitiallyConnected:(BOOL)connected {
-  
-    [self updateConnectionState:connected];
+  [self updateConnectionState:connected];
 
-    if (connected) {
-        if ([GVUserDefaults standardUserDefaults].toggleTargetDisplayMode) {
-            [self enableTargetDisplayMode];
-        }
+  if (connected) {
+    if ([GVUserDefaults standardUserDefaults].toggleTargetDisplayMode) {
+      [self enableTargetDisplayMode];
     }
+  }
 }
 
 - (void)updateConnectionState:(BOOL)connected {
@@ -216,19 +216,19 @@
   if ([self.thunderboltObserver isInTargetDisplayMode]) {
     return;
   }
-
+  
   CGEventSourceRef src = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
-
+  
   CGEventRef f2d = CGEventCreateKeyboardEvent(src, 0x90, true);
   CGEventRef f2u = CGEventCreateKeyboardEvent(src, 0x90, false);
-
+  
   CGEventSetFlags(f2d, kCGEventFlagMaskSecondaryFn | kCGEventFlagMaskCommand);
   CGEventSetFlags(f2u, kCGEventFlagMaskSecondaryFn | kCGEventFlagMaskCommand);
-
+  
   CGEventTapLocation loc = kCGHIDEventTap;
   CGEventPost(loc, f2d);
   CGEventPost(loc, f2u);
-
+  
   CFRelease(f2d);
   CFRelease(f2u);
   CFRelease(src);

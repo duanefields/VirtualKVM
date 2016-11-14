@@ -7,11 +7,11 @@
 @dynamic toggleDisableSleep;
 
 - (NSDictionary *)setupDefaults {
-    return @{
-             @"toggleBluetooth": @YES,
-             @"toggleTargetDisplayMode": @YES,
-             @"toggleDisableSleep": @YES,
-            };
+  return @{
+    @"toggleBluetooth": @YES,
+    @"toggleTargetDisplayMode": @YES,
+    @"toggleDisableSleep": @YES,
+  };
 }
 
 @end
