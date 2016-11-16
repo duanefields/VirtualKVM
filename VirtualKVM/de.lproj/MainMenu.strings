@@ -7,6 +7,9 @@
 /* Class = "NSMenuItem"; title = "Auto Toggle Display"; ObjectID = "Beb-Ne-3cM"; */
 "Beb-Ne-3cM.title" = "Monitor automatisch umschalten";
 
+/* Class = "NSMenuItem"; title = "Auto Disable Sleep"; ObjectID = "KqC-rJ-r1W"; */
+"KqC-rJ-r1W.title" = "Ruhezustand automatisch deaktivieren";
+
 /* Class = "NSMenuItem"; title = "Quit Virtual KVM"; ObjectID = "o6B-8G-HZL"; */
 "o6B-8G-HZL.title" = "Virtual KVM beenden";
 
