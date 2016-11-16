@@ -188,7 +188,7 @@
 
   if ([GVUserDefaults standardUserDefaults].toggleDisableSleep) {
     CFStringRef reasonForActivity = (__bridge CFStringRef)@"In Target Display Mode";
-    IOReturn success = IOPMAssertionCreateWithName(kIOPMAssertionTypeNoDisplaySleep, kIOPMAssertionLevelOn, reasonForActivity, &_sleepAssertion);
+    IOReturn success = IOPMAssertionCreateWithName(kIOPMAssertPreventUserIdleSystemSleep, kIOPMAssertionLevelOn, reasonForActivity, &_sleepAssertion);
 
     if (success == kIOReturnSuccess) {
       NSLog(NSLocalizedString(@"Sleep disabled.", comment:nil));
