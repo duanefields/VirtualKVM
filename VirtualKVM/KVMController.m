@@ -18,6 +18,7 @@
 @property (weak) IBOutlet NSMenuItem *toggleDisplayMenuItem;
 @property (weak) IBOutlet NSMenuItem *toggleSleepMenuItem;
 @property (weak) IBOutlet NSMenuItem *connectionStatusMenuItem;
+@property (weak) IBOutlet NSMenuItem *toggleIdleSleepMenuItem;
 
 @end
 
@@ -60,6 +61,7 @@
   self.toggleBluetoothMenuItem.state = [GVUserDefaults standardUserDefaults].toggleBluetooth ? NSOnState : NSOffState;
   self.toggleDisplayMenuItem.state = [GVUserDefaults standardUserDefaults].toggleTargetDisplayMode ? NSOnState : NSOffState;
   self.toggleSleepMenuItem.state = [GVUserDefaults standardUserDefaults].toggleDisableSleep ? NSOnState : NSOffState;
+ self.toggleIdleSleepMenuItem.state = [GVUserDefaults standardUserDefaults].toggleDisableIdleSleep ? NSOnState : NSOffState;
 
   self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], NSLocalizedString(@"Initializing …", comment:"State when the application is initializing.")];
 
@@ -106,7 +108,14 @@
     menuItem.state = NSOnState;
   }
 
-  [GVUserDefaults standardUserDefaults].toggleDisableSleep = menuItem.state == NSOnState;
+    if (menuItem == self.toggleIdleSleepMenuItem) {
+        
+        [GVUserDefaults standardUserDefaults].toggleDisableIdleSleep = menuItem.state == NSOnState;
+
+    } else if (menuItem == self.toggleSleepMenuItem) {
+        
+        [GVUserDefaults standardUserDefaults].toggleDisableSleep = menuItem.state == NSOnState;
+    }
 }
 
 - (IBAction)quit:(id)sender {
@@ -186,16 +195,22 @@
   CFRelease(f2u);
   CFRelease(src);
 
-  if ([GVUserDefaults standardUserDefaults].toggleDisableSleep) {
+    CFStringRef assertionType = nil;
+    
+    if ([GVUserDefaults standardUserDefaults].toggleTargetDisplayMode) {
+        assertionType = kIOPMAssertPreventUserIdleDisplaySleep;
+    } else {
+        assertionType = kIOPMAssertPreventUserIdleSystemSleep;
+    }
     CFStringRef reasonForActivity = (__bridge CFStringRef)@"In Target Display Mode";
-    IOReturn success = IOPMAssertionCreateWithName(kIOPMAssertPreventUserIdleSystemSleep, kIOPMAssertionLevelOn, reasonForActivity, &_sleepAssertion);
+    IOReturn success = IOPMAssertionCreateWithName(assertionType, kIOPMAssertionLevelOn, reasonForActivity, &_sleepAssertion);
 
     if (success == kIOReturnSuccess) {
       NSLog(NSLocalizedString(@"Sleep disabled.", comment:nil));
     } else {
       NSLog(NSLocalizedString(@"Error disabling sleep.", comment:nil));
     }
-  }
+  
 }
 
 - (void)disableTargetDisplayMode {
