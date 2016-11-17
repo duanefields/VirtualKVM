@@ -68,6 +68,9 @@
   if (self.isClient) {
     self.toggleDisplayMenuItem.hidden = YES;
     NSLog(NSLocalizedString(@"Running in %@.", comment:@"Example: Running in Client Mode."), [self modeString]);
+  } else {
+      self.toggleIdleSleepMenuItem.hidden = YES;
+      self.toggleSleepMenuItem.hidden = YES;
   }
 
   self.statusItem = [KVMStatusItem statusItemWithMenu:self.menu];
