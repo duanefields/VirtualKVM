@@ -219,7 +219,7 @@
 
     CFStringRef assertionType = nil;
     
-    if ([GVUserDefaults standardUserDefaults].toggleTargetDisplayMode) {
+    if ([GVUserDefaults standardUserDefaults].toggleDisableSleep) {
         assertionType = kIOPMAssertPreventUserIdleDisplaySleep;
     } else {
         assertionType = kIOPMAssertPreventUserIdleSystemSleep;
