@@ -42,13 +42,13 @@
                         <action selector="toggleTargetDisplayOption:" target="lVf-z2-2S9" id="b5O-ZI-yr6"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Auto Disable Idle Sleep" state="on" id="pFx-q3-0Qh">
+                <menuItem title="Allow Display To Sleep" state="on" id="pFx-q3-0Qh">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="toggleSleepOption:" target="lVf-z2-2S9" id="NHc-LJ-hGX"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Auto Disable Display Sleep" state="on" id="KqC-rJ-r1W">
+                <menuItem title="Allow System To Sleep" state="on" id="KqC-rJ-r1W">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="toggleSleepOption:" target="lVf-z2-2S9" id="VTr-LX-B8Y"/>
