@@ -216,7 +216,10 @@
   CFRelease(f2d);
   CFRelease(f2u);
   CFRelease(src);
-
+    
+    if (!self.isClient) {
+        return;
+    }
     if (_sleepAssertion) {//If we already have an `_sleepAssertion` then we are already holding a power assertion.
         return;
     }
