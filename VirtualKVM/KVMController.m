@@ -102,11 +102,27 @@
 - (IBAction)toggleSleepOption:(id)sender {
   NSMenuItem *menuItem = (NSMenuItem *)sender;
 
-  if (menuItem.state == NSOnState) {
-    menuItem.state = NSOffState;
-  } else {
-    menuItem.state = NSOnState;
-  }
+    if (menuItem == self.toggleIdleSleepMenuItem) {
+        
+        if (menuItem.state == NSOnState) {
+            menuItem.state = NSOffState;
+            self.toggleSleepMenuItem.enabled = YES;
+        } else {
+            self.toggleSleepMenuItem.enabled = NO;
+            menuItem.state = NSOnState;
+        }
+    }
+    
+    if (menuItem == self.toggleSleepMenuItem) {
+        
+        if (menuItem.state == NSOnState) {
+            menuItem.state = NSOffState;
+            self.toggleIdleSleepMenuItem.enabled = YES;
+        } else {
+            self.toggleIdleSleepMenuItem.enabled = NO;
+            menuItem.state = NSOnState;
+        }
+    }
 
     if (menuItem == self.toggleIdleSleepMenuItem) {
         
