@@ -71,6 +71,8 @@
   } else {
       self.toggleIdleSleepMenuItem.hidden = YES;
       self.toggleSleepMenuItem.hidden = YES;
+      [GVUserDefaults standardUserDefaults].toggleDisableSleep = NO;
+      [GVUserDefaults standardUserDefaults].toggleDisableIdleSleep = NO;
   }
 
   self.statusItem = [KVMStatusItem statusItemWithMenu:self.menu];
