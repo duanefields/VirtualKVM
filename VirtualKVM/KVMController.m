@@ -217,6 +217,9 @@
   CFRelease(f2u);
   CFRelease(src);
 
+    if (_sleepAssertion) {//If we already have an `_sleepAssertion` then we are already holding a power assertion.
+        return;
+    }
     CFStringRef assertionType = nil;
     
     if ([GVUserDefaults standardUserDefaults].toggleDisableSleep) {
