@@ -8,6 +8,7 @@ static NSTimeInterval const kTimeInterval = 2.0;
 @property (nonatomic, strong) NSTimer *timer;
 @property BOOL initialized;
 @property BOOL macConnected;
+@property NSArray *systemProfilerInformation;
 
 @end
 
@@ -20,6 +21,7 @@ static NSTimeInterval const kTimeInterval = 2.0;
   self = [super init];
   self.delegate = delegate;
   self.macConnected = NO;
+  self.systemProfilerInformation = nil;
 
   return self;
 }
@@ -37,7 +39,29 @@ static NSTimeInterval const kTimeInterval = 2.0;
 
 #pragma mark - Private Interface
 
+- (void)updateSystemProfilerInformation {
+  self.systemProfilerInformation = [KVMSystemProfiler dataTypes:@[@"SPDisplaysDataType", @"SPThunderboltDataType"]];
+}
+
+- (NSDictionary *)systemProfilerDisplayInfo {
+  if (self.systemProfilerInformation == nil) {
+    [self updateSystemProfilerInformation];
+  }
+  
+  return self.systemProfilerInformation[0];
+}
+
+- (NSDictionary *)systemProfilerThunderboltInfo {
+  if (self.systemProfilerInformation == nil) {
+    [self updateSystemProfilerInformation];
+  }
+  
+  return self.systemProfilerInformation[1];
+}
+
 - (void)timerNotification:(NSNotification *)aNotification {
+  [self updateSystemProfilerInformation];
+  
   BOOL previouslyConnected = self.macConnected;
   self.macConnected = [self macConnectedViaThunderbolt] || [self macConnectedViaDisplayPort];
   BOOL changed = self.macConnected != previouslyConnected;
@@ -75,9 +99,9 @@ static NSTimeInterval const kTimeInterval = 2.0;
     return YES;
   }
 
-  NSArray *plist = [KVMSystemProfiler dataType:@"SPDisplaysDataType"];
+  NSDictionary *plist = [self systemProfilerDisplayInfo];
 
-  NSArray *gpus = plist[0][@"_items"];
+  NSArray *gpus = plist[@"_items"];
 
   for (NSDictionary *gpu in gpus) {
     NSArray *displays = gpu[@"spdisplays_ndrvs"];
@@ -95,16 +119,18 @@ static NSTimeInterval const kTimeInterval = 2.0;
 }
 
 - (BOOL)isInTargetDisplayMode {
-  NSArray *plist = [KVMSystemProfiler dataType:@"SPDisplaysDataType"];
+  NSDictionary *plist = [self systemProfilerDisplayInfo];
 
-  NSArray *gpus = plist[0][@"_items"];
+  NSArray *gpus = plist[@"_items"];
 
   for (NSDictionary *gpu in gpus) {
     NSArray *displays = gpu[@"spdisplays_ndrvs"];
 
     for (NSDictionary *display in displays) {
-      if ([display[@"_name"] isEqualToString:@"iMac"] && display[@"_spdisplays_displayport_device"] == nil) {
-        return YES;
+      if ([display[@"_name"] isEqualToString:@"iMac"] && [display[@"spdisplays_builtin"] isEqualToString:@"spdisplays_yes"]) {
+        if (display[@"_spdisplays_displayport_device"] == nil) {
+          return YES;
+        }
       }
     }
   }
@@ -113,9 +139,9 @@ static NSTimeInterval const kTimeInterval = 2.0;
 }
 
 - (BOOL)macConnectedViaThunderbolt {
-  NSArray *plist = [KVMSystemProfiler dataType:@"SPThunderboltDataType"];
+  NSDictionary *plist = [self systemProfilerThunderboltInfo];
 
-  NSArray *devices = plist[0][@"_items"][0][@"_items"];
+  NSArray *devices = plist[@"_items"][0][@"_items"];
 
   for (NSDictionary *device in devices) {
     if ([device[@"vendor_id_key"] isEqualToString:@"0xA27"]) {
