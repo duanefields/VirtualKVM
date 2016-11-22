@@ -19,7 +19,6 @@
                 <outlet property="toggleBluetoothMenuItem" destination="5RI-2K-t5L" id="q2q-LS-th5"/>
                 <outlet property="toggleDisplayMenuItem" destination="Beb-Ne-3cM" id="e2R-MG-QZB"/>
                 <outlet property="toggleIdleSleepMenuItem" destination="pFx-q3-0Qh" id="YFB-yG-DEw"/>
-                <outlet property="toggleSleepMenuItem" destination="KqC-rJ-r1W" id="nqo-ba-9h6"/>
             </connections>
         </customObject>
         <customObject id="Voe-Tx-rLC" customClass="KVMAppDelegate"/>
@@ -42,16 +41,10 @@
                         <action selector="toggleTargetDisplayOption:" target="lVf-z2-2S9" id="b5O-ZI-yr6"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Allow Display To Sleep" state="on" id="pFx-q3-0Qh">
+                <menuItem title="Prevent Display Sleep" state="on" id="pFx-q3-0Qh">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="toggleSleepOption:" target="lVf-z2-2S9" id="NHc-LJ-hGX"/>
-                    </connections>
-                </menuItem>
-                <menuItem title="Allow System To Sleep" state="on" id="KqC-rJ-r1W">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="toggleSleepOption:" target="lVf-z2-2S9" id="VTr-LX-B8Y"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="aOi-yt-xjg"/>
