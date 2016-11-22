@@ -18,6 +18,7 @@
 @property (weak) IBOutlet NSMenuItem *toggleDisplayMenuItem;
 @property (weak) IBOutlet NSMenuItem *toggleSleepMenuItem;
 @property (weak) IBOutlet NSMenuItem *connectionStatusMenuItem;
+@property (nonatomic, assign) CFStringRef assertionType;
 
 @end
 
@@ -196,18 +197,18 @@
     if (_sleepAssertion) {//If we already have an `_sleepAssertion` then we are already holding a power assertion.
         return;
     }
-    CFStringRef assertionType = nil;
+    self.assertionType = nil;
     
     if ([GVUserDefaults standardUserDefaults].toggleDisableSleep) {
-        assertionType = kIOPMAssertPreventUserIdleDisplaySleep;
+        self.assertionType = kIOPMAssertPreventUserIdleDisplaySleep;
     } else {
-        assertionType = kIOPMAssertPreventUserIdleSystemSleep;
+        self.assertionType = kIOPMAssertPreventUserIdleSystemSleep;
     }
     CFStringRef reasonForActivity = (__bridge CFStringRef)@"In Target Display Mode";
-    IOReturn success = IOPMAssertionCreateWithName(assertionType, kIOPMAssertionLevelOn, reasonForActivity, &_sleepAssertion);
+    IOReturn success = IOPMAssertionCreateWithName(self.assertionType, kIOPMAssertionLevelOn, reasonForActivity, &_sleepAssertion);
 
     if (success == kIOReturnSuccess) {
-      NSLog(NSLocalizedString(@"Created power assertion. Assertion type: %@", nil),assertionType);
+      NSLog(NSLocalizedString(@"Created power assertion. Assertion type: %@", comment:nil),self.assertionType);
     } else {
       NSLog(NSLocalizedString(@"Unable to create power assertion.", comment:nil));
     }
@@ -219,9 +220,9 @@
     IOReturn success = IOPMAssertionRelease(self.sleepAssertion);
 
     if (success == kIOReturnSuccess) {
-      NSLog(NSLocalizedString(@"Release power assertion.", comment:nil));
+      NSLog(NSLocalizedString(@"Released power assertion. Assertion type: %@", comment:nil),self.assertionType);
     } else {
-      NSLog(NSLocalizedString(@"Unable to release power assertion.", comment:nil));
+      NSLog(NSLocalizedString(@"Unable to release power assertion. Assertion type: %@", comment:nil),self.assertionType);
     }
   }
 }
