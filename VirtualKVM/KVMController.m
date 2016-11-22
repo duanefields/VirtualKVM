@@ -18,7 +18,6 @@
 @property (weak) IBOutlet NSMenuItem *toggleDisplayMenuItem;
 @property (weak) IBOutlet NSMenuItem *toggleSleepMenuItem;
 @property (weak) IBOutlet NSMenuItem *connectionStatusMenuItem;
-@property (weak) IBOutlet NSMenuItem *toggleIdleSleepMenuItem;
 
 @end
 
@@ -62,7 +61,6 @@
   self.toggleBluetoothMenuItem.state = [GVUserDefaults standardUserDefaults].toggleBluetooth ? NSOnState : NSOffState;
   self.toggleDisplayMenuItem.state = [GVUserDefaults standardUserDefaults].toggleTargetDisplayMode ? NSOnState : NSOffState;
   self.toggleSleepMenuItem.state = [GVUserDefaults standardUserDefaults].toggleDisableSleep ? NSOnState : NSOffState;
- self.toggleIdleSleepMenuItem.state = [GVUserDefaults standardUserDefaults].toggleDisableIdleSleep ? NSOnState : NSOffState;
 
   self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], NSLocalizedString(@"Initializing …", comment:"State when the application is initializing.")];
 
@@ -70,10 +68,8 @@
     self.toggleDisplayMenuItem.hidden = YES;
     NSLog(NSLocalizedString(@"Running in %@.", comment:@"Example: Running in Client Mode."), [self modeString]);
   } else {
-      self.toggleIdleSleepMenuItem.hidden = YES;
       self.toggleSleepMenuItem.hidden = YES;
       [GVUserDefaults standardUserDefaults].toggleDisableSleep = NO;
-      [GVUserDefaults standardUserDefaults].toggleDisableIdleSleep = NO;
   }
 
   self.statusItem = [KVMStatusItem statusItemWithMenu:self.menu];
@@ -108,36 +104,13 @@
 - (IBAction)toggleSleepOption:(id)sender {
   NSMenuItem *menuItem = (NSMenuItem *)sender;
 
-    if (menuItem == self.toggleIdleSleepMenuItem) {
-        
-        if (menuItem.state == NSOnState) {
-            menuItem.state = NSOffState;
-            self.toggleSleepMenuItem.enabled = YES;
-        } else {
-            self.toggleSleepMenuItem.enabled = NO;
-            menuItem.state = NSOnState;
-        }
-    }
-    
-    if (menuItem == self.toggleSleepMenuItem) {
-        
-        if (menuItem.state == NSOnState) {
-            menuItem.state = NSOffState;
-            self.toggleIdleSleepMenuItem.enabled = YES;
-        } else {
-            self.toggleIdleSleepMenuItem.enabled = NO;
-            menuItem.state = NSOnState;
-        }
-    }
+  if (menuItem.state == NSOnState) {
+    menuItem.state = NSOffState;
+  } else {
+    menuItem.state = NSOnState;
+  }
 
-    if (menuItem == self.toggleIdleSleepMenuItem) {
-        
-        [GVUserDefaults standardUserDefaults].toggleDisableIdleSleep = menuItem.state == NSOnState;
-
-    } else if (menuItem == self.toggleSleepMenuItem) {
-        
-        [GVUserDefaults standardUserDefaults].toggleDisableSleep = menuItem.state == NSOnState;
-    }
+  [GVUserDefaults standardUserDefaults].toggleDisableSleep = menuItem.state == NSOnState;
 }
 
 - (IBAction)quit:(id)sender {

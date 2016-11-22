@@ -18,7 +18,7 @@
                 <outlet property="menu" destination="ZQU-Qi-o3m" id="mfM-jk-6Qf"/>
                 <outlet property="toggleBluetoothMenuItem" destination="5RI-2K-t5L" id="q2q-LS-th5"/>
                 <outlet property="toggleDisplayMenuItem" destination="Beb-Ne-3cM" id="e2R-MG-QZB"/>
-                <outlet property="toggleIdleSleepMenuItem" destination="pFx-q3-0Qh" id="YFB-yG-DEw"/>
+                <outlet property="toggleSleepMenuItem" destination="pFx-q3-0Qh" id="58O-CE-q2a"/>
             </connections>
         </customObject>
         <customObject id="Voe-Tx-rLC" customClass="KVMAppDelegate"/>
