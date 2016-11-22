@@ -168,12 +168,35 @@
 }
 
 #pragma mark - Helpers
-
+- (void)pressBrightnessKeys {
+    
+    CGEventSourceRef src = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
+    CGEventRef turnBrightnessUpKeyUp = CGEventCreateKeyboardEvent(src, 0x90, true);
+    CGEventRef turnBrightnessUpKeyDown = CGEventCreateKeyboardEvent(src, 0x90, false);
+    
+    CGEventRef turnBrightnessDownKeyUp = CGEventCreateKeyboardEvent(src, 0x91, true);
+    CGEventRef turnBrightnessDownKeyDown = CGEventCreateKeyboardEvent(src, 0x91, false);
+    
+    CGEventTapLocation loc = kCGHIDEventTap;
+    CGEventPost(loc, turnBrightnessUpKeyUp);
+    CGEventPost(loc, turnBrightnessUpKeyDown);
+    
+    CGEventPost(loc, turnBrightnessDownKeyUp);
+    CGEventPost(loc, turnBrightnessDownKeyDown);
+    
+    CFRelease(turnBrightnessUpKeyUp);
+    CFRelease(turnBrightnessUpKeyDown);
+    CFRelease(turnBrightnessDownKeyUp);
+    CFRelease(turnBrightnessDownKeyDown);
+    CFRelease(src);
+}
 - (void)enableTargetDisplayMode {
   if ([self.thunderboltObserver isInTargetDisplayMode]) {
     return;
   }
 
+  [self pressBrightnessKeys];
+    
   CGEventSourceRef src = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
 
   CGEventRef f2d = CGEventCreateKeyboardEvent(src, 0x90, true);
