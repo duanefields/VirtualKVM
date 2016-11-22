@@ -165,7 +165,7 @@
 }
 
 - (void)updateConnectionState:(BOOL)connected {
-  self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], connected ? NSLocalizedString(@"Connected", comment:nil) : NSLocalizedString(@"Not Connected", comment:nil)];
+  self.connectionStatusMenuItem.title = ([NSString stringWithFormat:@"%@: %@", [self modeString], connected && ([self clientIsInTargetDisplayMode]) ? NSLocalizedString(@"Connected", comment:nil) : NSLocalizedString(@"Not Connected", comment:nil)]);
 }
 
 #pragma mark - Helpers
@@ -174,6 +174,10 @@
   if ([self.thunderboltObserver isInTargetDisplayMode]) {
     return;
   }
+    
+    if ([self clientIsInTargetDisplayMode]) {
+        return;
+    }
 
   CGEventSourceRef src = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
 
@@ -225,6 +229,72 @@
       NSLog(NSLocalizedString(@"Unable to release power assertion. Assertion type: %@", comment:nil),self.assertionType);
     }
   }
+}
+
+#pragma mark - Target Display Mode Status
+
+- (BOOL)clientIsInTargetDisplayMode {
+    
+    NSArray *screens = [NSScreen screens];
+    
+    if (screens.count == 0) {
+        return NO;
+    }
+    
+    NSMutableArray <NSNumber *> *screenNumbers = [NSMutableArray new];
+    for (NSScreen *screen in screens) {
+        
+        NSLog(@"Screen name: %@",screen.deviceDescription[@"NSScreenNumber"]);
+        
+        if (screen.deviceDescription[@"NSScreenNumber"]) {
+            
+            [screenNumbers addObject:@([screen.deviceDescription[@"NSScreenNumber"] unsignedIntValue])];
+        }
+    }
+    
+    if (screenNumbers.count == 0) {
+        return NO;
+    }
+    
+    NSMutableArray <NSString *> *localizedScreenNames = [NSMutableArray new];
+   
+    for (NSNumber *screenNumber in screenNumbers) {
+        
+        NSString *localizedScreenName = [self screenNameForDisplay:screenNumber.unsignedIntValue];
+        if (localizedScreenName && localizedScreenName.length != 0) {
+            [localizedScreenNames addObject:localizedScreenName];
+            [localizedScreenNames addObject:@"iMac"];
+        }
+        
+    }
+    
+    if (localizedScreenNames.count == 0) {
+        return NO;
+    }
+    
+    for (NSString *localizedScreenName in localizedScreenNames) {
+        
+        if ([localizedScreenName isEqualToString:@"iMac"]) {
+            return YES;
+            break;
+        }
+    }
+    
+    return NO;
+}
+
+- (NSString *)screenNameForDisplay:(CGDirectDisplayID)displayID {
+    
+    NSString *screenName = nil;
+    
+    NSDictionary *deviceInfo = (__bridge NSDictionary *)IODisplayCreateInfoDictionary(CGDisplayIOServicePort(displayID), kIODisplayOnlyPreferredName);
+    NSDictionary *localizedNames = [deviceInfo objectForKey:[NSString stringWithUTF8String:kDisplayProductName]];
+    
+    if ([localizedNames count] > 0) {
+        screenName = [localizedNames objectForKey:[[localizedNames allKeys] objectAtIndex:0]];
+    }
+    
+    return screenName;
 }
 
 @end
