@@ -207,9 +207,9 @@
     IOReturn success = IOPMAssertionCreateWithName(assertionType, kIOPMAssertionLevelOn, reasonForActivity, &_sleepAssertion);
 
     if (success == kIOReturnSuccess) {
-      NSLog(NSLocalizedString(@"Sleep disabled.", comment:nil));
+      NSLog(NSLocalizedString(@"Created power assertion. Assertion type: %@", nil),assertionType);
     } else {
-      NSLog(NSLocalizedString(@"Error disabling sleep.", comment:nil));
+      NSLog(NSLocalizedString(@"Unable to create power assertion.", comment:nil));
     }
   
 }
@@ -219,9 +219,9 @@
     IOReturn success = IOPMAssertionRelease(self.sleepAssertion);
 
     if (success == kIOReturnSuccess) {
-      NSLog(NSLocalizedString(@"Sleep enabled.", comment:nil));
+      NSLog(NSLocalizedString(@"Release power assertion.", comment:nil));
     } else {
-      NSLog(NSLocalizedString(@"Error enabling sleep.", comment:nil));
+      NSLog(NSLocalizedString(@"Unable to release power assertion.", comment:nil));
     }
   }
 }
