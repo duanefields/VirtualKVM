@@ -263,7 +263,7 @@
         NSString *localizedScreenName = [self screenNameForDisplay:screenNumber.unsignedIntValue];
         if (localizedScreenName && localizedScreenName.length != 0) {
             [localizedScreenNames addObject:localizedScreenName];
-            [localizedScreenNames addObject:@"iMac"];
+           //For testing: [localizedScreenNames addObject:@"iMac"];
         }
         
     }
