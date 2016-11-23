@@ -174,6 +174,10 @@
 
 - (void)updateConnectionState:(BOOL)connected {
     
+    if (!self.isClient) {
+        self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], NSLocalizedString(@"Ready to Accept Connections", comment:nil)];
+        return;
+    }
     if (connected && [self clientIsInTargetDisplayMode]) {
         self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], NSLocalizedString(@"Connected", comment:nil)];
         [self createPowerAssertion];
@@ -257,7 +261,7 @@
     if (!self.isClient) {
         return NO;
     }
-    
+    //Will have multiple objects if the the MacBook is not in clamshell mode. However, when in clamshell mode `screens` should contain only contain 1 object, this object will be the iMac's screen.
     NSArray *screens = [NSScreen screens];
     
     if (screens.count == 0) {
@@ -266,11 +270,7 @@
     
     NSMutableArray <NSNumber *> *screenNumbers = [NSMutableArray new];
     for (NSScreen *screen in screens) {
-        
-        NSLog(@"Screen name: %@",screen.deviceDescription[@"NSScreenNumber"]);
-        
         if (screen.deviceDescription[@"NSScreenNumber"]) {
-            
             [screenNumbers addObject:@([screen.deviceDescription[@"NSScreenNumber"] unsignedIntValue])];
         }
     }
@@ -288,7 +288,6 @@
             [localizedScreenNames addObject:localizedScreenName];
            //For testing: [localizedScreenNames addObject:@"iMac"];
         }
-        
     }
     
     if (localizedScreenNames.count == 0) {
