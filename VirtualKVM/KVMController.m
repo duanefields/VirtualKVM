@@ -18,6 +18,7 @@
 @property (weak) IBOutlet NSMenuItem *toggleDisplayMenuItem;
 @property (weak) IBOutlet NSMenuItem *toggleSleepMenuItem;
 @property (weak) IBOutlet NSMenuItem *connectionStatusMenuItem;
+@property (nonatomic, assign) CFStringRef assertionType;
 
 @end
 
@@ -57,6 +58,7 @@
 }
 
 - (void)awakeFromNib {
+  self.menu.autoenablesItems = NO;
   self.toggleBluetoothMenuItem.state = [GVUserDefaults standardUserDefaults].toggleBluetooth ? NSOnState : NSOffState;
   self.toggleDisplayMenuItem.state = [GVUserDefaults standardUserDefaults].toggleTargetDisplayMode ? NSOnState : NSOffState;
   self.toggleSleepMenuItem.state = [GVUserDefaults standardUserDefaults].toggleDisableSleep ? NSOnState : NSOffState;
@@ -64,8 +66,11 @@
   self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], NSLocalizedString(@"Initializing …", comment:"State when the application is initializing.")];
 
   if (self.isClient) {
-    self.toggleDisplayMenuItem.enabled = NO;
+    self.toggleDisplayMenuItem.hidden = YES;
     NSLog(NSLocalizedString(@"Running in %@.", comment:@"Example: Running in Client Mode."), [self modeString]);
+  } else {
+      self.toggleSleepMenuItem.hidden = YES;
+      [GVUserDefaults standardUserDefaults].toggleDisableSleep = NO;
   }
 
   self.statusItem = [KVMStatusItem statusItemWithMenu:self.menu];
@@ -185,17 +190,29 @@
   CFRelease(f2d);
   CFRelease(f2u);
   CFRelease(src);
-
-  if ([GVUserDefaults standardUserDefaults].toggleDisableSleep) {
+    
+    if (!self.isClient) {
+        return;
+    }
+    if (_sleepAssertion) {//If we already have an `_sleepAssertion` then we are already holding a power assertion.
+        return;
+    }
+    self.assertionType = nil;
+    
+    if ([GVUserDefaults standardUserDefaults].toggleDisableSleep) {
+        self.assertionType = kIOPMAssertPreventUserIdleDisplaySleep;
+    } else {
+        self.assertionType = kIOPMAssertPreventUserIdleSystemSleep;
+    }
     CFStringRef reasonForActivity = (__bridge CFStringRef)@"In Target Display Mode";
-    IOReturn success = IOPMAssertionCreateWithName(kIOPMAssertionTypeNoDisplaySleep, kIOPMAssertionLevelOn, reasonForActivity, &_sleepAssertion);
+    IOReturn success = IOPMAssertionCreateWithName(self.assertionType, kIOPMAssertionLevelOn, reasonForActivity, &_sleepAssertion);
 
     if (success == kIOReturnSuccess) {
-      NSLog(NSLocalizedString(@"Sleep disabled.", comment:nil));
+      NSLog(NSLocalizedString(@"Created power assertion. Assertion type: %@", comment:nil),self.assertionType);
     } else {
-      NSLog(NSLocalizedString(@"Error disabling sleep.", comment:nil));
+      NSLog(NSLocalizedString(@"Unable to create power assertion.", comment:nil));
     }
-  }
+  
 }
 
 - (void)disableTargetDisplayMode {
@@ -203,9 +220,9 @@
     IOReturn success = IOPMAssertionRelease(self.sleepAssertion);
 
     if (success == kIOReturnSuccess) {
-      NSLog(NSLocalizedString(@"Sleep enabled.", comment:nil));
+      NSLog(NSLocalizedString(@"Released power assertion. Assertion type: %@", comment:nil),self.assertionType);
     } else {
-      NSLog(NSLocalizedString(@"Error enabling sleep.", comment:nil));
+      NSLog(NSLocalizedString(@"Unable to release power assertion. Assertion type: %@", comment:nil),self.assertionType);
     }
   }
 }

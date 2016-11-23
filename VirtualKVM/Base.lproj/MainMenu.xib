@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -16,11 +16,9 @@
             <connections>
                 <outlet property="connectionStatusMenuItem" destination="9wc-aF-0Uk" id="wCh-Cf-J3x"/>
                 <outlet property="menu" destination="ZQU-Qi-o3m" id="mfM-jk-6Qf"/>
-                <outlet property="toggleBluetoothMenuItem" destination="5RI-2K-t5L" id="ndn-UP-Y8j"/>
-                <outlet property="toggleDisplayMenuItem" destination="Beb-Ne-3cM" id="im0-2W-Fxf"/>
                 <outlet property="toggleBluetoothMenuItem" destination="5RI-2K-t5L" id="q2q-LS-th5"/>
                 <outlet property="toggleDisplayMenuItem" destination="Beb-Ne-3cM" id="e2R-MG-QZB"/>
-                <outlet property="toggleSleepMenuItem" destination="KqC-rJ-r1W" id="nqo-ba-9h6"/>
+                <outlet property="toggleSleepMenuItem" destination="pFx-q3-0Qh" id="58O-CE-q2a"/>
             </connections>
         </customObject>
         <customObject id="Voe-Tx-rLC" customClass="KVMAppDelegate"/>
@@ -43,10 +41,10 @@
                         <action selector="toggleTargetDisplayOption:" target="lVf-z2-2S9" id="b5O-ZI-yr6"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Auto Disable Sleep" state="on" id="KqC-rJ-r1W">
+                <menuItem title="Prevent Display Sleep" state="on" id="pFx-q3-0Qh">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="toggleSleepOption:" target="lVf-z2-2S9" id="VTr-LX-B8Y"/>
+                        <action selector="toggleSleepOption:" target="lVf-z2-2S9" id="NHc-LJ-hGX"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="aOi-yt-xjg"/>

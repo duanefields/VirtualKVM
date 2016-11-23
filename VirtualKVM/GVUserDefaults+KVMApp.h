@@ -6,6 +6,7 @@
 @property (nonatomic) BOOL toggleTargetDisplayMode;
 @property (nonatomic) BOOL toggleDisableSleep;
 
+
 - (NSDictionary *)setupDefaults;
 
 @end
