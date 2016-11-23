@@ -66,6 +66,7 @@
   self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], NSLocalizedString(@"Initializing …", comment:"State when the application is initializing.")];
 
   if (self.isClient) {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidChangeScreenParametersNotification:) name:NSApplicationDidChangeScreenParametersNotification object:nil];
     self.toggleDisplayMenuItem.hidden = YES;
     NSLog(NSLocalizedString(@"Running in %@.", comment:@"Example: Running in Client Mode."), [self modeString]);
   } else {
@@ -74,6 +75,13 @@
   }
 
   self.statusItem = [KVMStatusItem statusItemWithMenu:self.menu];
+}
+
+#pragma mark - NSApplicationDidChangeScreenParametersNotification
+
+- (void)applicationDidChangeScreenParametersNotification:(NSNotification *)notifcation {
+    
+    [self updateConnectionState:[self clientIsInTargetDisplayMode]];
 }
 
 #pragma mark - Menu Actions
@@ -165,7 +173,14 @@
 }
 
 - (void)updateConnectionState:(BOOL)connected {
-  self.connectionStatusMenuItem.title = ([NSString stringWithFormat:@"%@: %@", [self modeString], connected && ([self clientIsInTargetDisplayMode]) ? NSLocalizedString(@"Connected", comment:nil) : NSLocalizedString(@"Not Connected", comment:nil)]);
+    
+    if (connected && [self clientIsInTargetDisplayMode]) {
+        self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], NSLocalizedString(@"Connected", comment:nil)];
+        [self createPowerAssertion];
+    } else {
+        self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], NSLocalizedString(@"Not Connected", comment:nil)];
+        [self disableTargetDisplayMode];
+    }
 }
 
 #pragma mark - Helpers
@@ -195,6 +210,10 @@
   CFRelease(f2u);
   CFRelease(src);
     
+}
+
+- (void)createPowerAssertion {
+    
     if (!self.isClient) {
         return;
     }
@@ -210,13 +229,13 @@
     }
     CFStringRef reasonForActivity = (__bridge CFStringRef)@"In Target Display Mode";
     IOReturn success = IOPMAssertionCreateWithName(self.assertionType, kIOPMAssertionLevelOn, reasonForActivity, &_sleepAssertion);
-
+    
     if (success == kIOReturnSuccess) {
-      NSLog(NSLocalizedString(@"Created power assertion. Assertion type: %@", comment:nil),self.assertionType);
+        NSLog(NSLocalizedString(@"Created power assertion. Assertion type: %@", comment:nil),self.assertionType);
     } else {
-      NSLog(NSLocalizedString(@"Unable to create power assertion.", comment:nil));
+        NSLog(NSLocalizedString(@"Unable to create power assertion.", comment:nil));
     }
-  
+
 }
 
 - (void)disableTargetDisplayMode {
@@ -234,6 +253,10 @@
 #pragma mark - Target Display Mode Status
 
 - (BOOL)clientIsInTargetDisplayMode {
+    
+    if (!self.isClient) {
+        return NO;
+    }
     
     NSArray *screens = [NSScreen screens];
     
