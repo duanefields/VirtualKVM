@@ -190,7 +190,9 @@
 #pragma mark - Helpers
 
 - (void)enableTargetDisplayMode {
+  NSLog(@"Attempting to enable TDM.");
   if (self.thunderboltObserver.isInTargetDisplayMode || self.clientIsInTargetDisplayMode) {
+      NSLog(@"Early return when attempting to enable TDM.");
     return;
   }
     
