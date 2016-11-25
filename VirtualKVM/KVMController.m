@@ -190,14 +190,10 @@
 #pragma mark - Helpers
 
 - (void)enableTargetDisplayMode {
-  if ([self.thunderboltObserver isInTargetDisplayMode]) {
+  if (self.thunderboltObserver.isInTargetDisplayMode || self.clientIsInTargetDisplayMode) {
     return;
   }
     
-    if ([self clientIsInTargetDisplayMode]) {
-        return;
-    }
-
   CGEventSourceRef src = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
 
   CGEventRef f2d = CGEventCreateKeyboardEvent(src, 0x90, true);
