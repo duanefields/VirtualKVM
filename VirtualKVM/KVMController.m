@@ -43,8 +43,12 @@
 - (id)init {
   self = [super init];
   self.isClient = [[KVMController machineModel] rangeOfString:@"iMac"].location == NSNotFound;
-  self.thunderboltObserver = [[KVMThunderboltObserver alloc] initWithDelegate:self];
-  [self.thunderboltObserver startObserving];
+    
+    if (!self.isClient) {
+        self.thunderboltObserver = [[KVMThunderboltObserver alloc] initWithDelegate:self];
+        [self.thunderboltObserver startObserving];
+    }
+
 
   return self;
 }
@@ -67,6 +71,7 @@
 
   if (self.isClient) {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidChangeScreenParametersNotification:) name:NSApplicationDidChangeScreenParametersNotification object:nil];
+      [self updateConnectionState:[self clientIsInTargetDisplayMode]];
     self.toggleDisplayMenuItem.hidden = YES;
     NSLog(NSLocalizedString(@"Running in %@.", comment:@"Example: Running in Client Mode."), [self modeString]);
   } else {
