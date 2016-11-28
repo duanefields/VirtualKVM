@@ -5,16 +5,13 @@
 "Connected" = "Verbunden";
 
 /* No comment provided by engineer. */
+"Created power assertion. Assertion type: %@" = "";
+
+/* No comment provided by engineer. */
 "Disabling Bluetooth." = "Bluetooth wird deaktiviert.";
 
 /* No comment provided by engineer. */
 "Enabling Bluetooth." = "Bluetooth wird aktiviert.";
-
-/* No comment provided by engineer. */
-"Error disabling sleep." = "Fehler beim Deaktivieren des Ruhezustands.";
-
-/* No comment provided by engineer. */
-"Error enabling sleep." = "Fehler beim Aktivieren des Ruhezustands.";
 
 /* No comment provided by engineer. */
 "Host Mode" = "Host-Modus";
@@ -30,12 +27,6 @@
 
 /* No comment provided by engineer. */
 "Running on %@." = "Läuft auf einem %@.";
-
-/* No comment provided by engineer. */
-"Sleep disabled." = "Ruhezustand deaktiviert.";
-
-/* No comment provided by engineer. */
-"Sleep enabled." = "Ruhezustand aktiviert.";
 
 /* No comment provided by engineer. */
 "Thunderbolt device connected." = "Thunderbolt-Gerät verbunden.";
