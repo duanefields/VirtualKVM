@@ -318,8 +318,10 @@
 - (NSString *)screenNameForDisplay:(CGDirectDisplayID)displayID {
     
     NSString *screenName = nil;
-    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     NSDictionary *deviceInfo = (__bridge NSDictionary *)IODisplayCreateInfoDictionary(CGDisplayIOServicePort(displayID), kIODisplayOnlyPreferredName);
+    #pragma clang diagnostic pop
     NSDictionary *localizedNames = [deviceInfo objectForKey:[NSString stringWithUTF8String:kDisplayProductName]];
     
     if ([localizedNames count] > 0) {
