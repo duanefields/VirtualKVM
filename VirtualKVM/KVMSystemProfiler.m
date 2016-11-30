@@ -14,8 +14,14 @@
 
   NSPipe *out = [NSPipe pipe];
   [task setStandardOutput:out];
-  [task launch];
+    @try {
+        
+        [task launch];
 
+    } @catch (NSException *exception) {
+        NSLog(@"Caught exception: %@",exception);
+        return nil;
+    }
   NSFileHandle *read = [out fileHandleForReading];
   NSData *dataRead = [read readDataToEndOfFile];
 
