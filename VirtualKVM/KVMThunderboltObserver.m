@@ -3,12 +3,15 @@
 
 static NSTimeInterval const kTimeInterval = 2.0;
 
+typedef void (^DispatchRepeatCompletionHandler)(BOOL repeat);
+typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHandler);
 @interface KVMThunderboltObserver ()
 
-@property (nonatomic, strong) NSTimer *timer;
 @property BOOL initialized;
 @property BOOL macConnected;
 @property NSArray *systemProfilerInformation;
+@property (nonatomic, copy) DispatchRepeatBlock repeatBlock;
+@property (nonatomic, assign) BOOL shouldRepeat;
 
 @end
 
@@ -27,17 +30,41 @@ static NSTimeInterval const kTimeInterval = 2.0;
 }
 
 - (void)startObserving {
-  if (!self.timer || ![self.timer isValid]) {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:kTimeInterval target:self selector:@selector(timerNotification:) userInfo:nil repeats:YES];
-  }
+    if (!self.repeatBlock) {
+       [self registerRepeatBlock];
+    }
 }
 
+- (void)registerRepeatBlock {
+    
+    __weak typeof(self) weakSelf = self;
+    self.shouldRepeat = YES;
+    self.repeatBlock = ^(DispatchRepeatCompletionHandler completionHandler) {
+        typeof(self) strongSelf = weakSelf;
+        [strongSelf checkForThunderboltConnection];
+        completionHandler(strongSelf.shouldRepeat);
+    };
+    
+    [self dispatchRepeatWithTimeInterval:kTimeInterval completionHandler:self.repeatBlock];
+}
 - (void)stopObserving {
-  [self.timer invalidate];
-  self.timer = nil;
+    self.shouldRepeat = NO;
+    self.repeatBlock = nil;
 }
 
 #pragma mark - Private Interface
+
+- (void)dispatchRepeatWithTimeInterval:(NSTimeInterval)interval completionHandler:(DispatchRepeatBlock)completionHandler {
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(interval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        completionHandler(^(BOOL repeat) {
+            if (repeat) {
+            return [self dispatchRepeatWithTimeInterval:interval completionHandler:completionHandler];
+            }
+        });
+    });
+    
+}
 
 - (void)updateSystemProfilerInformation {
   self.systemProfilerInformation = [KVMSystemProfiler dataTypes:@[@"SPDisplaysDataType", @"SPThunderboltDataType"]];
@@ -59,7 +86,7 @@ static NSTimeInterval const kTimeInterval = 2.0;
   return self.systemProfilerInformation[1];
 }
 
-- (void)timerNotification:(NSNotification *)aNotification {
+- (void)checkForThunderboltConnection {
   [self updateSystemProfilerInformation];
   
   BOOL previouslyConnected = self.macConnected;

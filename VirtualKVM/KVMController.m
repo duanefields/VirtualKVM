@@ -43,8 +43,12 @@
 - (id)init {
   self = [super init];
   self.isClient = [[KVMController machineModel] rangeOfString:@"iMac"].location == NSNotFound;
-  self.thunderboltObserver = [[KVMThunderboltObserver alloc] initWithDelegate:self];
-  [self.thunderboltObserver startObserving];
+    
+    if (!self.isClient) {
+        self.thunderboltObserver = [[KVMThunderboltObserver alloc] initWithDelegate:self];
+        [self.thunderboltObserver startObserving];
+    }
+
 
   return self;
 }
@@ -66,6 +70,8 @@
   self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], NSLocalizedString(@"Initializing …", comment:"State when the application is initializing.")];
 
   if (self.isClient) {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidChangeScreenParametersNotification:) name:NSApplicationDidChangeScreenParametersNotification object:nil];
+      [self updateConnectionState:[self clientIsInTargetDisplayMode]];
     self.toggleDisplayMenuItem.hidden = YES;
     NSLog(NSLocalizedString(@"Running in %@.", comment:@"Example: Running in Client Mode."), [self modeString]);
   } else {
@@ -74,6 +80,13 @@
   }
 
   self.statusItem = [KVMStatusItem statusItemWithMenu:self.menu];
+}
+
+#pragma mark - NSApplicationDidChangeScreenParametersNotification
+
+- (void)applicationDidChangeScreenParametersNotification:(NSNotification *)notifcation {
+    
+    [self updateConnectionState:[self clientIsInTargetDisplayMode]];
 }
 
 #pragma mark - Menu Actions
@@ -165,16 +178,29 @@
 }
 
 - (void)updateConnectionState:(BOOL)connected {
-  self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], connected ? NSLocalizedString(@"Connected", comment:nil) : NSLocalizedString(@"Not Connected", comment:nil)];
+    
+    if (!self.isClient) {
+        self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], NSLocalizedString(@"Ready to Accept Connections", comment:nil)];
+        return;
+    }
+    if (connected && [self clientIsInTargetDisplayMode]) {
+        self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], NSLocalizedString(@"Connected", comment:nil)];
+        [self createPowerAssertion];
+    } else {
+        self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], NSLocalizedString(@"Not Connected", comment:nil)];
+        [self disableTargetDisplayMode];
+    }
 }
 
 #pragma mark - Helpers
 
 - (void)enableTargetDisplayMode {
-  if ([self.thunderboltObserver isInTargetDisplayMode]) {
+  NSLog(@"Attempting to enable TDM.");
+  if (self.thunderboltObserver.isInTargetDisplayMode || self.clientIsInTargetDisplayMode) {
+      NSLog(@"Early return when attempting to enable TDM.");
     return;
   }
-
+    
   CGEventSourceRef src = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
 
   CGEventRef f2d = CGEventCreateKeyboardEvent(src, 0x90, true);
@@ -191,6 +217,10 @@
   CFRelease(f2u);
   CFRelease(src);
     
+}
+
+- (void)createPowerAssertion {
+    
     if (!self.isClient) {
         return;
     }
@@ -206,6 +236,13 @@
     }
     CFStringRef reasonForActivity = (__bridge CFStringRef)@"In Target Display Mode";
     IOReturn success = IOPMAssertionCreateWithName(self.assertionType, kIOPMAssertionLevelOn, reasonForActivity, &_sleepAssertion);
+    
+    if (success == kIOReturnSuccess) {
+        NSLog(NSLocalizedString(@"Created power assertion. Assertion type: %@", comment:nil),self.assertionType);
+    } else {
+        NSLog(NSLocalizedString(@"Unable to create power assertion.", comment:nil));
+    }
+
 
     if (success == kIOReturnSuccess) {
       NSLog(NSLocalizedString(@"Created power assertion. Assertion type: %@", comment:nil),self.assertionType);
@@ -225,6 +262,73 @@
       NSLog(NSLocalizedString(@"Unable to release power assertion. Assertion type: %@", comment:nil),self.assertionType);
     }
   }
+}
+
+#pragma mark - Target Display Mode Status
+
+- (BOOL)clientIsInTargetDisplayMode {
+    
+    if (!self.isClient) {
+        return NO;
+    }
+    //Will have multiple objects if the the MacBook is not in clamshell mode. However, when in clamshell mode `screens` should contain only contain 1 object, this object will be the iMac's screen.
+    NSArray *screens = [NSScreen screens];
+    
+    if (screens.count == 0) {
+        return NO;
+    }
+    
+    NSMutableArray <NSNumber *> *screenNumbers = [NSMutableArray new];
+    for (NSScreen *screen in screens) {
+        if (screen.deviceDescription[@"NSScreenNumber"]) {
+            [screenNumbers addObject:@([screen.deviceDescription[@"NSScreenNumber"] unsignedIntValue])];
+        }
+    }
+    
+    if (screenNumbers.count == 0) {
+        return NO;
+    }
+    
+    NSMutableArray <NSString *> *localizedScreenNames = [NSMutableArray new];
+   
+    for (NSNumber *screenNumber in screenNumbers) {
+        
+        NSString *localizedScreenName = [self screenNameForDisplay:screenNumber.unsignedIntValue];
+        if (localizedScreenName && localizedScreenName.length != 0) {
+            [localizedScreenNames addObject:localizedScreenName];
+           //For testing: [localizedScreenNames addObject:@"iMac"];
+        }
+    }
+    
+    if (localizedScreenNames.count == 0) {
+        return NO;
+    }
+    
+    for (NSString *localizedScreenName in localizedScreenNames) {
+        
+        if ([localizedScreenName isEqualToString:@"iMac"]) {
+            return YES;
+            break;
+        }
+    }
+    
+    return NO;
+}
+
+- (NSString *)screenNameForDisplay:(CGDirectDisplayID)displayID {
+    
+    NSString *screenName = nil;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    NSDictionary *deviceInfo = (__bridge NSDictionary *)IODisplayCreateInfoDictionary(CGDisplayIOServicePort(displayID), kIODisplayOnlyPreferredName);
+    #pragma clang diagnostic pop
+    NSDictionary *localizedNames = [deviceInfo objectForKey:[NSString stringWithUTF8String:kDisplayProductName]];
+    
+    if ([localizedNames count] > 0) {
+        screenName = [localizedNames objectForKey:[[localizedNames allKeys] objectAtIndex:0]];
+    }
+    
+    return screenName;
 }
 
 @end
