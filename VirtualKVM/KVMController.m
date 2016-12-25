@@ -43,9 +43,13 @@
 - (id)init {
   self = [super init];
   self.isClient = [[KVMController machineModel] rangeOfString:@"iMac"].location == NSNotFound;
-  self.thunderboltObserver = [[KVMThunderboltObserver alloc] initWithDelegate:self];
-  [self.thunderboltObserver startObserving];
     
+    if (!self.isClient) {
+        self.thunderboltObserver = [[KVMThunderboltObserver alloc] initWithDelegate:self];
+        [self.thunderboltObserver startObserving];
+    }
+
+
   return self;
 }
 
