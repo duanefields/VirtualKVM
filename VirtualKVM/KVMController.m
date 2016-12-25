@@ -224,7 +224,7 @@
     if (!self.isClient) {
         return;
     }
-    if (_sleepAssertion) {//If we already have an `_sleepAssertion` then we are already holding a power assertion.
+    if (self.sleepAssertion) {//If we already have an `_sleepAssertion` then we are already holding a power assertion.
         return;
     }
     self.assertionType = nil;
@@ -250,6 +250,7 @@
     IOReturn success = IOPMAssertionRelease(self.sleepAssertion);
 
     if (success == kIOReturnSuccess) {
+      self.sleepAssertion = kIOPMNullAssertionID;
       NSLog(NSLocalizedString(@"Released power assertion. Assertion type: %@", comment:nil),self.assertionType);
     } else {
       NSLog(NSLocalizedString(@"Unable to release power assertion. Assertion type: %@", comment:nil),self.assertionType);
