@@ -242,13 +242,6 @@
     } else {
         NSLog(NSLocalizedString(@"Unable to create power assertion.", comment:nil));
     }
-
-
-    if (success == kIOReturnSuccess) {
-      NSLog(NSLocalizedString(@"Created power assertion. Assertion type: %@", comment:nil),self.assertionType);
-    } else {
-      NSLog(NSLocalizedString(@"Unable to create power assertion.", comment:nil));
-    }
   
 }
 
