@@ -179,7 +179,7 @@
         self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], NSLocalizedString(@"Ready to Accept Connections", comment:nil)];
         return;
     }
-    if (connected) {
+    if (connected && [self clientIsInTargetDisplayMode]) {
         self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], NSLocalizedString(@"Connected", comment:nil)];
         [self createPowerAssertion];
     } else {
