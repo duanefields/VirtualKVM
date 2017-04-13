@@ -12,7 +12,7 @@ typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHa
 @property NSArray *systemProfilerInformation;
 @property (nonatomic, copy) DispatchRepeatBlock repeatBlock;
 @property (nonatomic, assign) BOOL shouldRepeat;
-
+@property (nonatomic, assign, getter=isThunderboltEnabled) BOOL thunderboltEnabled;
 @end
 
 
@@ -33,6 +33,33 @@ typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHa
     if (!self.repeatBlock) {
        [self registerRepeatBlock];
     }
+}
+
+// Determines if the host has thunderbolt ports
+- (BOOL)isThunderboltEnabled {
+    
+    NSArray *profilerResponse = [KVMSystemProfiler dataType:@"SPThunderboltDataType"];
+    
+    if (profilerResponse.count >= 1) {
+        
+        NSDictionary *info = profilerResponse[0];
+        if (info.count == 0) {
+            return NO;
+        }
+        NSArray *items = info[@"_items"];
+        
+        if (items.count == 0) {
+            return NO;
+        }
+        NSString *busName = items[0][@"_name"];
+        
+        if ([busName isEqualToString:@"thunderbolt_bus"]) {
+            return YES;
+        }
+        return NO;
+    }
+    
+    return NO;
 }
 
 - (void)registerRepeatBlock {
@@ -90,7 +117,13 @@ typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHa
   [self updateSystemProfilerInformation];
   
   BOOL previouslyConnected = self.macConnected;
-  self.macConnected = [self macConnectedViaThunderbolt] || [self macConnectedViaDisplayPort];
+    
+  if (self.isThunderboltEnabled) {
+      self.macConnected = [self macConnectedViaThunderbolt];
+  } else {
+    //Starting on macOS 10.1.4 macConnectedViaDisplayPort will return `YES` on iMac's with thunderbolt ports and therefore cause the application to always think that it is in TDM.
+    self.macConnected = [self macConnectedViaDisplayPort];
+  }
   BOOL changed = self.macConnected != previouslyConnected;
 
   if (changed) {
