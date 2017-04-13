@@ -5,15 +5,6 @@
 "Connected" = "Verbunden";
 
 /* No comment provided by engineer. */
-"Created power assertion. Assertion type: %@" = "";
-
-/* No comment provided by engineer. */
-"Disabling Bluetooth." = "Bluetooth wird deaktiviert.";
-
-/* No comment provided by engineer. */
-"Enabling Bluetooth." = "Bluetooth wird aktiviert.";
-
-/* No comment provided by engineer. */
 "Host Mode" = "Host-Modus";
 
 /* State when the application is initializing. */
@@ -21,16 +12,4 @@
 
 /* No comment provided by engineer. */
 "Not Connected" = "Nicht verbunden";
-
-/* Example: Running in Client Mode. */
-"Running in %@." = "Läuft im %@.";
-
-/* No comment provided by engineer. */
-"Running on %@." = "Läuft auf einem %@.";
-
-/* No comment provided by engineer. */
-"Thunderbolt device connected." = "Thunderbolt-Gerät verbunden.";
-
-/* No comment provided by engineer. */
-"Thunderbolt device disconnected." = "Thunderbolt-Gerät getrennt.";
 
