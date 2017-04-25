@@ -38,7 +38,7 @@ typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHa
 // Determines if the host has thunderbolt ports
 - (BOOL)isThunderboltEnabled {
     
-    NSArray *profilerResponse = [KVMSystemProfiler dataType:@"SPThunderboltDataType"];
+    NSArray *profilerResponse = [self systemProfilerThunderboltInfo];
     
     if (profilerResponse.count >= 1) {
         
