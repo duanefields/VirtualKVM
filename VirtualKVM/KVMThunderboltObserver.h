@@ -6,6 +6,7 @@
 
 @property (nonatomic, strong) id<KVMThunderBoltObserverDelegate> delegate;
 @property (readonly) BOOL macConnected;
+@property (nonatomic, assign, readonly, getter=isThunderboltEnabled) BOOL thunderboltEnabled;
 
 - (id)initWithDelegate:(id<KVMThunderBoltObserverDelegate>)delegate;
 - (void)startObserving;
