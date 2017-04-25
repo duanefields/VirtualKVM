@@ -149,6 +149,8 @@
       [[KVMBluetoothController sharedController] disableBluetooth];
     }
   }
+    
+  [self enableBluetooth];
 }
 
 - (void)thunderboltObserverDeviceDisconnected:(KVMThunderboltObserver *)observer {
@@ -158,14 +160,8 @@
   if ([GVUserDefaults standardUserDefaults].toggleTargetDisplayMode) {
     [self disableTargetDisplayMode];
   }
-
-  if ([GVUserDefaults standardUserDefaults].toggleBluetooth) {
-    if (self.isClient) {
-      [[KVMBluetoothController sharedController] disableBluetooth];
-    } else {
-      [[KVMBluetoothController sharedController] enableBluetooth];
-    }
-  }
+    
+  [self disableBluetooth];
 }
 
 - (void)thunderboltObserver:(KVMThunderboltObserver *)observer isInitiallyConnected:(BOOL)connected {
@@ -177,7 +173,28 @@
     }
   }
 }
+- (void)enableBluetooth {
+    
+    if ([GVUserDefaults standardUserDefaults].toggleBluetooth) {
+        if (self.isClient) {
+            [[KVMBluetoothController sharedController] enableBluetooth];
+        } else {
+            [[KVMBluetoothController sharedController] disableBluetooth];
+        }
+    }
+}
 
+- (void)disableBluetooth {
+    
+    if ([GVUserDefaults standardUserDefaults].toggleBluetooth) {
+        if (self.isClient) {
+            [[KVMBluetoothController sharedController] disableBluetooth];
+        } else {
+            [[KVMBluetoothController sharedController] enableBluetooth];
+        }
+    }
+ 
+}
 - (void)updateConnectionState:(BOOL)connected {
     
     if (!self.isClient) {
@@ -186,9 +203,11 @@
     }
     if (connected && [self clientIsInTargetDisplayMode]) {
         self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], NSLocalizedString(@"Connected", comment:nil)];
+        [self enableBluetooth];
         [self createPowerAssertion];
     } else {
         self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], NSLocalizedString(@"Not Connected", comment:nil)];
+        [self disableBluetooth];
         [self disableTargetDisplayMode];
     }
 }
