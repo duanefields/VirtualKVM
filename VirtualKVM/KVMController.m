@@ -33,7 +33,7 @@
     sysctlbyname("hw.model", model, &len, NULL, 0);
     NSString *model_ns = [NSString stringWithUTF8String:model];
     free(model);
-    NSLog(NSLocalizedString(@"Running on %@.", comment:nil), model_ns);
+    NSLog(@"Running on %@.", model_ns);
     return model_ns;
   }
 
@@ -70,13 +70,14 @@
   self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], NSLocalizedString(@"Initializing …", comment:"State when the application is initializing.")];
 
   if (self.isClient) {
+    NSLog(@"Running in client mode.");
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidChangeScreenParametersNotification:) name:NSApplicationDidChangeScreenParametersNotification object:nil];
-      [self updateConnectionState:[self clientIsInTargetDisplayMode]];
+    [self updateConnectionState:[self clientIsInTargetDisplayMode]];
     self.toggleDisplayMenuItem.hidden = YES;
-    NSLog(NSLocalizedString(@"Running in %@.", comment:@"Example: Running in Client Mode."), [self modeString]);
   } else {
-      self.toggleSleepMenuItem.hidden = YES;
-      [GVUserDefaults standardUserDefaults].toggleDisableSleep = NO;
+    NSLog(@"Running in host mode.");
+    self.toggleSleepMenuItem.hidden = YES;
+    [GVUserDefaults standardUserDefaults].toggleDisableSleep = NO;
   }
 
   self.statusItem = [KVMStatusItem statusItemWithMenu:self.menu];
@@ -134,7 +135,7 @@
 #pragma mark - KVMThunderboltObserverDelegate
 
 - (void)thunderboltObserverDeviceConnected:(KVMThunderboltObserver *)observer {
-  NSLog(NSLocalizedString(@"Thunderbolt device connected.", comment:nil));
+  NSLog(@"Thunderbolt device connected.");
   [self updateConnectionState:YES];
 
   if ([GVUserDefaults standardUserDefaults].toggleTargetDisplayMode) {
@@ -148,23 +149,19 @@
       [[KVMBluetoothController sharedController] disableBluetooth];
     }
   }
+    
+  [self enableBluetooth];
 }
 
 - (void)thunderboltObserverDeviceDisconnected:(KVMThunderboltObserver *)observer {
-  NSLog(NSLocalizedString(@"Thunderbolt device disconnected.", comment:nil));
+  NSLog(@"Thunderbolt device disconnected.");
   [self updateConnectionState:NO];
 
   if ([GVUserDefaults standardUserDefaults].toggleTargetDisplayMode) {
     [self disableTargetDisplayMode];
   }
-
-  if ([GVUserDefaults standardUserDefaults].toggleBluetooth) {
-    if (self.isClient) {
-      [[KVMBluetoothController sharedController] disableBluetooth];
-    } else {
-      [[KVMBluetoothController sharedController] enableBluetooth];
-    }
-  }
+    
+  [self disableBluetooth];
 }
 
 - (void)thunderboltObserver:(KVMThunderboltObserver *)observer isInitiallyConnected:(BOOL)connected {
@@ -176,7 +173,28 @@
     }
   }
 }
+- (void)enableBluetooth {
+    
+    if ([GVUserDefaults standardUserDefaults].toggleBluetooth) {
+        if (self.isClient) {
+            [[KVMBluetoothController sharedController] enableBluetooth];
+        } else {
+            [[KVMBluetoothController sharedController] disableBluetooth];
+        }
+    }
+}
 
+- (void)disableBluetooth {
+    
+    if ([GVUserDefaults standardUserDefaults].toggleBluetooth) {
+        if (self.isClient) {
+            [[KVMBluetoothController sharedController] disableBluetooth];
+        } else {
+            [[KVMBluetoothController sharedController] enableBluetooth];
+        }
+    }
+ 
+}
 - (void)updateConnectionState:(BOOL)connected {
     
     if (!self.isClient) {
@@ -185,9 +203,11 @@
     }
     if (connected && [self clientIsInTargetDisplayMode]) {
         self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], NSLocalizedString(@"Connected", comment:nil)];
+        [self enableBluetooth];
         [self createPowerAssertion];
     } else {
         self.connectionStatusMenuItem.title = [NSString stringWithFormat:@"%@: %@", [self modeString], NSLocalizedString(@"Not Connected", comment:nil)];
+        [self disableBluetooth];
         [self disableTargetDisplayMode];
     }
 }
@@ -238,10 +258,10 @@
     IOReturn success = IOPMAssertionCreateWithName(self.assertionType, kIOPMAssertionLevelOn, reasonForActivity, &_sleepAssertion);
     
     if (success == kIOReturnSuccess) {
-        NSLog(NSLocalizedString(@"Created power assertion. Assertion type: %@", comment:nil),self.assertionType);
+        NSLog(@"Created power assertion. Assertion type: %@", self.assertionType);
     } else {
-        NSLog(NSLocalizedString(@"Unable to create power assertion.", comment:nil));
-    }
+        NSLog(@"Unable to create power assertion.");
+    } 
   
 }
 
@@ -251,9 +271,9 @@
 
     if (success == kIOReturnSuccess) {
       self.sleepAssertion = kIOPMNullAssertionID;
-      NSLog(NSLocalizedString(@"Released power assertion. Assertion type: %@", comment:nil),self.assertionType);
+      NSLog(@"Released power assertion. Assertion type: %@", self.assertionType);
     } else {
-      NSLog(NSLocalizedString(@"Unable to release power assertion. Assertion type: %@", comment:nil),self.assertionType);
+      NSLog(@"Unable to release power assertion. Assertion type: %@", self.assertionType);
     }
   }
 }
