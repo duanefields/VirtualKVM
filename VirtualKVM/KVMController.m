@@ -261,7 +261,7 @@
         NSLog(@"Created power assertion. Assertion type: %@", self.assertionType);
     } else {
         NSLog(@"Unable to create power assertion.");
-    }
+    } 
   
 }
 
