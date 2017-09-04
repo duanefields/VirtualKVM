@@ -38,17 +38,12 @@ typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHa
 // Determines if the host has thunderbolt ports
 - (BOOL)isThunderboltEnabled {
     
-    NSArray *profilerResponse = [self systemProfilerThunderboltInfo];
+    NSDictionary *profilerResponse = [self systemProfilerThunderboltInfo];
     
     if (profilerResponse.count >= 1) {
+        NSArray *items = profilerResponse[@"_items"];
         
-        NSDictionary *info = profilerResponse[0];
-        if (info.count == 0) {
-            return NO;
-        }
-        NSArray *items = info[@"_items"];
-        
-        if (items.count == 0) {
+        if (!items || items.count == 0) {
             return NO;
         }
         NSString *busName = items[0][@"_name"];
@@ -61,6 +56,7 @@ typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHa
     
     return NO;
 }
+
 
 - (void)registerRepeatBlock {
     
