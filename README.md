@@ -1,6 +1,3 @@
-Please note - I upgraded to a Retina iMac, which doesn't support target display mode, so I have no way to
-test or make changes to this application going forward, so consider this unmaintained.
-
 VirtualKVM
 ==========
 
