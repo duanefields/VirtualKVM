@@ -6,5 +6,13 @@
         <description>Most recent changes with links to updates.</description>
         <language>en</language>
         
+        <item>
+        <title>123</title>
+        <sparkle:minimumSystemVersion>10.9</sparkle:minimumSystemVersion>
+        <sparkle:releaseNotesLink>https://github.com/duanefields/VirtualKVM/raw/master/Releases/CHANGELOG.html</sparkle:releaseNotesLink>
+        <pubDate>Mon, 06 Nov 2017 09:41:26 +0000</pubDate>
+        <enclosure url="https://github.com/duanefields/VirtualKVM/raw/master/Releases/v1_2_3.zip" length="3777525" type="application/octet-stream" sparkle:version="123" sparkle:shortVersionString="1.2.3"/>
+        </item>
+        
     </channel>
 </rss>
