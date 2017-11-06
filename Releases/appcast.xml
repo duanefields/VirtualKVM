@@ -8,8 +8,19 @@
         
         <item>
         <title>123</title>
+        <description><![CDATA[
+							<ul>
+								<h3>VirtualKVM 1.2.3</h3>
+								
+								<p><strong>Released: Nov 06, 2017</strong></p>
+								
+								<ul>
+								<li>Add Sparkle updating </li>
+								<li>Numerous bug fixes and improvements (since v1.1.2)</li>
+								</ul>
+							</ul>
+						]]></description>
         <sparkle:minimumSystemVersion>10.9</sparkle:minimumSystemVersion>
-        <sparkle:releaseNotesLink>https://github.com/duanefields/VirtualKVM/raw/master/Releases/CHANGELOG.html</sparkle:releaseNotesLink>
         <pubDate>Mon, 06 Nov 2017 09:41:26 +0000</pubDate>
         <enclosure url="https://github.com/duanefields/VirtualKVM/raw/master/Releases/v1_2_3.zip" length="3777525" type="application/octet-stream" sparkle:version="123" sparkle:shortVersionString="1.2.3"/>
         </item>
