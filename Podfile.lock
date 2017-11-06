@@ -1,12 +1,15 @@
 PODS:
   - GVUserDefaults (1.0.2)
+  - Sparkle (1.18.1)
 
 DEPENDENCIES:
   - GVUserDefaults
+  - Sparkle
 
 SPEC CHECKSUMS:
   GVUserDefaults: 52d48cf8ba578b40a1a76312b196dfc9134ba36a
+  Sparkle: 06ea33170007c5937ee54da481b4481af98fac79
 
-PODFILE CHECKSUM: 8fef11b0ba22404411605ea0b0978cedd3fda2d7
+PODFILE CHECKSUM: b008d844f4ab0f3d8de00788eaa63a46c7c44e29
 
 COCOAPODS: 1.2.0

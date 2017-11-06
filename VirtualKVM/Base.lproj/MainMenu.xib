@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -23,6 +23,7 @@
         </customObject>
         <customObject id="Voe-Tx-rLC" customClass="KVMAppDelegate"/>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
+        <customObject id="p4a-DV-d6K" customClass="SUUpdater"/>
         <menu id="ZQU-Qi-o3m">
             <items>
                 <menuItem title="Connection: Unknown" enabled="NO" id="9wc-aF-0Uk">
@@ -48,6 +49,12 @@
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="aOi-yt-xjg"/>
+                <menuItem title="Check for updates..." id="6tr-dc-SKT">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="checkForUpdates:" target="p4a-DV-d6K" id="7jW-jm-RwG"/>
+                    </connections>
+                </menuItem>
                 <menuItem title="Quit Virtual KVM" id="o6B-8G-HZL">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
