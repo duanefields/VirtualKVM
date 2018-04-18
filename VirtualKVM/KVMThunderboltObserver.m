@@ -25,14 +25,37 @@ typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHa
   self.delegate = delegate;
   self.macConnected = NO;
   self.systemProfilerInformation = nil;
-
   return self;
+}
+
+- (void)dealloc {
+    [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self name:NSWorkspaceDidWakeNotification object:nil];
+    [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self name:NSWorkspaceScreensDidWakeNotification object:nil];
 }
 
 - (void)startObserving {
     if (!self.repeatBlock) {
        [self registerRepeatBlock];
     }
+    
+    [[NSWorkspace sharedWorkspace].notificationCenter addObserver:self selector:@selector(didWake) name:NSWorkspaceDidWakeNotification object:nil];
+    [[NSWorkspace sharedWorkspace].notificationCenter addObserver:self selector:@selector(screenDidWake) name:NSWorkspaceScreensDidWakeNotification object:nil];
+}
+
+- (void)screenDidWake {
+    if (!self.repeatBlock) {
+        return;
+    }
+    
+    [self checkForThunderboltConnection];
+}
+
+- (void)didWake {
+    if (!self.repeatBlock) {
+        return;
+    }
+    
+    [self checkForThunderboltConnection];
 }
 
 // Determines if the host has thunderbolt ports
@@ -73,6 +96,9 @@ typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHa
 - (void)stopObserving {
     self.shouldRepeat = NO;
     self.repeatBlock = nil;
+    
+    [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self name:NSWorkspaceDidWakeNotification object:nil];
+    [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self name:NSWorkspaceScreensDidWakeNotification object:nil];
 }
 
 #pragma mark - Private Interface
