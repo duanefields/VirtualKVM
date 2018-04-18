@@ -1,7 +1,7 @@
 #import "KVMThunderboltObserver.h"
 #import "KVMSystemProfiler.h"
 
-static NSTimeInterval const kTimeInterval = 2.0;
+static NSTimeInterval const kTimeInterval = 0.5;
 
 typedef void (^DispatchRepeatCompletionHandler)(BOOL repeat);
 typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHandler);
