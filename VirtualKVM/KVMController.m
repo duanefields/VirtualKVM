@@ -227,6 +227,8 @@
     return;
   }
     
+  [self pressShiftKey];
+    
   CGEventSourceRef src = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
 
   CGEventRef f2d = CGEventCreateKeyboardEvent(src, 0x90, true);
@@ -242,7 +244,21 @@
   CFRelease(f2d);
   CFRelease(f2u);
   CFRelease(src);
+
+}
+
+- (void)pressShiftKey {
     
+    CGEventSourceRef source = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
+    CGEventRef shiftDown = CGEventCreateKeyboardEvent(source, (CGKeyCode)56, YES);
+    CGEventRef shiftUp = CGEventCreateKeyboardEvent(source, (CGKeyCode)56, NO);
+    
+    CGEventPost(kCGAnnotatedSessionEventTap, shiftDown);
+    CGEventPost(kCGAnnotatedSessionEventTap, shiftUp);
+    
+    CFRelease(shiftUp);
+    CFRelease(shiftDown);
+    CFRelease(source);
 }
 
 - (void)createPowerAssertion {
