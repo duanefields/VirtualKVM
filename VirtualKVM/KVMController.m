@@ -11,6 +11,7 @@
 @property (nonatomic, strong) KVMThunderboltObserver *thunderboltObserver;
 @property (nonatomic, strong) NSStatusItem *statusItem;
 @property (nonatomic) IOPMAssertionID sleepAssertion;
+@property (nonatomic, strong) id clientUserActivity;
 @property (nonatomic) BOOL isClient;
 
 @property (nonatomic) IBOutlet NSMenu *menu;
@@ -47,10 +48,15 @@
     if (!self.isClient) {
         self.thunderboltObserver = [[KVMThunderboltObserver alloc] initWithDelegate:self];
         [self.thunderboltObserver startObserving];
+        
+        self.clientUserActivity = [[NSProcessInfo processInfo]beginActivityWithOptions:NSActivityIdleSystemSleepDisabled reason:@"Checking for connections"];
     }
 
-
   return self;
+}
+
+- (void)dealloc {
+    [[NSProcessInfo processInfo]endActivity:self.clientUserActivity];
 }
 
 - (NSString *)modeString {
