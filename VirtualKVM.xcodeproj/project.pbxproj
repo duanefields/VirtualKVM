@@ -130,6 +130,7 @@
 				47672943191BBD7200726705 /* Products */,
 				36829DEFAD624FCB6420C463 /* Pods */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
 		};
 		47672943191BBD7200726705 /* Products */ = {
