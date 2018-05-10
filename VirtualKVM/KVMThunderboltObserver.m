@@ -225,29 +225,9 @@ typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHa
 }
 
 - (BOOL)isInTargetDisplayMode {
-    
   NSString *assertionString = [self systemAssertionInfomation];
     //The Display Port daemon. If this isn't holding an assertion then the iMac isn't in TDM.
-  if (![assertionString containsString:@"com.apple.dpd"]) {
-        return NO;
-  }
-  NSDictionary *plist = [self systemProfilerDisplayInfo];
-
-  NSArray *gpus = plist[@"_items"];
-
-  for (NSDictionary *gpu in gpus) {
-    NSArray *displays = gpu[@"spdisplays_ndrvs"];
-
-    for (NSDictionary *display in displays) {
-      if ([display[@"_name"] isEqualToString:@"iMac"] && [display[@"spdisplays_builtin"] isEqualToString:@"spdisplays_yes"]) {
-        if (display[@"_spdisplays_displayport_device"] == nil) {
-          return YES;
-        }
-      }
-    }
-  }
-
-  return NO;
+  return [assertionString containsString:@"com.apple.dpd"];
 }
 
 - (BOOL)macConnectedViaThunderbolt {
