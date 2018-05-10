@@ -244,7 +244,11 @@
   CFRelease(f2d);
   CFRelease(f2u);
   CFRelease(src);
-
+    
+  if (!self.thunderboltObserver.isInTargetDisplayMode) {
+        //TDM wasn't enabled try again
+        [self enableTargetDisplayMode];
+     }
 }
 
 - (void)pressShiftKey {
