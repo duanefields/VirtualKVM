@@ -74,7 +74,7 @@
 		4767297C191BF05400726705 /* KVMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVMController.h; sourceTree = "<group>"; };
 		4767297D191BF05400726705 /* KVMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KVMController.m; sourceTree = "<group>"; };
 		4767297F191C022900726705 /* KVMThunderboltObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVMThunderboltObserver.h; sourceTree = "<group>"; };
-		47672980191C022900726705 /* KVMThunderboltObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KVMThunderboltObserver.m; sourceTree = "<group>"; };
+		47672980191C022900726705 /* KVMThunderboltObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = KVMThunderboltObserver.m; sourceTree = "<group>"; };
 		47E96802191C3A17006531E1 /* KVMBluetoothController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVMBluetoothController.h; sourceTree = "<group>"; };
 		47E96803191C3A17006531E1 /* KVMBluetoothController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KVMBluetoothController.m; sourceTree = "<group>"; };
 		47E96805191C3AFB006531E1 /* IOBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOBluetooth.framework; path = System/Library/Frameworks/IOBluetooth.framework; sourceTree = SDKROOT; };
