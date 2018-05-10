@@ -127,6 +127,30 @@ typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHa
   return self.systemProfilerInformation[0];
 }
 
+- (NSString *)systemAssertionInfomation {
+    
+    NSTask *task = [[NSTask alloc] init];
+    [task setLaunchPath:@"/usr/bin/pmset"];
+    [task setArguments:@[@"-g", @"assertions"]];
+    
+    NSPipe *out = [NSPipe pipe];
+    [task setStandardOutput:out];
+    
+    @try {
+        [task launch];
+    } @catch (NSException *exception) {
+        NSLog(@"Caught exception: %@", exception);
+        return nil;
+    }
+    
+    NSFileHandle *read = [out fileHandleForReading];
+    NSData *dataRead = [read readDataToEndOfFile];
+    
+    NSString *string = [[NSString alloc]initWithData:dataRead encoding:NSUTF8StringEncoding];
+    
+    return string;
+}
+
 - (NSDictionary *)systemProfilerThunderboltInfo {
   if (self.systemProfilerInformation == nil) {
     [self updateSystemProfilerInformation];
@@ -201,6 +225,12 @@ typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHa
 }
 
 - (BOOL)isInTargetDisplayMode {
+    
+  NSString *assertionString = [self systemAssertionInfomation];
+    //The Display Port daemon. If this isn't holding an assertion then the iMac isn't in TDM.
+  if (![assertionString containsString:@"com.apple.dpd"]) {
+        return NO;
+  }
   NSDictionary *plist = [self systemProfilerDisplayInfo];
 
   NSArray *gpus = plist[@"_items"];
