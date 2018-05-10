@@ -147,7 +147,13 @@ static dispatch_source_t updateTimer = NULL;
   
   BOOL previouslyConnected = self.macConnected;
   
-  self.macConnected = [self isInTargetDisplayMode];
+  if (self.isThunderboltEnabled) {
+    self.macConnected = [self macConnectedViaThunderbolt];
+  } else {
+    //Starting on macOS 10.1.4 macConnectedViaDisplayPort will return `YES` on iMac's with thunderbolt ports and therefore cause the application to always think that it is in TDM.
+    self.macConnected = [self macConnectedViaDisplayPort];
+  }
+  
   BOOL changed = self.macConnected != previouslyConnected;
   
   if (changed) {
