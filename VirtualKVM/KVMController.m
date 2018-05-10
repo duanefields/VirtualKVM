@@ -252,8 +252,7 @@
 }
 
 - (void)pressShiftKey {
-    NSError *error = nil;
-    [[[NSAppleScript alloc]initWithSource:@"tell application \"System Events\" \n key code 49 \n end tell"]executeAndReturnError:&error];
+    [[[NSAppleScript alloc]initWithSource:@"tell application \"System Events\" \n key code 49 \n end tell"]executeAndReturnError:nil];
 }
 
 - (void)createPowerAssertion {
