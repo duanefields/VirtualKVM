@@ -248,17 +248,8 @@
 }
 
 - (void)pressShiftKey {
-    
-    CGEventSourceRef source = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
-    CGEventRef shiftDown = CGEventCreateKeyboardEvent(source, (CGKeyCode)56, YES);
-    CGEventRef shiftUp = CGEventCreateKeyboardEvent(source, (CGKeyCode)56, NO);
-    
-    CGEventPost(kCGAnnotatedSessionEventTap, shiftDown);
-    CGEventPost(kCGAnnotatedSessionEventTap, shiftUp);
-    
-    CFRelease(shiftUp);
-    CFRelease(shiftDown);
-    CFRelease(source);
+    NSError *error = nil;
+    [[[NSAppleScript alloc]initWithSource:@"tell application \"System Events\" \n key code 49 \n end tell"]executeAndReturnError:&error];
 }
 
 - (void)createPowerAssertion {
