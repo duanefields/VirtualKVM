@@ -2,15 +2,13 @@
 #import "KVMSystemProfiler.h"
 
 static NSTimeInterval const kTimeInterval = 0.5;
+static dispatch_source_t updateTimer = NULL;
 
-typedef void (^DispatchRepeatCompletionHandler)(BOOL repeat);
-typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHandler);
 @interface KVMThunderboltObserver ()
 
 @property BOOL initialized;
 @property BOOL macConnected;
 @property NSArray *systemProfilerInformation;
-@property (nonatomic, copy) DispatchRepeatBlock repeatBlock;
 @property (nonatomic, assign) BOOL shouldRepeat;
 @property (nonatomic, assign, getter=isThunderboltEnabled) BOOL thunderboltEnabled;
 @end
@@ -34,27 +32,18 @@ typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHa
 }
 
 - (void)startObserving {
-    if (!self.repeatBlock) {
-       [self registerRepeatBlock];
-    }
-    
+  [self startTimer];
     [[NSWorkspace sharedWorkspace].notificationCenter addObserver:self selector:@selector(didWake) name:NSWorkspaceDidWakeNotification object:nil];
     [[NSWorkspace sharedWorkspace].notificationCenter addObserver:self selector:@selector(screenDidWake) name:NSWorkspaceScreensDidWakeNotification object:nil];
 }
 
 - (void)screenDidWake {
-    if (!self.repeatBlock) {
-        return;
-    }
-    
+  [self startTimer];
     [self checkForThunderboltConnection];
 }
 
 - (void)didWake {
-    if (!self.repeatBlock) {
-        return;
-    }
-    
+  [self startTimer];
     [self checkForThunderboltConnection];
 }
 
@@ -80,39 +69,33 @@ typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHa
     return NO;
 }
 
-
-- (void)registerRepeatBlock {
-    
-    __weak typeof(self) weakSelf = self;
-    self.shouldRepeat = YES;
-    self.repeatBlock = ^(DispatchRepeatCompletionHandler completionHandler) {
-        typeof(self) strongSelf = weakSelf;
-        [strongSelf checkForThunderboltConnection];
-        completionHandler(strongSelf.shouldRepeat);
-    };
-    
-    [self dispatchRepeatWithTimeInterval:kTimeInterval completionHandler:self.repeatBlock];
-}
 - (void)stopObserving {
-    self.shouldRepeat = NO;
-    self.repeatBlock = nil;
-    
-    [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self name:NSWorkspaceDidWakeNotification object:nil];
-    [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self name:NSWorkspaceScreensDidWakeNotification object:nil];
+  [self stopTimer];
+  [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self name:NSWorkspaceDidWakeNotification object:nil];
+  [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self name:NSWorkspaceScreensDidWakeNotification object:nil];
 }
 
-#pragma mark - Private Interface
+- (void)startTimer {
+  if (updateTimer != NULL)
+    return;
+  
+  CFIndex repeatTime = kTimeInterval;
+  uint64_t repeatInterval = repeatTime * NSEC_PER_SEC;
+  uint64_t repeatLeeway = repeatInterval / 10;
+  updateTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
+  dispatch_source_set_timer(updateTimer, dispatch_walltime(NULL, repeatInterval), repeatInterval, repeatLeeway);
+  dispatch_source_set_event_handler(updateTimer, ^{
+    [self checkForThunderboltConnection];
+  });
+  dispatch_resume(updateTimer);
+}
 
-- (void)dispatchRepeatWithTimeInterval:(NSTimeInterval)interval completionHandler:(DispatchRepeatBlock)completionHandler {
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(interval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        completionHandler(^(BOOL repeat) {
-            if (repeat) {
-            return [self dispatchRepeatWithTimeInterval:interval completionHandler:completionHandler];
-            }
-        });
-    });
-    
+- (void)stopTimer {
+  if (updateTimer == NULL)
+    return;
+  
+  dispatch_source_cancel(updateTimer);
+  updateTimer = NULL;
 }
 
 - (void)updateSystemProfilerInformation {
