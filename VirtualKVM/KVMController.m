@@ -227,8 +227,6 @@
     return;
   }
     
-  [self pressShiftKey];
-    
   CGEventSourceRef src = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
 
   CGEventRef f2d = CGEventCreateKeyboardEvent(src, 0x90, true);
@@ -249,10 +247,6 @@
         //TDM wasn't enabled try again
         [self enableTargetDisplayMode];
      }
-}
-
-- (void)pressShiftKey {
-    [[[NSAppleScript alloc]initWithSource:@"tell application \"System Events\" \n key code 49 \n end tell"]executeAndReturnError:nil];
 }
 
 - (void)createPowerAssertion {
