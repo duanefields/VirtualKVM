@@ -163,13 +163,8 @@ typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHa
   [self updateSystemProfilerInformation];
   
   BOOL previouslyConnected = self.macConnected;
-    
-  if (self.isThunderboltEnabled) {
-      self.macConnected = [self macConnectedViaThunderbolt];
-  } else {
-    //Starting on macOS 10.1.4 macConnectedViaDisplayPort will return `YES` on iMac's with thunderbolt ports and therefore cause the application to always think that it is in TDM.
-    self.macConnected = [self macConnectedViaDisplayPort];
-  }
+  
+  self.macConnected = [self isInTargetDisplayMode];
   BOOL changed = self.macConnected != previouslyConnected;
 
   if (changed) {
