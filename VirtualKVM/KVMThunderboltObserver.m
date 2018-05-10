@@ -27,46 +27,46 @@ static dispatch_source_t updateTimer = NULL;
 }
 
 - (void)dealloc {
-    [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self name:NSWorkspaceDidWakeNotification object:nil];
-    [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self name:NSWorkspaceScreensDidWakeNotification object:nil];
+  [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self name:NSWorkspaceDidWakeNotification object:nil];
+  [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self name:NSWorkspaceScreensDidWakeNotification object:nil];
 }
 
 - (void)startObserving {
   [self startTimer];
-    [[NSWorkspace sharedWorkspace].notificationCenter addObserver:self selector:@selector(didWake) name:NSWorkspaceDidWakeNotification object:nil];
-    [[NSWorkspace sharedWorkspace].notificationCenter addObserver:self selector:@selector(screenDidWake) name:NSWorkspaceScreensDidWakeNotification object:nil];
+  [[NSWorkspace sharedWorkspace].notificationCenter addObserver:self selector:@selector(didWake) name:NSWorkspaceDidWakeNotification object:nil];
+  [[NSWorkspace sharedWorkspace].notificationCenter addObserver:self selector:@selector(screenDidWake) name:NSWorkspaceScreensDidWakeNotification object:nil];
 }
 
 - (void)screenDidWake {
   [self startTimer];
-    [self checkForThunderboltConnection];
+  [self checkForThunderboltConnection];
 }
 
 - (void)didWake {
   [self startTimer];
-    [self checkForThunderboltConnection];
+  [self checkForThunderboltConnection];
 }
 
 // Determines if the host has thunderbolt ports
 - (BOOL)isThunderboltEnabled {
+  
+  NSDictionary *profilerResponse = [self systemProfilerThunderboltInfo];
+  
+  if (profilerResponse.count >= 1) {
+    NSArray *items = profilerResponse[@"_items"];
     
-    NSDictionary *profilerResponse = [self systemProfilerThunderboltInfo];
-    
-    if (profilerResponse.count >= 1) {
-        NSArray *items = profilerResponse[@"_items"];
-        
-        if (!items || items.count == 0) {
-            return NO;
-        }
-        NSString *busName = items[0][@"_name"];
-        
-        if ([busName isEqualToString:@"thunderbolt_bus"]) {
-            return YES;
-        }
-        return NO;
+    if (!items || items.count == 0) {
+      return NO;
     }
+    NSString *busName = items[0][@"_name"];
     
+    if ([busName isEqualToString:@"thunderbolt_bus"]) {
+      return YES;
+    }
     return NO;
+  }
+  
+  return NO;
 }
 
 - (void)stopObserving {
@@ -111,27 +111,27 @@ static dispatch_source_t updateTimer = NULL;
 }
 
 - (NSString *)systemAssertionInfomation {
-    
-    NSTask *task = [[NSTask alloc] init];
-    [task setLaunchPath:@"/usr/bin/pmset"];
-    [task setArguments:@[@"-g", @"assertions"]];
-    
-    NSPipe *out = [NSPipe pipe];
-    [task setStandardOutput:out];
-    
-    @try {
-        [task launch];
-    } @catch (NSException *exception) {
-        NSLog(@"Caught exception: %@", exception);
-        return nil;
-    }
-    
-    NSFileHandle *read = [out fileHandleForReading];
-    NSData *dataRead = [read readDataToEndOfFile];
-    
-    NSString *string = [[NSString alloc]initWithData:dataRead encoding:NSUTF8StringEncoding];
-    
-    return string;
+  
+  NSTask *task = [[NSTask alloc] init];
+  [task setLaunchPath:@"/usr/bin/pmset"];
+  [task setArguments:@[@"-g", @"assertions"]];
+  
+  NSPipe *out = [NSPipe pipe];
+  [task setStandardOutput:out];
+  
+  @try {
+    [task launch];
+  } @catch (NSException *exception) {
+    NSLog(@"Caught exception: %@", exception);
+    return nil;
+  }
+  
+  NSFileHandle *read = [out fileHandleForReading];
+  NSData *dataRead = [read readDataToEndOfFile];
+  
+  NSString *string = [[NSString alloc]initWithData:dataRead encoding:NSUTF8StringEncoding];
+  
+  return string;
 }
 
 - (NSDictionary *)systemProfilerThunderboltInfo {
@@ -149,11 +149,11 @@ static dispatch_source_t updateTimer = NULL;
   
   self.macConnected = [self isInTargetDisplayMode];
   BOOL changed = self.macConnected != previouslyConnected;
-
+  
   if (changed) {
     [self notifyDelegateOfConnectionChange];
   }
-
+  
   if (!self.initialized) {
     self.initialized = YES;
     [self notifyDelegateOfInitialization];
@@ -182,14 +182,14 @@ static dispatch_source_t updateTimer = NULL;
   if ([self isInTargetDisplayMode]) {
     return YES;
   }
-
+  
   NSDictionary *plist = [self systemProfilerDisplayInfo];
-
+  
   NSArray *gpus = plist[@"_items"];
-
+  
   for (NSDictionary *gpu in gpus) {
     NSArray *displays = gpu[@"spdisplays_ndrvs"];
-
+    
     for (NSDictionary *display in displays) {
       if ([display[@"spdisplays_connection_type"] isEqualToString:@"spdisplays_displayport_dongletype_dp"]) {
         if ([display[@"_spdisplays_display-vendor-id"] isEqualToString:@"610"]) {
@@ -198,27 +198,27 @@ static dispatch_source_t updateTimer = NULL;
       }
     }
   }
-
+  
   return NO;
 }
 
 - (BOOL)isInTargetDisplayMode {
   NSString *assertionString = [self systemAssertionInfomation];
-    //The Display Port daemon. If this isn't holding an assertion then the iMac isn't in TDM.
+  //The Display Port daemon. If this isn't holding an assertion then the iMac isn't in TDM.
   return [assertionString containsString:@"com.apple.dpd"];
 }
 
 - (BOOL)macConnectedViaThunderbolt {
   NSDictionary *plist = [self systemProfilerThunderboltInfo];
-
+  
   NSArray *devices = plist[@"_items"][0][@"_items"];
-
+  
   for (NSDictionary *device in devices) {
     if ([device[@"vendor_id_key"] isEqualToString:@"0xA27"]) {
       return YES;
     }
   }
-
+  
   return NO;
 }
 
