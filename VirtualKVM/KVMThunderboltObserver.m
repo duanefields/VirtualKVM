@@ -42,6 +42,7 @@
 - (void)startObserving {
   self.networkInterfaceNotifier.delegate = self;
   [self.networkInterfaceNotifier startObserving];
+  [self checkForThunderboltConnection];
   [[NSWorkspace sharedWorkspace].notificationCenter addObserver:self selector:@selector(didWake) name:NSWorkspaceDidWakeNotification object:nil];
   [[NSWorkspace sharedWorkspace].notificationCenter addObserver:self selector:@selector(screenDidWake) name:NSWorkspaceScreensDidWakeNotification object:nil];
 }
