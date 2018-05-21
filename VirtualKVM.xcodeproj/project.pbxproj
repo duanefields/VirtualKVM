@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		011BCBEE20B25B20008D78DC /* NetworkInterfaceNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011BCBED20B25B20008D78DC /* NetworkInterfaceNotifier.swift */; };
+		011BCBF020B25B35008D78DC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 011BCBEF20B25B35008D78DC /* SystemConfiguration.framework */; };
 		2840E5131DD8CD940054146D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2840E5151DD8CD940054146D /* Localizable.strings */; };
 		2854907C1DD8610800525808 /* KVMSystemProfiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2854907B1DD8610800525808 /* KVMSystemProfiler.m */; };
 		47672946191BBD7200726705 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47672945191BBD7200726705 /* Cocoa.framework */; };
@@ -41,6 +43,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		011BCBEC20B25B1F008D78DC /* VirtualKVM-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VirtualKVM-Bridging-Header.h"; sourceTree = "<group>"; };
+		011BCBED20B25B20008D78DC /* NetworkInterfaceNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInterfaceNotifier.swift; sourceTree = "<group>"; };
+		011BCBEF20B25B35008D78DC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1CDE0651EFEFF723A5BBA131 /* libPods-VirtualKVMTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VirtualKVMTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2673095FE54EC9E82407FA63 /* Pods-VirtualKVMTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VirtualKVMTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VirtualKVMTests/Pods-VirtualKVMTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2840E50D1DD8CD870054146D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -91,6 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				011BCBF020B25B35008D78DC /* SystemConfiguration.framework in Frameworks */,
 				47E96806191C3AFB006531E1 /* IOBluetooth.framework in Frameworks */,
 				47672946191BBD7200726705 /* Cocoa.framework in Frameworks */,
 				842C043D5E3184F3FD955214 /* libPods-VirtualKVM.a in Frameworks */,
@@ -145,6 +151,7 @@
 		47672944191BBD7200726705 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				011BCBEF20B25B35008D78DC /* SystemConfiguration.framework */,
 				47E96805191C3AFB006531E1 /* IOBluetooth.framework */,
 				47672945191BBD7200726705 /* Cocoa.framework */,
 				47672964191BBD7200726705 /* XCTest.framework */,
@@ -181,8 +188,10 @@
 				2854907B1DD8610800525808 /* KVMSystemProfiler.m */,
 				4767297F191C022900726705 /* KVMThunderboltObserver.h */,
 				47672980191C022900726705 /* KVMThunderboltObserver.m */,
+				011BCBED20B25B20008D78DC /* NetworkInterfaceNotifier.swift */,
 				47E96807191DB6C1006531E1 /* Status Menu UI */,
 				4767294C191BBD7200726705 /* Supporting Files */,
+				011BCBEC20B25B1F008D78DC /* VirtualKVM-Bridging-Header.h */,
 			);
 			path = VirtualKVM;
 			sourceTree = "<group>";
@@ -282,6 +291,9 @@
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Fast Wombat";
 				TargetAttributes = {
+					47672941191BBD7200726705 = {
+						LastSwiftMigration = 0930;
+					};
 					47672962191BBD7200726705 = {
 						TestTargetID = 47672941191BBD7200726705;
 					};
@@ -442,6 +454,7 @@
 				4767297E191BF05400726705 /* KVMController.m in Sources */,
 				47672952191BBD7200726705 /* main.m in Sources */,
 				47672981191C022900726705 /* KVMThunderboltObserver.m in Sources */,
+				011BCBEE20B25B20008D78DC /* NetworkInterfaceNotifier.swift in Sources */,
 				47E9680A191DB6FA006531E1 /* GVUserDefaults+KVMApp.m in Sources */,
 				2854907C1DD8610800525808 /* KVMSystemProfiler.m in Sources */,
 				47E96804191C3A17006531E1 /* KVMBluetoothController.m in Sources */,
@@ -604,13 +617,18 @@
 			baseConfigurationReference = EC87DECAF4D69C12AAF5B1F0 /* Pods-VirtualKVM.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VirtualKVM/VirtualKVM-Prefix.pch";
 				INFOPLIST_FILE = "VirtualKVM/VirtualKVM-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fastwombat.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "VirtualKVM/VirtualKVM-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -620,13 +638,17 @@
 			baseConfigurationReference = 9928F567C93C6C6EB874E4BA /* Pods-VirtualKVM.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VirtualKVM/VirtualKVM-Prefix.pch";
 				INFOPLIST_FILE = "VirtualKVM/VirtualKVM-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fastwombat.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "VirtualKVM/VirtualKVM-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -635,6 +657,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2673095FE54EC9E82407FA63 /* Pods-VirtualKVMTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/VirtualKVM.app/Contents/MacOS/VirtualKVM";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -659,6 +682,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EAF7D17600776A7F7140AB1E /* Pods-VirtualKVMTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/VirtualKVM.app/Contents/MacOS/VirtualKVM";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (

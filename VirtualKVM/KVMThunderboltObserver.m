@@ -1,16 +1,16 @@
 #import "KVMThunderboltObserver.h"
 #import "KVMSystemProfiler.h"
+#import "VirtualKVM-Swift.h"
 
-static NSTimeInterval const kTimeInterval = 0.5;
-static dispatch_source_t updateTimer = NULL;
-
-@interface KVMThunderboltObserver ()
+@interface KVMThunderboltObserver () <NetworkInterfaceNotifierDelegate>
 
 @property BOOL initialized;
 @property BOOL macConnected;
 @property NSArray *systemProfilerInformation;
 @property (nonatomic, assign) BOOL shouldRepeat;
 @property (nonatomic, assign, getter=isThunderboltEnabled) BOOL thunderboltEnabled;
+@property (nonatomic, strong) NetworkInterfaceNotifier *networkInterfaceNotifier;
+
 @end
 
 
@@ -23,6 +23,7 @@ static dispatch_source_t updateTimer = NULL;
   self.delegate = delegate;
   self.macConnected = NO;
   self.systemProfilerInformation = nil;
+  self.networkInterfaceNotifier = [NetworkInterfaceNotifier new];
   return self;
 }
 
@@ -31,19 +32,27 @@ static dispatch_source_t updateTimer = NULL;
   [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self name:NSWorkspaceScreensDidWakeNotification object:nil];
 }
 
+#pragma mark -
+
+- (void)networkInterfaceNotifierDidDetectChanage {
+  
+  [self checkForThunderboltConnection];
+}
+
 - (void)startObserving {
-  [self startTimer];
+  self.networkInterfaceNotifier.delegate = self;
+  [self.networkInterfaceNotifier startObserving];
   [[NSWorkspace sharedWorkspace].notificationCenter addObserver:self selector:@selector(didWake) name:NSWorkspaceDidWakeNotification object:nil];
   [[NSWorkspace sharedWorkspace].notificationCenter addObserver:self selector:@selector(screenDidWake) name:NSWorkspaceScreensDidWakeNotification object:nil];
 }
 
 - (void)screenDidWake {
-  [self startTimer];
+
   [self checkForThunderboltConnection];
 }
 
 - (void)didWake {
-  [self startTimer];
+  
   [self checkForThunderboltConnection];
 }
 
@@ -70,32 +79,9 @@ static dispatch_source_t updateTimer = NULL;
 }
 
 - (void)stopObserving {
-  [self stopTimer];
+
   [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self name:NSWorkspaceDidWakeNotification object:nil];
   [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self name:NSWorkspaceScreensDidWakeNotification object:nil];
-}
-
-- (void)startTimer {
-  if (updateTimer != NULL)
-    return;
-  
-  CFIndex repeatTime = kTimeInterval;
-  uint64_t repeatInterval = repeatTime * NSEC_PER_SEC;
-  uint64_t repeatLeeway = repeatInterval / 10;
-  updateTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
-  dispatch_source_set_timer(updateTimer, dispatch_walltime(NULL, repeatInterval), repeatInterval, repeatLeeway);
-  dispatch_source_set_event_handler(updateTimer, ^{
-    [self checkForThunderboltConnection];
-  });
-  dispatch_resume(updateTimer);
-}
-
-- (void)stopTimer {
-  if (updateTimer == NULL)
-    return;
-  
-  dispatch_source_cancel(updateTimer);
-  updateTimer = NULL;
 }
 
 - (void)updateSystemProfilerInformation {
