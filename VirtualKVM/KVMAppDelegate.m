@@ -69,8 +69,7 @@
     [DDLog addLogger:[DDASLLogger sharedInstance]];
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
   }
-  
-  DDLogError(@"Paper Jam!");
+ 
 }
 
 @end
