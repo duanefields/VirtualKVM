@@ -28,7 +28,7 @@
 		47E96804191C3A17006531E1 /* KVMBluetoothController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47E96803191C3A17006531E1 /* KVMBluetoothController.m */; };
 		47E96806191C3AFB006531E1 /* IOBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47E96805191C3AFB006531E1 /* IOBluetooth.framework */; };
 		47E9680A191DB6FA006531E1 /* GVUserDefaults+KVMApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 47E96809191DB6FA006531E1 /* GVUserDefaults+KVMApp.m */; };
-		842C043D5E3184F3FD955214 /* libPods-VirtualKVM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ECB0AB336CC54A45593109BE /* libPods-VirtualKVM.a */; };
+		EF7DCC2AA52E85D5C4536BE1 /* Pods_VirtualKVM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64CF363233439698EE2DC50D /* Pods_VirtualKVM.framework */; };
 		F57E3D68E03B79931505646C /* libPods-VirtualKVMTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CDE0651EFEFF723A5BBA131 /* libPods-VirtualKVMTests.a */; };
 /* End PBXBuildFile section */
 
@@ -85,10 +85,10 @@
 		47E96805191C3AFB006531E1 /* IOBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOBluetooth.framework; path = System/Library/Frameworks/IOBluetooth.framework; sourceTree = SDKROOT; };
 		47E96808191DB6FA006531E1 /* GVUserDefaults+KVMApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GVUserDefaults+KVMApp.h"; sourceTree = "<group>"; };
 		47E96809191DB6FA006531E1 /* GVUserDefaults+KVMApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GVUserDefaults+KVMApp.m"; sourceTree = "<group>"; };
+		64CF363233439698EE2DC50D /* Pods_VirtualKVM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VirtualKVM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9928F567C93C6C6EB874E4BA /* Pods-VirtualKVM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VirtualKVM.release.xcconfig"; path = "Pods/Target Support Files/Pods-VirtualKVM/Pods-VirtualKVM.release.xcconfig"; sourceTree = "<group>"; };
 		EAF7D17600776A7F7140AB1E /* Pods-VirtualKVMTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VirtualKVMTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-VirtualKVMTests/Pods-VirtualKVMTests.release.xcconfig"; sourceTree = "<group>"; };
 		EC87DECAF4D69C12AAF5B1F0 /* Pods-VirtualKVM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VirtualKVM.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VirtualKVM/Pods-VirtualKVM.debug.xcconfig"; sourceTree = "<group>"; };
-		ECB0AB336CC54A45593109BE /* libPods-VirtualKVM.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VirtualKVM.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,7 +99,7 @@
 				011BCBF020B25B35008D78DC /* SystemConfiguration.framework in Frameworks */,
 				47E96806191C3AFB006531E1 /* IOBluetooth.framework in Frameworks */,
 				47672946191BBD7200726705 /* Cocoa.framework in Frameworks */,
-				842C043D5E3184F3FD955214 /* libPods-VirtualKVM.a in Frameworks */,
+				EF7DCC2AA52E85D5C4536BE1 /* Pods_VirtualKVM.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,8 +156,8 @@
 				47672945191BBD7200726705 /* Cocoa.framework */,
 				47672964191BBD7200726705 /* XCTest.framework */,
 				47672947191BBD7200726705 /* Other Frameworks */,
-				ECB0AB336CC54A45593109BE /* libPods-VirtualKVM.a */,
 				1CDE0651EFEFF723A5BBA131 /* libPods-VirtualKVMTests.a */,
+				64CF363233439698EE2DC50D /* Pods_VirtualKVM.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -358,7 +358,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		499F7C25E03D884A58C90A9C /* [CP] Check Pods Manifest.lock */ = {
@@ -376,7 +376,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		58C91F90D2DB4CDD08B23BE9 /* [CP] Embed Pods Frameworks */ = {
@@ -386,11 +386,15 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-VirtualKVM/Pods-VirtualKVM-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
+				"${BUILT_PRODUCTS_DIR}/GVUserDefaults/GVUserDefaults.framework",
 				"${PODS_ROOT}/Sparkle/Sparkle.framework",
 				"${PODS_ROOT}/Sparkle/Sparkle.framework.dSYM",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GVUserDefaults.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sparkle.framework",
 				"${DWARF_DSYM_FOLDER_PATH}/Sparkle.framework.dSYM",
 			);
@@ -623,7 +627,7 @@
 				GCC_PREFIX_HEADER = "VirtualKVM/VirtualKVM-Prefix.pch";
 				INFOPLIST_FILE = "VirtualKVM/VirtualKVM-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fastwombat.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "VirtualKVM/VirtualKVM-Bridging-Header.h";
@@ -644,7 +648,7 @@
 				GCC_PREFIX_HEADER = "VirtualKVM/VirtualKVM-Prefix.pch";
 				INFOPLIST_FILE = "VirtualKVM/VirtualKVM-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fastwombat.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "VirtualKVM/VirtualKVM-Bridging-Header.h";
