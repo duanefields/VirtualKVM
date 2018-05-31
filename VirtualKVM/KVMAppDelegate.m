@@ -12,20 +12,20 @@
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
   NSString *string = [NSString stringWithFormat:@"%@ — %@ | %@ (%@:%@)", logMessage->_timestamp, logMessage->_message, logMessage->_function, logMessage->_fileName, @(logMessage->_line)];
   
-  switch (logMessage->_level) {
-    case DDLogLevelError:
+  switch (logMessage->_flag) {
+    case DDLogFlagError:
       string = [NSString stringWithFormat:@"❤️ %@", string];
       break;
-    case DDLogLevelWarning:
+    case DDLogFlagWarning:
       string = [NSString stringWithFormat:@"💛 %@", string];
       break;
-    case DDLogLevelInfo:
+    case DDLogFlagInfo:
       string = [NSString stringWithFormat:@"💙 %@", string];
       break;
-    case DDLogLevelDebug:
+    case DDLogFlagDebug:
       string = [NSString stringWithFormat:@"💚 %@", string];
       break;
-    case DDLogLevelVerbose:
+    case DDLogFlagVerbose:
       string = [NSString stringWithFormat:@"💜 %@", string];
       break;
       
