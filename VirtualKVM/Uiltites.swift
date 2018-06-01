@@ -20,10 +20,10 @@ import SwiftyBeaver
     log = SwiftyBeaver.self
    
     let console = ConsoleDestination()
-    console.format = "$Dyyyy-MM-dd HH:mm:ss.SSS$d $C$L$c: $M"
+    console.format = "$Dyyyy-MM-dd HH:mm:ss.SSS$d $C$L$c $N.$F:$l - $M"
     
     let file = FileDestination()
-    file.format = "$Dyyyy-MM-dd HH:mm:ss.SSS$d $C$L$c: $M"
+    file.format = "$Dyyyy-MM-dd HH:mm:ss.SSS$d $C$L$c $N.$F:$l - $M"
     
     log?.addDestination(console)
     log?.addDestination(file)
