@@ -1,7 +1,6 @@
 #import "KVMThunderboltObserver.h"
 #import "KVMSystemProfiler.h"
-#import "VirtualKVM-Swift.h"
-
+@import SBObjectiveCWrapper;
 @interface KVMThunderboltObserver () <NetworkInterfaceNotifierDelegate>
 
 @property BOOL initialized;
@@ -15,6 +14,10 @@
 
 
 @implementation KVMThunderboltObserver
+
++ (void)initialize {
+  [[Uiltites shared]setupLogging];
+}
 
 #pragma mark - Public Interface
 
@@ -36,10 +39,12 @@
 
 - (void)networkInterfaceNotifierDidDetectChanage {
   
+  SBLogInfo(@"Network interface change detected");
   [self checkForThunderboltConnection];
 }
 
 - (void)startObserving {
+  SBLogInfo(@"Start observing thunderbolt connections");
   self.networkInterfaceNotifier.delegate = self;
   [self.networkInterfaceNotifier startObserving];
   [self checkForThunderboltConnection];
@@ -48,12 +53,14 @@
 }
 
 - (void)screenDidWake {
-
+  
+  SBLogInfo(@"Screen did wake");
   [self checkForThunderboltConnection];
 }
 
 - (void)didWake {
   
+  SBLogInfo(@"Computer did wake");
   [self checkForThunderboltConnection];
 }
 
@@ -81,6 +88,8 @@
 
 - (void)stopObserving {
 
+  SBLogInfo(@"Stop observing thunderbolt connections");
+  
   [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self name:NSWorkspaceDidWakeNotification object:nil];
   [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self name:NSWorkspaceScreensDidWakeNotification object:nil];
 }
@@ -109,7 +118,7 @@
   @try {
     [task launch];
   } @catch (NSException *exception) {
-    NSLog(@"Caught exception: %@", exception);
+    SBLogWarning(@"Caught exception: %@", exception);
     return nil;
   }
   
@@ -132,6 +141,7 @@
 - (void)checkForThunderboltConnection {
   [[NSOperationQueue mainQueue]addOperationWithBlock:^{
     
+    SBLogInfo(@"Checking for thuderbolt connection. \nDisplay Info: %@ \nThunderbolt Info: %@\nPower Assertion Info: %@", [self systemProfilerDisplayInfo], [self systemProfilerThunderboltInfo], [self systemAssertionInfomation]);
     [self updateSystemProfilerInformation];
     
     BOOL previouslyConnected = self.macConnected;
