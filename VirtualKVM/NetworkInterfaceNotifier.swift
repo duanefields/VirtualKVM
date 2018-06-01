@@ -21,6 +21,11 @@ class NetworkInterfaceNotifier: NSObject {
     let displayName: String
   }
   
+  override init() {
+    Uiltites.shared.setupLogging()
+    super.init()
+  }
+  
   var delegate: NetworkInterfaceNotifierDelegate?
   
   func startObserving() {
@@ -35,14 +40,14 @@ class NetworkInterfaceNotifier: NSObject {
     OperationQueue().addOperation {
       
       guard Bundle.main.bundleIdentifier != nil else {
-        print("Could not get bundle identifier")
+        Uiltites.shared.log?.warning("Could not get bundle identifier")
         return
       }
       
       var context = SCDynamicStoreContext(version: 0, info: UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque()), retain: nil, release: nil, copyDescription: nil)
       
       guard let store = SCDynamicStoreCreate(nil, Bundle.main.bundleIdentifier! as CFString, callback, &context) else {
-        print("Could not connect SCDynamicStoreCreate")
+        Uiltites.shared.log?.warning("Could not connect SCDynamicStoreCreate")
         return
       }
       
@@ -52,7 +57,7 @@ class NetworkInterfaceNotifier: NSObject {
         if let name = SCNetworkInterfaceGetBSDName(interface as! SCNetworkInterface),
           let displayName = SCNetworkInterfaceGetLocalizedDisplayName(interface as! SCNetworkInterface) {
           interfaces.append(NetworkInterface(BSDName: name as String, displayName: displayName as String))
-          print("Hardware Port: \(displayName) \nInterface \(name)")
+          Uiltites.shared.log?.info("Hardware Port: \(displayName) \nInterface \(name)")
         }
       }
       
