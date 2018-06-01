@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		011BCBEE20B25B20008D78DC /* NetworkInterfaceNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011BCBED20B25B20008D78DC /* NetworkInterfaceNotifier.swift */; };
 		011BCBF020B25B35008D78DC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 011BCBEF20B25B35008D78DC /* SystemConfiguration.framework */; };
+		01C05AC220C08BC0002E0C89 /* Uiltites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C05AC120C08BC0002E0C89 /* Uiltites.swift */; };
 		2840E5131DD8CD940054146D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2840E5151DD8CD940054146D /* Localizable.strings */; };
 		2854907C1DD8610800525808 /* KVMSystemProfiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2854907B1DD8610800525808 /* KVMSystemProfiler.m */; };
 		47672946191BBD7200726705 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47672945191BBD7200726705 /* Cocoa.framework */; };
@@ -46,6 +47,7 @@
 		011BCBEC20B25B1F008D78DC /* VirtualKVM-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VirtualKVM-Bridging-Header.h"; sourceTree = "<group>"; };
 		011BCBED20B25B20008D78DC /* NetworkInterfaceNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInterfaceNotifier.swift; sourceTree = "<group>"; };
 		011BCBEF20B25B35008D78DC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		01C05AC120C08BC0002E0C89 /* Uiltites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Uiltites.swift; sourceTree = "<group>"; };
 		1CDE0651EFEFF723A5BBA131 /* libPods-VirtualKVMTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VirtualKVMTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2673095FE54EC9E82407FA63 /* Pods-VirtualKVMTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VirtualKVMTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VirtualKVMTests/Pods-VirtualKVMTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2840E50D1DD8CD870054146D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				47672957191BBD7200726705 /* KVMAppDelegate.h */,
 				47672958191BBD7200726705 /* KVMAppDelegate.m */,
 				47E96802191C3A17006531E1 /* KVMBluetoothController.h */,
+				01C05AC120C08BC0002E0C89 /* Uiltites.swift */,
 				47E96803191C3A17006531E1 /* KVMBluetoothController.m */,
 				4767297C191BF05400726705 /* KVMController.h */,
 				4767297D191BF05400726705 /* KVMController.m */,
@@ -386,17 +389,19 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-VirtualKVM/Pods-VirtualKVM-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
 				"${BUILT_PRODUCTS_DIR}/GVUserDefaults/GVUserDefaults.framework",
+				"${BUILT_PRODUCTS_DIR}/SBObjectiveCWrapper/SBObjectiveCWrapper.framework",
 				"${PODS_ROOT}/Sparkle/Sparkle.framework",
 				"${PODS_ROOT}/Sparkle/Sparkle.framework.dSYM",
+				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GVUserDefaults.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SBObjectiveCWrapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sparkle.framework",
 				"${DWARF_DSYM_FOLDER_PATH}/Sparkle.framework.dSYM",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -461,6 +466,7 @@
 				011BCBEE20B25B20008D78DC /* NetworkInterfaceNotifier.swift in Sources */,
 				47E9680A191DB6FA006531E1 /* GVUserDefaults+KVMApp.m in Sources */,
 				2854907C1DD8610800525808 /* KVMSystemProfiler.m in Sources */,
+				01C05AC220C08BC0002E0C89 /* Uiltites.swift in Sources */,
 				47E96804191C3A17006531E1 /* KVMBluetoothController.m in Sources */,
 				47C0D521191EFA1A00BB9246 /* KVMStatusItem.m in Sources */,
 				47672959191BBD7200726705 /* KVMAppDelegate.m in Sources */,
@@ -627,7 +633,7 @@
 				GCC_PREFIX_HEADER = "VirtualKVM/VirtualKVM-Prefix.pch";
 				INFOPLIST_FILE = "VirtualKVM/VirtualKVM-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fastwombat.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "VirtualKVM/VirtualKVM-Bridging-Header.h";
@@ -648,7 +654,7 @@
 				GCC_PREFIX_HEADER = "VirtualKVM/VirtualKVM-Prefix.pch";
 				INFOPLIST_FILE = "VirtualKVM/VirtualKVM-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fastwombat.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "VirtualKVM/VirtualKVM-Bridging-Header.h";

@@ -5,6 +5,7 @@
 #import <IOKit/pwr_mgt/IOPMLib.h>
 #include <sys/types.h>
 #include <sys/sysctl.h>
+@import SBObjectiveCWrapper;
 
 @interface KVMController ()
 
@@ -41,6 +42,9 @@
   return @"Unknown";
 }
 
++ (void)initialize {
+  [[Uiltites shared]setupLogging];
+}
 - (id)init {
   self = [super init];
   self.isClient = [[KVMController machineModel] rangeOfString:@"iMac"].location == NSNotFound;

@@ -8,6 +8,4 @@
   #import <Cocoa/Cocoa.h>
 #endif
 
-#import <CocoaLumberjack/CocoaLumberjack.h>
-
-static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
+#import "VirtualKVM-Swift.h"

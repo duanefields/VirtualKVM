@@ -8,7 +8,7 @@
 
 import SystemConfiguration
 import Foundation
-import CocoaLumberjack
+
 
 @objc protocol NetworkInterfaceNotifierDelegate {
   func networkInterfaceNotifierDidDetectChanage()
