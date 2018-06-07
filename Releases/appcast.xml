@@ -9,7 +9,18 @@
          <item>
         <title>124</title>
         <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
-        <sparkle:releaseNotesLink>https://github.com/duanefields/VirtualKVM/raw/master/Releases/CHANGELOG.html</sparkle:releaseNotesLink>
+        <description><![CDATA[
+            <ul>
+            <h3>VirtualKVM 1.2.4</h3>
+            
+            <p><strong>Released: Jun 07, 2018</strong></p>
+            
+            <ul>
+            <li>Now requires macOS 10.11 or later</li>
+            <li>Add ability to save debug logs </li>
+            <li>Should fix connectivity issues</li>
+            </ul>
+        ]]></description>
         <pubDate>Thu, 07 Nov 2018 02:50:00 +0000</pubDate>
         <enclosure url="https://github.com/duanefields/VirtualKVM/raw/master/Releases/v1_2_4zip" length="7280126" type="application/octet-stream" sparkle:version="124" sparkle:shortVersionString="1.2.4"/>
         </item>
