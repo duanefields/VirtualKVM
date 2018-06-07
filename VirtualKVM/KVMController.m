@@ -21,6 +21,7 @@
 @property (weak) IBOutlet NSMenuItem *toggleSleepMenuItem;
 @property (weak) IBOutlet NSMenuItem *connectionStatusMenuItem;
 @property (nonatomic, assign) CFStringRef assertionType;
+@property (weak) IBOutlet NSMenuItem *saveDebugLogsMenuItem;
 
 @end
 
@@ -136,6 +137,35 @@
   }
   
   [GVUserDefaults standardUserDefaults].toggleDisableSleep = menuItem.state == NSOnState;
+}
+
+- (IBAction)toggleSaveDebugLogs:(id)sender {
+  
+  NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+  openPanel.canChooseFiles = NO;
+  openPanel.canChooseDirectories = YES;
+  openPanel.message = @"Choose where you would like to save the debug log";
+  NSModalResponse modalResponse = [openPanel runModal];
+  if (modalResponse != NSModalResponseOK) { return; }
+  
+  NSString *logFilePath = [[Uiltites shared]logFilePath];
+  if (logFilePath == nil) {
+    NSAlert *alert = [NSAlert new];
+    alert.messageText = @"Failed to save log";
+    alert.informativeText = @"App failed to save the debug log. Please relaunch the app and try again.";
+    [alert runModal];
+    return;
+  }
+  
+  NSString *destinationFilePath = [[[openPanel.directoryURL.path stringByAppendingPathComponent:logFilePath.lastPathComponent] stringByDeletingPathExtension]stringByAppendingString:[NSString stringWithFormat:@" — %@.log", [NSDate date]]];
+  
+  NSError *error = nil;
+  if (![[NSFileManager defaultManager]copyItemAtPath:logFilePath toPath:destinationFilePath error:&error]) {
+    [[NSAlert alertWithError:error]runModal];
+    return;
+  }
+  
+  [[NSWorkspace sharedWorkspace]activateFileViewerSelectingURLs:@[[NSURL fileURLWithPath:destinationFilePath]]];
 }
 
 - (IBAction)quit:(id)sender {

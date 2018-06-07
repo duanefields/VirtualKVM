@@ -28,4 +28,17 @@ import SwiftyBeaver
     log?.addDestination(console)
     log?.addDestination(file)
   }
+  
+  @objc var logFilePath: String? {
+    guard log?.destinations.isEmpty == false else { return nil }
+    for desination in (log?.destinations)! {
+      guard desination is FileDestination else { continue }
+      
+      let fileDesination = desination as! FileDestination
+      return fileDesination.logFileURL?.path
+    }
+    
+    return nil
+  }
+  
 }
