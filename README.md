@@ -27,10 +27,12 @@ This project requires CocoaPods.
  * sudo gem install cocoapods
  * pod install
 
-Open VirtualKVM.xcworkspace in XCode and build...
+Open VirtualKVM.xcworkspace in Xcode and build...
 
 Known Issues
 ============
 
-When bluetooth is disabled, if the macbook goes to sleep, the iMac failes to re-instate target display mode, I THINK because it no longer has a keyboard and thus I can't send keyboard command sequences, which is the only way I know how to trigger
+* Bluetooth switching between newer Apple wireless (keyboards, mice, trackpads) is unsupported.
+
+* When bluetooth is disabled, if the macbook goes to sleep, the iMac failes to re-instate target display mode, I THINK because it no longer has a keyboard and thus I can't send keyboard command sequences, which is the only way I know how to trigger
 target display mode. Let me know if you have any ideas.
