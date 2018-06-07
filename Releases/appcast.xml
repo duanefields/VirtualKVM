@@ -11,7 +11,7 @@
         <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
         <sparkle:releaseNotesLink>https://github.com/duanefields/VirtualKVM/raw/master/Releases/CHANGELOG.html</sparkle:releaseNotesLink>
         <pubDate>Thu, 07 Nov 2018 02:50:00 +0000</pubDate>
-        <enclosure url="https://github.com/duanefields/VirtualKVM/raw/master/Releases/v1_2_zip" length="7280126" type="application/octet-stream" sparkle:version="124" sparkle:shortVersionString="1.2.4"/>
+        <enclosure url="https://github.com/duanefields/VirtualKVM/raw/master/Releases/v1_2_4zip" length="7280126" type="application/octet-stream" sparkle:version="124" sparkle:shortVersionString="1.2.4"/>
         </item>
         
         <item>
