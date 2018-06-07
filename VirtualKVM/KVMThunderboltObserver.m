@@ -1,22 +1,23 @@
 #import "KVMThunderboltObserver.h"
 #import "KVMSystemProfiler.h"
-
-static NSTimeInterval const kTimeInterval = 2.0;
-
-typedef void (^DispatchRepeatCompletionHandler)(BOOL repeat);
-typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHandler);
-@interface KVMThunderboltObserver ()
+@import SBObjectiveCWrapper;
+@interface KVMThunderboltObserver () <NetworkInterfaceNotifierDelegate>
 
 @property BOOL initialized;
 @property BOOL macConnected;
 @property NSArray *systemProfilerInformation;
-@property (nonatomic, copy) DispatchRepeatBlock repeatBlock;
 @property (nonatomic, assign) BOOL shouldRepeat;
 @property (nonatomic, assign, getter=isThunderboltEnabled) BOOL thunderboltEnabled;
+@property (nonatomic, strong) NetworkInterfaceNotifier *networkInterfaceNotifier;
+
 @end
 
 
 @implementation KVMThunderboltObserver
+
++ (void)initialize {
+  [[Uiltites shared]setupLogging];
+}
 
 #pragma mark - Public Interface
 
@@ -25,68 +26,72 @@ typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHa
   self.delegate = delegate;
   self.macConnected = NO;
   self.systemProfilerInformation = nil;
-
+  self.networkInterfaceNotifier = [NetworkInterfaceNotifier new];
   return self;
 }
 
+- (void)dealloc {
+  [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self name:NSWorkspaceDidWakeNotification object:nil];
+  [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self name:NSWorkspaceScreensDidWakeNotification object:nil];
+}
+
+#pragma mark -
+
+- (void)networkInterfaceNotifierDidDetectChanage {
+  
+  SBLogInfo(@"Network interface change detected");
+  [self checkForThunderboltConnection];
+}
+
 - (void)startObserving {
-    if (!self.repeatBlock) {
-       [self registerRepeatBlock];
-    }
+  SBLogInfo(@"Start observing thunderbolt connections");
+  self.networkInterfaceNotifier.delegate = self;
+  [self.networkInterfaceNotifier startObserving];
+  [self checkForThunderboltConnection];
+  [[NSWorkspace sharedWorkspace].notificationCenter addObserver:self selector:@selector(didWake) name:NSWorkspaceDidWakeNotification object:nil];
+  [[NSWorkspace sharedWorkspace].notificationCenter addObserver:self selector:@selector(screenDidWake) name:NSWorkspaceScreensDidWakeNotification object:nil];
+}
+
+- (void)screenDidWake {
+  
+  SBLogInfo(@"Screen did wake");
+  [self checkForThunderboltConnection];
+}
+
+- (void)didWake {
+  
+  SBLogInfo(@"Computer did wake");
+  [self checkForThunderboltConnection];
 }
 
 // Determines if the host has thunderbolt ports
 - (BOOL)isThunderboltEnabled {
+  
+  NSDictionary *profilerResponse = [self systemProfilerThunderboltInfo];
+  
+  if (profilerResponse.count >= 1) {
+    NSArray *items = profilerResponse[@"_items"];
     
-    NSDictionary *profilerResponse = [self systemProfilerThunderboltInfo];
-    
-    if (profilerResponse.count >= 1) {
-        NSArray *items = profilerResponse[@"_items"];
-        
-        if (!items || items.count == 0) {
-            return NO;
-        }
-        NSString *busName = items[0][@"_name"];
-        
-        if ([busName isEqualToString:@"thunderbolt_bus"]) {
-            return YES;
-        }
-        return NO;
+    if (!items || items.count == 0) {
+      return NO;
     }
+    NSString *busName = items[0][@"_name"];
     
+    if ([busName isEqualToString:@"thunderbolt_bus"]) {
+      return YES;
+    }
     return NO;
+  }
+  
+  return NO;
 }
 
-
-- (void)registerRepeatBlock {
-    
-    __weak typeof(self) weakSelf = self;
-    self.shouldRepeat = YES;
-    self.repeatBlock = ^(DispatchRepeatCompletionHandler completionHandler) {
-        typeof(self) strongSelf = weakSelf;
-        [strongSelf checkForThunderboltConnection];
-        completionHandler(strongSelf.shouldRepeat);
-    };
-    
-    [self dispatchRepeatWithTimeInterval:kTimeInterval completionHandler:self.repeatBlock];
-}
 - (void)stopObserving {
-    self.shouldRepeat = NO;
-    self.repeatBlock = nil;
-}
 
-#pragma mark - Private Interface
-
-- (void)dispatchRepeatWithTimeInterval:(NSTimeInterval)interval completionHandler:(DispatchRepeatBlock)completionHandler {
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(interval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        completionHandler(^(BOOL repeat) {
-            if (repeat) {
-            return [self dispatchRepeatWithTimeInterval:interval completionHandler:completionHandler];
-            }
-        });
-    });
-    
+  SBLogInfo(@"Stop observing thunderbolt connections");
+  
+  [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self name:NSWorkspaceDidWakeNotification object:nil];
+  [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self name:NSWorkspaceScreensDidWakeNotification object:nil];
 }
 
 - (void)updateSystemProfilerInformation {
@@ -101,6 +106,30 @@ typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHa
   return self.systemProfilerInformation[0];
 }
 
+- (NSString *)systemAssertionInfomation {
+  
+  NSTask *task = [[NSTask alloc] init];
+  [task setLaunchPath:@"/usr/bin/pmset"];
+  [task setArguments:@[@"-g", @"assertions"]];
+  
+  NSPipe *out = [NSPipe pipe];
+  [task setStandardOutput:out];
+  
+  @try {
+    [task launch];
+  } @catch (NSException *exception) {
+    SBLogWarning(@"Caught exception: %@", exception);
+    return nil;
+  }
+  
+  NSFileHandle *read = [out fileHandleForReading];
+  NSData *dataRead = [read readDataToEndOfFile];
+  
+  NSString *string = [[NSString alloc]initWithData:dataRead encoding:NSUTF8StringEncoding];
+  
+  return string;
+}
+
 - (NSDictionary *)systemProfilerThunderboltInfo {
   if (self.systemProfilerInformation == nil) {
     [self updateSystemProfilerInformation];
@@ -110,26 +139,31 @@ typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHa
 }
 
 - (void)checkForThunderboltConnection {
-  [self updateSystemProfilerInformation];
-  
-  BOOL previouslyConnected = self.macConnected;
+  [[NSOperationQueue mainQueue]addOperationWithBlock:^{
     
-  if (self.isThunderboltEnabled) {
+    SBLogInfo(@"Checking for thuderbolt connection. \nDisplay Info: %@ \nThunderbolt Info: %@\nPower Assertion Info: %@", [self systemProfilerDisplayInfo], [self systemProfilerThunderboltInfo], [self systemAssertionInfomation]);
+    [self updateSystemProfilerInformation];
+    
+    BOOL previouslyConnected = self.macConnected;
+    
+    if (self.isThunderboltEnabled) {
       self.macConnected = [self macConnectedViaThunderbolt];
-  } else {
-    //Starting on macOS 10.1.4 macConnectedViaDisplayPort will return `YES` on iMac's with thunderbolt ports and therefore cause the application to always think that it is in TDM.
-    self.macConnected = [self macConnectedViaDisplayPort];
-  }
-  BOOL changed = self.macConnected != previouslyConnected;
-
-  if (changed) {
-    [self notifyDelegateOfConnectionChange];
-  }
-
-  if (!self.initialized) {
-    self.initialized = YES;
-    [self notifyDelegateOfInitialization];
-  }
+    } else {
+      //Starting on macOS 10.1.4 macConnectedViaDisplayPort will return `YES` on iMac's with thunderbolt ports and therefore cause the application to always think that it is in TDM.
+      self.macConnected = [self macConnectedViaDisplayPort];
+    }
+    
+    BOOL changed = self.macConnected != previouslyConnected;
+    
+    if (changed) {
+      [self notifyDelegateOfConnectionChange];
+    }
+    
+    if (!self.initialized) {
+      self.initialized = YES;
+      [self notifyDelegateOfInitialization];
+    }
+  }];
 }
 
 - (void)notifyDelegateOfConnectionChange {
@@ -154,14 +188,14 @@ typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHa
   if ([self isInTargetDisplayMode]) {
     return YES;
   }
-
+  
   NSDictionary *plist = [self systemProfilerDisplayInfo];
-
+  
   NSArray *gpus = plist[@"_items"];
-
+  
   for (NSDictionary *gpu in gpus) {
     NSArray *displays = gpu[@"spdisplays_ndrvs"];
-
+    
     for (NSDictionary *display in displays) {
       if ([display[@"spdisplays_connection_type"] isEqualToString:@"spdisplays_displayport_dongletype_dp"]) {
         if ([display[@"_spdisplays_display-vendor-id"] isEqualToString:@"610"]) {
@@ -170,41 +204,27 @@ typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHa
       }
     }
   }
-
+  
   return NO;
 }
 
 - (BOOL)isInTargetDisplayMode {
-  NSDictionary *plist = [self systemProfilerDisplayInfo];
-
-  NSArray *gpus = plist[@"_items"];
-
-  for (NSDictionary *gpu in gpus) {
-    NSArray *displays = gpu[@"spdisplays_ndrvs"];
-
-    for (NSDictionary *display in displays) {
-      if ([display[@"_name"] isEqualToString:@"iMac"] && [display[@"spdisplays_builtin"] isEqualToString:@"spdisplays_yes"]) {
-        if (display[@"_spdisplays_displayport_device"] == nil) {
-          return YES;
-        }
-      }
-    }
-  }
-
-  return NO;
+  NSString *assertionString = [self systemAssertionInfomation];
+  //The Display Port daemon. If this isn't holding an assertion then the iMac isn't in TDM.
+  return [assertionString containsString:@"com.apple.dpd"];
 }
 
 - (BOOL)macConnectedViaThunderbolt {
   NSDictionary *plist = [self systemProfilerThunderboltInfo];
-
+  
   NSArray *devices = plist[@"_items"][0][@"_items"];
-
+  
   for (NSDictionary *device in devices) {
     if ([device[@"vendor_id_key"] isEqualToString:@"0xA27"]) {
       return YES;
     }
   }
-
+  
   return NO;
 }
 

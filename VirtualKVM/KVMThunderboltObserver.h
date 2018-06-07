@@ -12,6 +12,7 @@
 - (void)startObserving;
 - (void)stopObserving;
 - (BOOL)isInTargetDisplayMode;
+- (NSString *)systemAssertionInfomation;
 
 @end
 
