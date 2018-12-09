@@ -10,7 +10,6 @@
 		011BCBEE20B25B20008D78DC /* NetworkInterfaceNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011BCBED20B25B20008D78DC /* NetworkInterfaceNotifier.swift */; };
 		011BCBF020B25B35008D78DC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 011BCBEF20B25B35008D78DC /* SystemConfiguration.framework */; };
 		01C05AC220C08BC0002E0C89 /* Uiltites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C05AC120C08BC0002E0C89 /* Uiltites.swift */; };
-		01FD11CE21BD66E600ECF006 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FD11CD21BD66E500ECF006 /* main.m */; };
 		2840E5131DD8CD940054146D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2840E5151DD8CD940054146D /* Localizable.strings */; };
 		2854907C1DD8610800525808 /* KVMSystemProfiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2854907B1DD8610800525808 /* KVMSystemProfiler.m */; };
 		47672946191BBD7200726705 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47672945191BBD7200726705 /* Cocoa.framework */; };
@@ -44,25 +43,11 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		01FD11C921BD66E500ECF006 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		011BCBEC20B25B1F008D78DC /* VirtualKVM-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VirtualKVM-Bridging-Header.h"; sourceTree = "<group>"; };
 		011BCBED20B25B20008D78DC /* NetworkInterfaceNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInterfaceNotifier.swift; sourceTree = "<group>"; };
 		011BCBEF20B25B35008D78DC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		01C05AC120C08BC0002E0C89 /* Uiltites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Uiltites.swift; sourceTree = "<group>"; };
-		01FD11CB21BD66E500ECF006 /* VirtualKVM Helper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "VirtualKVM Helper"; sourceTree = BUILT_PRODUCTS_DIR; };
-		01FD11CD21BD66E500ECF006 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1CDE0651EFEFF723A5BBA131 /* libPods-VirtualKVMTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VirtualKVMTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2673095FE54EC9E82407FA63 /* Pods-VirtualKVMTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VirtualKVMTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VirtualKVMTests/Pods-VirtualKVMTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2840E50D1DD8CD870054146D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -109,13 +94,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		01FD11C821BD66E500ECF006 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4767293F191BBD7200726705 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -140,14 +118,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		01FD11CC21BD66E500ECF006 /* VirtualKVM Helper */ = {
-			isa = PBXGroup;
-			children = (
-				01FD11CD21BD66E500ECF006 /* main.m */,
-			);
-			path = "VirtualKVM Helper";
-			sourceTree = "<group>";
-		};
 		36829DEFAD624FCB6420C463 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -164,7 +134,6 @@
 			children = (
 				4767294B191BBD7200726705 /* VirtualKVM */,
 				47672969191BBD7200726705 /* VirtualKVMTests */,
-				01FD11CC21BD66E500ECF006 /* VirtualKVM Helper */,
 				47672944191BBD7200726705 /* Frameworks */,
 				47672943191BBD7200726705 /* Products */,
 				36829DEFAD624FCB6420C463 /* Pods */,
@@ -177,7 +146,6 @@
 			children = (
 				47672942191BBD7200726705 /* VirtualKVM.app */,
 				47672963191BBD7200726705 /* VirtualKVMTests.xctest */,
-				01FD11CB21BD66E500ECF006 /* VirtualKVM Helper */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -275,23 +243,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		01FD11CA21BD66E500ECF006 /* VirtualKVM Helper */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 01FD11D121BD66E600ECF006 /* Build configuration list for PBXNativeTarget "VirtualKVM Helper" */;
-			buildPhases = (
-				01FD11C721BD66E500ECF006 /* Sources */,
-				01FD11C821BD66E500ECF006 /* Frameworks */,
-				01FD11C921BD66E500ECF006 /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "VirtualKVM Helper";
-			productName = "VirtualKVM Helper";
-			productReference = 01FD11CB21BD66E500ECF006 /* VirtualKVM Helper */;
-			productType = "com.apple.product-type.tool";
-		};
 		47672941191BBD7200726705 /* VirtualKVM */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 47672973191BBD7200726705 /* Build configuration list for PBXNativeTarget "VirtualKVM" */;
@@ -301,6 +252,7 @@
 				4767293F191BBD7200726705 /* Frameworks */,
 				47672940191BBD7200726705 /* Resources */,
 				58C91F90D2DB4CDD08B23BE9 /* [CP] Embed Pods Frameworks */,
+				F1615B9E42373F1ACC0F6E6C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -319,6 +271,8 @@
 				4767295F191BBD7200726705 /* Sources */,
 				47672960191BBD7200726705 /* Frameworks */,
 				47672961191BBD7200726705 /* Resources */,
+				B47CA175D50195BABA61BB98 /* [CP] Embed Pods Frameworks */,
+				E1308A9AA0DCA6AC5CC0BE3E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -340,11 +294,6 @@
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Fast Wombat";
 				TargetAttributes = {
-					01FD11CA21BD66E500ECF006 = {
-						CreatedOnToolsVersion = 10.1;
-						DevelopmentTeam = 92RXMNCL7U;
-						ProvisioningStyle = Automatic;
-					};
 					47672941191BBD7200726705 = {
 						LastSwiftMigration = 0930;
 					};
@@ -369,7 +318,6 @@
 			targets = (
 				47672941191BBD7200726705 /* VirtualKVM */,
 				47672962191BBD7200726705 /* VirtualKVMTests */,
-				01FD11CA21BD66E500ECF006 /* VirtualKVM Helper */,
 			);
 		};
 /* End PBXProject section */
@@ -440,7 +388,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-VirtualKVM/Pods-VirtualKVM-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-VirtualKVM/Pods-VirtualKVM-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/GVUserDefaults/GVUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/SBObjectiveCWrapper/SBObjectiveCWrapper.framework",
 				"${PODS_ROOT}/Sparkle/Sparkle.framework",
@@ -457,20 +405,57 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VirtualKVM/Pods-VirtualKVM-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VirtualKVM/Pods-VirtualKVM-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B47CA175D50195BABA61BB98 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VirtualKVMTests/Pods-VirtualKVMTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E1308A9AA0DCA6AC5CC0BE3E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VirtualKVMTests/Pods-VirtualKVMTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F1615B9E42373F1ACC0F6E6C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VirtualKVM/Pods-VirtualKVM-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		01FD11C721BD66E500ECF006 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				01FD11CE21BD66E600ECF006 /* main.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4767293E191BBD7200726705 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -554,64 +539,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		01FD11CF21BD66E600ECF006 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 92RXMNCL7U;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		01FD11D021BD66E600ECF006 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = 92RXMNCL7U;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		47672971191BBD7200726705 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -785,15 +712,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		01FD11D121BD66E600ECF006 /* Build configuration list for PBXNativeTarget "VirtualKVM Helper" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				01FD11CF21BD66E600ECF006 /* Debug */,
-				01FD11D021BD66E600ECF006 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		4767293D191BBD7200726705 /* Build configuration list for PBXProject "VirtualKVM" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
