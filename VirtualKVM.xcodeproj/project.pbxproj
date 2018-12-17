@@ -291,8 +291,15 @@
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Fast Wombat";
 				TargetAttributes = {
+					01CBCC4E21C7E7CA00154EB3 = {
+						CreatedOnToolsVersion = 10.1;
+						DevelopmentTeam = 92RXMNCL7U;
+						ProvisioningStyle = Automatic;
+					};
 					47672941191BBD7200726705 = {
+						DevelopmentTeam = 92RXMNCL7U;
 						LastSwiftMigration = 0930;
+						ProvisioningStyle = Automatic;
 					};
 					47672962191BBD7200726705 = {
 						TestTargetID = 47672941191BBD7200726705;
@@ -580,7 +587,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 92RXMNCL7U;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VirtualKVM/VirtualKVM-Prefix.pch";
 				INFOPLIST_FILE = "VirtualKVM/VirtualKVM-Info.plist";
@@ -588,6 +598,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fastwombat.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "VirtualKVM/VirtualKVM-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -601,7 +612,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 92RXMNCL7U;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VirtualKVM/VirtualKVM-Prefix.pch";
 				INFOPLIST_FILE = "VirtualKVM/VirtualKVM-Info.plist";
@@ -609,6 +623,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fastwombat.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "VirtualKVM/VirtualKVM-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = app;
