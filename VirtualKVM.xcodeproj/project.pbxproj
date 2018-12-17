@@ -11,7 +11,7 @@
 		011BCBF020B25B35008D78DC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 011BCBEF20B25B35008D78DC /* SystemConfiguration.framework */; };
 		01C05AC220C08BC0002E0C89 /* Uiltites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C05AC120C08BC0002E0C89 /* Uiltites.swift */; };
 		01CBCC5221C7E7CB00154EB3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 01CBCC5121C7E7CB00154EB3 /* main.m */; };
-		01CBCC5921C7E91C00154EB3 /* VirtualKVMHelper in Copy Helper */ = {isa = PBXBuildFile; fileRef = 01CBCC4F21C7E7CA00154EB3 /* VirtualKVMHelper */; };
+		01CBCC5921C7E91C00154EB3 /* com.fastwombat.VirtualKVMHelper in Copy Helper */ = {isa = PBXBuildFile; fileRef = 01CBCC4F21C7E7CA00154EB3 /* com.fastwombat.VirtualKVMHelper */; };
 		2840E5131DD8CD940054146D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2840E5151DD8CD940054146D /* Localizable.strings */; };
 		2854907C1DD8610800525808 /* KVMSystemProfiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2854907B1DD8610800525808 /* KVMSystemProfiler.m */; };
 		47672946191BBD7200726705 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47672945191BBD7200726705 /* Cocoa.framework */; };
@@ -68,7 +68,7 @@
 			dstPath = Contents/Library/LaunchServices;
 			dstSubfolderSpec = 1;
 			files = (
-				01CBCC5921C7E91C00154EB3 /* VirtualKVMHelper in Copy Helper */,
+				01CBCC5921C7E91C00154EB3 /* com.fastwombat.VirtualKVMHelper in Copy Helper */,
 			);
 			name = "Copy Helper";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -80,7 +80,7 @@
 		011BCBED20B25B20008D78DC /* NetworkInterfaceNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInterfaceNotifier.swift; sourceTree = "<group>"; };
 		011BCBEF20B25B35008D78DC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		01C05AC120C08BC0002E0C89 /* Uiltites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Uiltites.swift; sourceTree = "<group>"; };
-		01CBCC4F21C7E7CA00154EB3 /* VirtualKVMHelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = VirtualKVMHelper; sourceTree = BUILT_PRODUCTS_DIR; };
+		01CBCC4F21C7E7CA00154EB3 /* com.fastwombat.VirtualKVMHelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = com.fastwombat.VirtualKVMHelper; sourceTree = BUILT_PRODUCTS_DIR; };
 		01CBCC5121C7E7CB00154EB3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		01CBCC5621C7E7E700154EB3 /* Helper-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Helper-Info.plist"; sourceTree = "<group>"; };
 		01CBCC5721C7E7F400154EB3 /* Helper-Launchd.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Helper-Launchd.plist"; sourceTree = "<group>"; };
@@ -200,7 +200,7 @@
 			children = (
 				47672942191BBD7200726705 /* VirtualKVM.app */,
 				47672963191BBD7200726705 /* VirtualKVMTests.xctest */,
-				01CBCC4F21C7E7CA00154EB3 /* VirtualKVMHelper */,
+				01CBCC4F21C7E7CA00154EB3 /* com.fastwombat.VirtualKVMHelper */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -312,7 +312,7 @@
 			);
 			name = VirtualKVMHelper;
 			productName = VirtualKVMHelper;
-			productReference = 01CBCC4F21C7E7CA00154EB3 /* VirtualKVMHelper */;
+			productReference = 01CBCC4F21C7E7CA00154EB3 /* com.fastwombat.VirtualKVMHelper */;
 			productType = "com.apple.product-type.tool";
 		};
 		47672941191BBD7200726705 /* VirtualKVM */ = {
@@ -612,8 +612,19 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = (
+					"-sectcreate",
+					__TEXT,
+					__info_plist,
+					"\"$(SRCROOT)/VirtualKVMHelper/Helper-Info.plist\"",
+					"-sectcreate",
+					__TEXT,
+					__launchd_plist,
+					"\"$(SRCROOT)/VirtualKVMHelper/Helper-Launchd.plist\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fastwombat.VirtualKVMHelper;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = com.fastwombat.VirtualKVMHelper;
+				PRODUCT_NAME = com.fastwombat.VirtualKVMHelper;
 			};
 			name = Debug;
 		};
@@ -643,8 +654,19 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = (
+					"-sectcreate",
+					__TEXT,
+					__info_plist,
+					"\"$(SRCROOT)/VirtualKVMHelper/Helper-Info.plist\"",
+					"-sectcreate",
+					__TEXT,
+					__launchd_plist,
+					"\"$(SRCROOT)/VirtualKVMHelper/Helper-Launchd.plist\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fastwombat.VirtualKVMHelper;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = com.fastwombat.VirtualKVMHelper;
+				PRODUCT_NAME = com.fastwombat.VirtualKVMHelper;
 			};
 			name = Release;
 		};

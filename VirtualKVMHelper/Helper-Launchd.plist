@@ -3,10 +3,10 @@
 <plist version="1.0">
 <dict>
 	<key>Label</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<string>com.fastwombat.VirtualKVMHelper</string>
 	<key>MachServices</key>
 	<dict>
-		<key>$(PRODUCT_BUNDLE_IDENTIFIER)</key>
+		<key>com.fastwombat.VirtualKVMHelper</key>
 		<true/>
 	</dict>
 </dict>
