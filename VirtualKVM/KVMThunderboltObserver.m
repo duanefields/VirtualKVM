@@ -1,5 +1,6 @@
 #import "KVMThunderboltObserver.h"
 #import "KVMSystemProfiler.h"
+#import "VirtualKVM-Swift.h"
 @import SBObjectiveCWrapper;
 @interface KVMThunderboltObserver () <NetworkInterfaceNotifierDelegate>
 

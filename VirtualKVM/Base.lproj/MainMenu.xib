@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -22,7 +22,7 @@
                 <outlet property="toggleSleepMenuItem" destination="pFx-q3-0Qh" id="58O-CE-q2a"/>
             </connections>
         </customObject>
-        <customObject id="Voe-Tx-rLC" customClass="KVMAppDelegate"/>
+        <customObject id="Voe-Tx-rLC" customClass="KVMAppDelegate" customModule="VirtualKVM" customModuleProvider="target"/>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <customObject id="p4a-DV-d6K" customClass="SUUpdater"/>
         <menu id="ZQU-Qi-o3m">

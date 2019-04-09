@@ -14,7 +14,7 @@ import Foundation
   func networkInterfaceNotifierDidDetectChanage()
 }
 
-class NetworkInterfaceNotifier: NSObject {
+@objcMembers class NetworkInterfaceNotifier: NSObject {
   
   struct NetworkInterface {
     let BSDName: String
