@@ -3,6 +3,7 @@
 #import "KVMController.h"
 #import "GVUserDefaults+KVMApp.h"
 #import "KVMSystemProfiler.h"
+#import "VirtualKVM-Swift.h"
 @import SBObjectiveCWrapper;
 
 @interface KVMAppDelegate ()

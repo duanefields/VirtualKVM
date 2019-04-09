@@ -9,7 +9,7 @@
 import Cocoa
 import SwiftyBeaver
 
-@objc class Uiltites: NSObject {
+@objcMembers class Uiltites: NSObject {
   
   static let shared = Uiltites()
   var log: SwiftyBeaver.Type?

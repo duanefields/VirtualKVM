@@ -252,7 +252,6 @@
 				4767293F191BBD7200726705 /* Frameworks */,
 				47672940191BBD7200726705 /* Resources */,
 				58C91F90D2DB4CDD08B23BE9 /* [CP] Embed Pods Frameworks */,
-				F1615B9E42373F1ACC0F6E6C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -271,8 +270,6 @@
 				4767295F191BBD7200726705 /* Sources */,
 				47672960191BBD7200726705 /* Frameworks */,
 				47672961191BBD7200726705 /* Resources */,
-				B47CA175D50195BABA61BB98 /* [CP] Embed Pods Frameworks */,
-				E1308A9AA0DCA6AC5CC0BE3E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -307,6 +304,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 				de,
@@ -388,7 +386,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-VirtualKVM/Pods-VirtualKVM-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-VirtualKVM/Pods-VirtualKVM-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/GVUserDefaults/GVUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/SBObjectiveCWrapper/SBObjectiveCWrapper.framework",
 				"${PODS_ROOT}/Sparkle/Sparkle.framework",
@@ -405,52 +403,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VirtualKVM/Pods-VirtualKVM-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B47CA175D50195BABA61BB98 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VirtualKVMTests/Pods-VirtualKVMTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E1308A9AA0DCA6AC5CC0BE3E /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VirtualKVMTests/Pods-VirtualKVMTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F1615B9E42373F1ACC0F6E6C /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VirtualKVM/Pods-VirtualKVM-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VirtualKVM/Pods-VirtualKVM-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -638,7 +591,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "VirtualKVM/VirtualKVM-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -658,7 +611,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fastwombat.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "VirtualKVM/VirtualKVM-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

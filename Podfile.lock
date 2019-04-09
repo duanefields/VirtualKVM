@@ -1,21 +1,36 @@
 PODS:
   - GVUserDefaults (1.0.2)
-  - SBObjectiveCWrapper (1.4.0):
-    - SwiftyBeaver (~> 1.4.0)
-  - Sparkle (1.18.1)
-  - SwiftyBeaver (1.4.4)
+  - SBObjectiveCWrapper (1.5.0):
+    - SwiftyBeaver (~> 1.7.0)
+  - Sparkle (1.21.3)
+  - SwiftyBeaver (1.7.0)
 
 DEPENDENCIES:
   - GVUserDefaults
-  - SBObjectiveCWrapper (~> 1.4.0)
+  - SBObjectiveCWrapper (from `https://github.com/SwiftyBeaver/SBObjectiveCWrapper.git`)
   - Sparkle
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - GVUserDefaults
+    - Sparkle
+    - SwiftyBeaver
+
+EXTERNAL SOURCES:
+  SBObjectiveCWrapper:
+    :git: https://github.com/SwiftyBeaver/SBObjectiveCWrapper.git
+
+CHECKOUT OPTIONS:
+  SBObjectiveCWrapper:
+    :commit: 4fcdab9198d5ee513b082d59d7b24651b5ae0977
+    :git: https://github.com/SwiftyBeaver/SBObjectiveCWrapper.git
 
 SPEC CHECKSUMS:
   GVUserDefaults: 52d48cf8ba578b40a1a76312b196dfc9134ba36a
-  SBObjectiveCWrapper: 854ea56b37cd0031af2b1d6e12c2f965fc4ff86d
-  Sparkle: 06ea33170007c5937ee54da481b4481af98fac79
-  SwiftyBeaver: 25bd76281f49ca989ec2e3cbde9af89c15bc1432
+  SBObjectiveCWrapper: 6f0387cfc006504d4ffe3bd4b14e61fb593150c3
+  Sparkle: 3f75576db8b0265adef36c43249d747f22d0b708
+  SwiftyBeaver: 4cc0080d2e23f980652e28978db11a5c9da39165
 
-PODFILE CHECKSUM: bd5504958af33c674f630d6e7d19e13b376df9df
+PODFILE CHECKSUM: fc292da25bdcb27f505dce4beaa1fccd03c0dc98
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.7.0.beta.3
