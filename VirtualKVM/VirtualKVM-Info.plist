@@ -34,6 +34,11 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>SMPrivilegedExecutables</key>
+	<dict>
+		<key>com.fastwombat.VirtualKVMHelper</key>
+		<string>identifier "com.fastwombat.VirtualKVMHelper" and anchor apple generic and certificate leaf[subject.CN] = "Mac Developer: Ysanna John (ANF8B9F3YE)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
+	</dict>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedURL</key>
