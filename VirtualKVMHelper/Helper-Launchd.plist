@@ -9,5 +9,7 @@
 		<key>com.fastwombat.VirtualKVMHelper</key>
 		<true/>
 	</dict>
+	<key>KeepAlive</key>
+	<true/>
 </dict>
 </plist>
