@@ -334,7 +334,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 011D3E6F225D41BE00594DB6 /* Build configuration list for PBXNativeTarget "com.fastwombat.VirtualKVMHelper" */;
 			buildPhases = (
-				011D3E74225D430700594DB6 /* ShellScript */,
 				011D3E67225D41BD00594DB6 /* Sources */,
 				011D3E68225D41BD00594DB6 /* Frameworks */,
 				011D3E69225D41BD00594DB6 /* CopyFiles */,
@@ -352,7 +351,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 47672973191BBD7200726705 /* Build configuration list for PBXNativeTarget "VirtualKVM" */;
 			buildPhases = (
-				011D3E64225D40B400594DB6 /* ShellScript */,
 				499F7C25E03D884A58C90A9C /* [CP] Check Pods Manifest.lock */,
 				4767293E191BBD7200726705 /* Sources */,
 				4767293F191BBD7200726705 /* Frameworks */,
@@ -461,40 +459,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		011D3E64225D40B400594DB6 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}\"/Scripts/CodeSignUpdate.sh\n";
-		};
-		011D3E74225D430700594DB6 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}\"/Scripts/CodeSignUpdate.sh\n";
-		};
 		3884B6C12F1DBF5032622D1F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
