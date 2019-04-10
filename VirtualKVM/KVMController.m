@@ -261,9 +261,7 @@
     NSLog(@"Early return when attempting to enable TDM.");
     return;
   }
-  
   [[NSNotificationCenter defaultCenter]postNotificationName:KVMAppDelegate.shouldKillDisplayDaemonNotification object:nil];
-  [[NSNotificationCenter defaultCenter]postNotificationName:KVMAppDelegate.shouldKillDisplayAudioDaemonNotification object:nil];
   
   CGEventSourceRef src = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
   
@@ -317,7 +315,6 @@
 
 - (void)disableTargetDisplayMode {
   [[NSNotificationCenter defaultCenter]postNotificationName:KVMAppDelegate.shouldKillDisplayDaemonNotification object:nil];
-  [[NSNotificationCenter defaultCenter]postNotificationName:KVMAppDelegate.shouldKillDisplayAudioDaemonNotification object:nil];
   if (self.sleepAssertion != kIOPMNullAssertionID) {
     IOReturn success = IOPMAssertionRelease(self.sleepAssertion);
     
