@@ -18,49 +18,50 @@ class KVMAppDelegate: NSObject, NSApplicationDelegate, AppProtocol {
   private var currentHelperConnection: NSXPCConnection?
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     
+    Uiltites.shared.setupLogging()
+    
+    print("Log path VirtualKVM: \(Uiltites.shared.logFilePath!)")
     // Update the current authorization database right
     // This will prompt the user for authentication if something needs updating.
-    
     do {
       try HelperAuthorization.authorizationRightsUpdateDatabase()
     } catch let error as NSError {
-      print("Error `authorizationRightsUpdateDatabase` \(error)")
+      Uiltites.shared.log?.error("Error `authorizationRightsUpdateDatabase` \(error)")
     }
     self.helperStatus { installed in
       guard installed == false else {
         return
       }
-      
-      print("Helper not installed, attempting installation.")
+      Uiltites.shared.log?.info("Helper not installed, attempting installation.")
       
       do {
         _ = try self.helperInstall()
       } catch {
-        print("Failed to install helper")
+        Uiltites.shared.log?.error("Failed to install helper")
       }
     }
     
     NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: KVMAppDelegate.shouldKillDisplayDaemonNotification), object: nil, queue: nil) { (_) in
       guard let helper = self.helper(nil) else { return }
-      helper.killProcess(arguments: "Safari", completion: { (existCode) in
-        print("Kill Display Daemon with code \(existCode)")
+      Uiltites.shared.log?.debug("shouldKillDisplayDaemonNotification")
+      helper.killProcess(arguments: "dpd", completion: { (existCode) in
+        Uiltites.shared.log?.info("Kill Display Daemon with code \(existCode)")
       })
     }
     
     NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: KVMAppDelegate.shouldKillDisplayAudioDaemonNotification), object: nil, queue: nil) { (_) in
-      guard let helper = self.helper(nil) else { return }
-      helper.killProcess(arguments: "dpaudiothru", completion: { (existCode) in
-        print("Kill Display Audio Daemon with code \(existCode)")
-      })
+      Uiltites.shared.log?.debug("shouldKillDisplayAudioDaemonNotification")
+      Uiltites.shared.stopAudioDaemon()
     }
     
     NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: KVMAppDelegate.shouldLaunchDisplayAudioDaemonNotification), object: nil, queue: nil) { (_) in
-      guard let helper = self.helper(nil) else { return }
-    
-      helper.launchProcess(path: "/usr/libexec/dpaudiothru", completion: { (existCode) in
-        print("Launch dpaudiothru with code \(existCode)")
-      })
+      Uiltites.shared.log?.debug("shouldLaunchDisplayAudioDaemonNotification")
+      Uiltites.shared.startAudioDaemon()
     }
+  }
+  
+  func applicationWillTerminate(_ notification: Notification) {
+    Uiltites.shared.stopAudioDaemon()
   }
   
   // MARK: -

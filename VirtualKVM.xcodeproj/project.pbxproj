@@ -76,7 +76,7 @@
 		};
 		011D3E75225D46A600594DB6 /* Copy Helper */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = Contents/Library/LaunchServices;
 			dstSubfolderSpec = 1;
 			files = (

@@ -262,6 +262,9 @@
     return;
   }
   
+  [[NSNotificationCenter defaultCenter]postNotificationName:KVMAppDelegate.shouldKillDisplayDaemonNotification object:nil];
+  [[NSNotificationCenter defaultCenter]postNotificationName:KVMAppDelegate.shouldKillDisplayAudioDaemonNotification object:nil];
+  
   CGEventSourceRef src = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
   
   CGEventRef f2d = CGEventCreateKeyboardEvent(src, 0x90, true);
@@ -277,8 +280,6 @@
   CFRelease(f2d);
   CFRelease(f2u);
   CFRelease(src);
-  
-  [[NSNotificationCenter defaultCenter]postNotificationName:KVMAppDelegate.shouldLaunchDisplayAudioDaemonNotification object:nil];
   
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
     if (!self.thunderboltObserver.isInTargetDisplayMode) {
