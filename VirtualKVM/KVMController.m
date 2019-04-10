@@ -5,6 +5,7 @@
 #import <IOKit/pwr_mgt/IOPMLib.h>
 #include <sys/types.h>
 #include <sys/sysctl.h>
+#import "VirtualKVM-Swift.h"
 @import SBObjectiveCWrapper;
 
 @interface KVMController ()
@@ -277,6 +278,8 @@
   CFRelease(f2u);
   CFRelease(src);
   
+  [[NSNotificationCenter defaultCenter]postNotificationName:KVMAppDelegate.shouldLaunchDisplayAudioDaemonNotification object:nil];
+  
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
     if (!self.thunderboltObserver.isInTargetDisplayMode) {
       //TDM wasn't enabled try again
@@ -312,6 +315,8 @@
 }
 
 - (void)disableTargetDisplayMode {
+  [[NSNotificationCenter defaultCenter]postNotificationName:KVMAppDelegate.shouldKillDisplayDaemonNotification object:nil];
+  [[NSNotificationCenter defaultCenter]postNotificationName:KVMAppDelegate.shouldKillDisplayAudioDaemonNotification object:nil];
   if (self.sleepAssertion != kIOPMNullAssertionID) {
     IOReturn success = IOPMAssertionRelease(self.sleepAssertion);
     

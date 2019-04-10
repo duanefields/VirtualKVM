@@ -83,28 +83,26 @@ import Foundation
         completion(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "0")
     }
 
-    func runCommandLs(withPath path: String, completion: @escaping (NSNumber) -> Void) {
-
-        // For security reasons, all commands should be hardcoded in the helper
-        let command = "/usr/bin/killall"
-        let arguments = [path]
-
-        // Run the task
-        self.runTask(command: command, arguments: arguments, completion: completion)
+    func killProcess(arguments: String, completion: @escaping (NSNumber) -> Void) {
+        self.runTask(command: "/usr/bin/killall", arguments: [arguments], completion: completion)
     }
-
+    
+    func launchProcess(path: String, completion: @escaping (NSNumber) -> Void) {
+        self.runTask(command: path, arguments: [""], completion: completion)
+    }
+    
     func runCommandLs(withPath path: String, authData: NSData?, completion: @escaping (NSNumber) -> Void) {
-
+        
         // Check the passed authorization, if the user need to authenticate to use this command the user might be prompted depending on the settings and/or cached authentication.
-
+        
         guard self.verifyAuthorization(authData, forCommand: #selector(HelperProtocol.runCommandLs(withPath:authData:completion:))) else {
             completion(kAuthorizationFailedExitCode)
             return
         }
-
-        self.runCommandLs(withPath: path, completion: completion)
+        
+        self.runTask(command: path, arguments: [""], completion: completion)
     }
-
+    
     // MARK: -
     // MARK: Private Helper Methods
 
