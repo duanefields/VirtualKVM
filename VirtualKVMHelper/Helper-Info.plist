@@ -14,7 +14,7 @@
 	<string>2</string>
 	<key>SMAuthorizedClients</key>
 	<array>
-		<string>identifier "com.fastwombat.VirtualKVM" and anchor apple generic and certificate leaf[subject.CN] = "Mac Developer: Ysanna John (ANF8B9F3YE)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
+		<string>identifier "com.fastwombat.VirtualKVM" and anchor apple generic and certificate leaf[subject.OU] = "92RXMNCL7U"</string>
 	</array>
 </dict>
 </plist>
