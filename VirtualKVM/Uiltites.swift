@@ -13,6 +13,7 @@ import SwiftyBeaver
   
   static let shared = Uiltites()
   var log: SwiftyBeaver.Type?
+  fileprivate var task: Process?
   
   @objc func setupLogging() {
     guard log == nil else { return }
@@ -27,6 +28,22 @@ import SwiftyBeaver
     
     log?.addDestination(console)
     log?.addDestination(file)
+  }
+  
+  @objc func startAudioDaemon() {
+    guard task?.isRunning == false || task?.isRunning == nil else { return }
+    OperationQueue().addOperation {
+      self.task = Process()
+      self.task?.launchPath = "/usr/libexec/dpaudiothru"
+      self.task?.arguments = [""]
+      self.task?.launch()
+      self.task?.waitUntilExit()
+    }
+  }
+  
+  @objc func stopAudioDaemon() {
+    guard task?.isRunning ?? false else { return }
+    self.task?.terminate()
   }
   
   @objc var logFilePath: String? {
